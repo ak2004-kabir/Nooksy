@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Shop all products on Nooksy — Tote Bags, Photo Frames, Tumblers and more." />
+  <title>Shop — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="canonical" href="https://nooksy.in/pages/shop.html" />
+  <style>
+    .shop-header {
+      padding: 2rem 2rem 1.5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 0.5px solid var(--border);
+      background: #fff;
+    }
+    .shop-title h1 { font-family: var(--font-heading); font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+    .shop-title p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .sort-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .sort-select { border: 0.5px solid var(--border); background: #fff; font-family: var(--font-body); font-size: 13px; padding: 7px 10px; color: #000; cursor: pointer; }
+    .shop-body { display: grid; grid-template-columns: 220px 1fr; min-height: 600px; }
+    .sidebar { border-right: 0.5px solid var(--border); padding: 1.5rem; background: #fff; }
+    .filter-section { margin-bottom: 2rem; }
+    .filter-title { font-family: var(--font-heading); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #000; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 0.5px solid var(--border); }
+    .filter-option { display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem; cursor: pointer; }
+    .filter-option input { accent-color: #000; width: 14px; height: 14px; }
+    .filter-option label { font-size: 13px; color: #000; cursor: pointer; flex: 1; }
+    .filter-option .fcount { font-size: 11px; color: var(--muted); }
+    .price-range { display: flex; gap: 6px; align-items: center; margin-top: 0.5rem; }
+    .price-input { border: 0.5px solid var(--border); padding: 7px 8px; font-size: 12px; font-family: var(--font-body); width: 80px; color: #000; }
+    .apply-btn { width: 100%; background: #000; color: #fff; border: none; font-family: var(--font-body); font-size: 12px; font-weight: 500; padding: 8px; cursor: pointer; margin-top: 0.75rem; letter-spacing: 0.5px; }
+    .clear-btn { width: 100%; background: #fff; color: var(--muted); border: 0.5px solid var(--border); font-family: var(--font-body); font-size: 12px; padding: 7px; cursor: pointer; margin-top: 6px; }
+    .products-area { padding: 1.5rem 2rem; background: var(--gray); }
+    .active-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: center; }
+    .filter-tag { background: #000; color: #fff; font-size: 11px; letter-spacing: 0.5px; padding: 4px 10px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .results-count { font-size: 12px; color: var(--muted); margin-left: auto; }
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+    .pagination { display: flex; justify-content: center; align-items: center; gap: 6px; padding: 2rem; }
+    .page-btn { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border: 0.5px solid var(--border); background: #fff; font-size: 13px; cursor: pointer; font-family: var(--font-body); }
+    .page-btn.active { background: #000; color: #fff; border-color: #000; }
+    @media (max-width: 768px) {
+      .shop-body { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .shop-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    }
+    @media (max-width: 480px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  Free shipping above ₹499 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">nooksy</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" aria-label="Search"><i class="ti ti-search"></i></button>
+    <a href="cart.html" class="nav-icon" aria-label="Cart">
+      <i class="ti ti-shopping-bag"></i>
+      <span class="cart-badge">0</span>
+    </a>
+    <button class="nav-icon" aria-label="Account"><i class="ti ti-user"></i></button>
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="../index.html">Home</a> &rsaquo; <span>Shop</span>
+</div>
+
+<!-- SHOP HEADER -->
+<div class="shop-header">
+  <div class="shop-title">
+    <h1 id="page-heading">All Products</h1>
+    <p id="product-count">Loading products...</p>
+  </div>
+  <div class="sort-wrap">
+    Sort by:
+    <select class="sort-select" id="sort-select" onchange="applyFilters()">
+      <option value="featured">Featured</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+      <option value="newest">Newest First</option>
+    </select>
+  </div>
+</div>
+
+<!-- SHOP BODY -->
+<div class="shop-body">
+  <!-- SIDEBAR FILTERS -->
+  <aside class="sidebar">
+    <div class="filter-section">
+      <div class="filter-title">Category</div>
+      <div class="filter-option">
+        <input type="radio" name="cat" id="cat-all" value="all" checked onchange="applyFilters()">
+        <label for="cat-all">All Products</label>
+        <span class="fcount" id="count-all"></span>
+      </div>
+      <div class="filter-option">
+        <input type="radio" name="cat" id="cat-tote" value="tote-bags" onchange="applyFilters()">
+        <label for="cat-tote">Tote Bags</label>
+        <span class="fcount" id="count-tote-bags"></span>
+      </div>
+      <div class="filter-option">
+        <input type="radio" name="cat" id="cat-frames" value="photo-frames" onchange="applyFilters()">
+        <label for="cat-frames">Photo Frames</label>
+        <span class="fcount" id="count-photo-frames"></span>
+      </div>
+      <div class="filter-option">
+        <input type="radio" name="cat" id="cat-tumblers" value="tumblers" onchange="applyFilters()">
+        <label for="cat-tumblers">Tumblers</label>
+        <span class="fcount" id="count-tumblers"></span>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Price Range</div>
+      <div class="price-range">
+        <input class="price-input" type="number" id="price-min" placeholder="₹ Min" value="0" min="0">
+        <span style="font-size:12px;color:var(--muted)">—</span>
+        <input class="price-input" type="number" id="price-max" placeholder="₹ Max" value="2000" min="0">
+      </div>
+      <button class="apply-btn" onclick="applyFilters()">Apply</button>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Availability</div>
+      <div class="filter-option">
+        <input type="checkbox" id="in-stock" checked onchange="applyFilters()">
+        <label for="in-stock">In Stock</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="on-sale" onchange="applyFilters()">
+        <label for="on-sale">On Sale</label>
+      </div>
+    </div>
+
+    <button class="clear-btn" onclick="clearFilters()">Clear All Filters</button>
+  </aside>
+
+  <!-- PRODUCTS AREA -->
+  <div class="products-area">
+    <div class="active-filters" id="active-filters"></div>
+    <div class="products-grid" id="products-grid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <i class="ti ti-loader" style="font-size:32px;margin-bottom:1rem;display:block"></i>
+        Loading products...
+      </div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">nooksy</div>
+      <div class="footer-brand-tagline">Your Everyday, Reimagined</div>
+      <p class="footer-brand-desc">Thoughtfully designed everyday products that bring joy to your space and routine.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="shop.html?cat=tote-bags">Tote Bags</a></li>
+        <li><a href="shop.html?cat=photo-frames">Photo Frames</a></li>
+        <li><a href="shop.html?cat=tumblers">Tumblers</a></li>
+        <li><a href="shop.html">All Products</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="contact.html">Track Order</a></li>
+        <li><a href="policies.html#returns">Returns</a></li>
+        <li><a href="policies.html#shipping">Shipping Info</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Nooksy</a></li>
+        <li><a href="policies.html#privacy">Privacy Policy</a></li>
+        <li><a href="policies.html#terms">Terms &amp; Conditions</a></li>
+        <li><a href="policies.html#returns">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com/nooksy.in" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      <a href="https://wa.me/917356113346" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+      <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
+    </div>
+    <div class="footer-payments">
+      <span class="pay-pill">UPI</span>
+      <span class="pay-pill">PayU</span>
+      <span class="pay-pill">COD</span>
+      <span class="pay-pill">Net Banking</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="../js/products.js"></script>
+<script>
+  const ITEMS_PER_PAGE = 9;
+  let currentPage = 1;
+  let filteredProducts = [...products];
+
+  function getCategoryFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('cat') || 'all';
+  }
+
+  function initCategoryCounts() {
+    document.getElementById('count-all').textContent = products.length;
+    ['tote-bags', 'photo-frames', 'tumblers'].forEach(cat => {
+      const el = document.getElementById('count-' + cat);
+      if (el) el.textContent = products.filter(p => p.category === cat).length;
+    });
+  }
+
+  function applyFilters() {
+    const cat = document.querySelector('input[name="cat"]:checked').value;
+    const priceMin = parseInt(document.getElementById('price-min').value) || 0;
+    const priceMax = parseInt(document.getElementById('price-max').value) || 99999;
+    const inStock = document.getElementById('in-stock').checked;
+    const onSale = document.getElementById('on-sale').checked;
+    const sortVal = document.getElementById('sort-select').value;
+
+    filteredProducts = products.filter(p => {
+      if (cat !== 'all' && p.category !== cat) return false;
+      if (p.price < priceMin || p.price > priceMax) return false;
+      if (inStock && !p.inStock) return false;
+      if (onSale && !p.originalPrice) return false;
+      return true;
+    });
+
+    if (sortVal === 'price-low') filteredProducts.sort((a, b) => a.price - b.price);
+    else if (sortVal === 'price-high') filteredProducts.sort((a, b) => b.price - a.price);
+    else if (sortVal === 'newest') filteredProducts.reverse();
+
+    currentPage = 1;
+    updatePageHeading(cat);
+    renderActiveFilters(cat, onSale);
+    renderProducts();
+    renderPagination();
+  }
+
+  function updatePageHeading(cat) {
+    const labels = { 'all': 'All Products', 'tote-bags': 'Tote Bags', 'photo-frames': 'Photo Frames', 'tumblers': 'Tumblers' };
+    document.getElementById('page-heading').textContent = labels[cat] || 'All Products';
+    document.getElementById('product-count').textContent = filteredProducts.length + ' products';
+  }
+
+  function renderActiveFilters(cat, onSale) {
+    const container = document.getElementById('active-filters');
+    let html = '';
+    if (cat !== 'all') html += `<span class="filter-tag">${cat.replace('-', ' ')} <i class="ti ti-x" onclick="clearFilters()"></i></span>`;
+    if (onSale) html += `<span class="filter-tag">On Sale <i class="ti ti-x" onclick="clearFilters()"></i></span>`;
+    html += `<span class="results-count">Showing ${filteredProducts.length} products</span>`;
+    container.innerHTML = html;
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById('products-grid');
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const pageProducts = filteredProducts.slice(start, start + ITEMS_PER_PAGE);
+
+    if (pageProducts.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <i class="ti ti-mood-sad" style="font-size:40px;margin-bottom:1rem;display:block"></i>
+        No products found. <a href="shop.html" style="color:#000;text-decoration:underline">Clear filters</a>
+      </div>`;
+      return;
+    }
+    grid.innerHTML = pageProducts.map(p => renderProductCard(p, '../')).join('');
+  }
+
+  function renderPagination() {
+    const total = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    const pg = document.getElementById('pagination');
+    if (total <= 1) { pg.innerHTML = ''; return; }
+    let html = `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="ti ti-chevron-left"></i></button>`;
+    for (let i = 1; i <= total; i++) {
+      html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+    }
+    html += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === total ? 'disabled' : ''}><i class="ti ti-chevron-right"></i></button>`;
+    pg.innerHTML = html;
+  }
+
+  function changePage(page) {
+    const total = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    if (page < 1 || page > total) return;
+    currentPage = page;
+    renderProducts();
+    renderPagination();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function clearFilters() {
+    document.getElementById('cat-all').checked = true;
+    document.getElementById('price-min').value = 0;
+    document.getElementById('price-max').value = 2000;
+    document.getElementById('in-stock').checked = true;
+    document.getElementById('on-sale').checked = false;
+    document.getElementById('sort-select').value = 'featured';
+    applyFilters();
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', () => {
+    initCategoryCounts();
+    const urlCat = getCategoryFromURL();
+    if (urlCat !== 'all') {
+      const radio = document.querySelector(`input[value="${urlCat}"]`);
+      if (radio) radio.checked = true;
+    }
+    applyFilters();
+  });
+</script>
+</body>
+</html>

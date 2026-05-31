@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .checkout-nav { background: #fff; border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-secure { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+
+    .checkout-steps { background: #fff; border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+    .step.done .step-num { background: #000; color: #fff; }
+    .step.active .step-num { background: #000; color: #fff; }
+    .step.inactive .step-num { background: #eee; color: var(--muted); }
+    .step.done .step-label, .step.active .step-label { color: #000; font-weight: 600; }
+    .step.inactive .step-label { color: var(--muted); }
+    .step-divider { width: 48px; height: 1px; background: var(--border); margin: 0 10px; }
+
+    .checkout-body { display: grid; grid-template-columns: 1fr 340px; gap: 0; background: var(--gray); min-height: 600px; }
+    .checkout-left { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .section-block { background: #fff; border: 0.5px solid var(--border); padding: 1.5rem; }
+    .section-block-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .section-block-title { font-family: var(--font-heading); font-size: 14px; font-weight: 700; letter-spacing: -0.3px; display: flex; align-items: center; gap: 10px; }
+    .section-num { width: 22px; height: 22px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+
+    .checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .checkbox-row input { accent-color: #000; width: 14px; height: 14px; }
+    .checkbox-row label { font-size: 13px; color: #444; cursor: pointer; }
+
+    .pay-option { border: 0.5px solid var(--border); background: #fff; padding: 1rem; cursor: pointer; margin-bottom: 8px; }
+    .pay-option.selected { border-color: #000; }
+    .pay-option-header { display: flex; align-items: center; gap: 10px; }
+    .pay-option-header input { accent-color: #000; width: 15px; height: 15px; }
+    .pay-option-name { font-size: 13px; font-weight: 500; flex: 1; }
+    .pay-icons { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pay-pill-sm { background: #f0f0f0; font-size: 10px; color: #555; padding: 2px 7px; letter-spacing: 0.3px; }
+    .pay-option-body { margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .pay-note { background: var(--gray); padding: 0.75rem; font-size: 12px; color: #555; display: flex; align-items: center; gap: 8px; border: 0.5px solid var(--border); line-height: 1.5; }
+    .pay-note i { font-size: 16px; color: #000; flex-shrink: 0; }
+
+    .place-order-btn { width: 100%; background: #000; color: #fff; border: none; font-size: 14px; font-weight: 500; padding: 15px; cursor: pointer; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 1rem; }
+    .terms-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 8px; line-height: 1.6; }
+    .terms-note a { color: #000; text-decoration: underline; }
+    .back-link { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.25rem; }
+
+    /* RIGHT PANEL */
+    .checkout-right { padding: 1.5rem; background: #fff; border-left: 0.5px solid var(--border); }
+    .order-summary-title { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin-bottom: 1.25rem; }
+    .order-item { display: flex; gap: 10px; margin-bottom: 0.875rem; align-items: center; }
+    .order-item-img { background: var(--beige); width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; overflow: hidden; }
+    .order-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .order-item-img i { font-size: 20px; color: #b8a48a; }
+    .order-item-qty { position: absolute; top: -6px; right: -6px; background: #000; color: #fff; font-size: 9px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .order-item-name { font-size: 12px; font-weight: 600; font-family: var(--font-heading); margin-bottom: 2px; }
+    .order-item-meta { font-size: 11px; color: var(--muted); }
+    .order-item-price { font-size: 13px; font-weight: 700; font-family: var(--font-heading); white-space: nowrap; margin-left: auto; }
+    .summary-divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 0.625rem; color: #444; }
+    .summary-row.saving { color: var(--green); font-weight: 500; }
+    .summary-total { display: flex; justify-content: space-between; font-family: var(--font-heading); font-size: 15px; font-weight: 700; margin-top: 0.5rem; }
+    .trust-stack { display: flex; flex-direction: column; gap: 8px; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 0.5px solid var(--border); }
+    .trust-stack-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; }
+    .trust-stack-item i { font-size: 15px; color: #000; }
+
+    .field-error { font-size: 11px; color: #c0392b; margin-top: 3px; display: none; }
+    .form-input.error { border-color: #c0392b; }
+
+    @media (max-width: 900px) {
+      .checkout-body { grid-template-columns: 1fr; }
+      .checkout-right { border-left: none; border-top: 0.5px solid var(--border); }
+    }
+    @media (max-width: 600px) {
+      .checkout-left { padding: 1rem; }
+      .step-divider { width: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="announce-bar">SECURE CHECKOUT &nbsp;·&nbsp; SSL ENCRYPTED &nbsp;·&nbsp; COD AVAILABLE</div>
+
+<!-- CHECKOUT NAVBAR -->
+<div class="checkout-nav">
+  <a href="../index.html" class="nav-logo">nooksy</a>
+  <div class="nav-secure"><i class="ti ti-lock"></i> Secure Checkout</div>
+</div>
+
+<!-- STEPS -->
+<div class="checkout-steps">
+  <div class="step done">
+    <div class="step-num"><i class="ti ti-check" style="font-size:11px"></i></div>
+    <div class="step-label">Cart</div>
+  </div>
+  <div class="step-divider"></div>
+  <div class="step active">
+    <div class="step-num">2</div>
+    <div class="step-label">Checkout</div>
+  </div>
+  <div class="step-divider"></div>
+  <div class="step inactive">
+    <div class="step-num">3</div>
+    <div class="step-label">Confirmation</div>
+  </div>
+</div>
+
+<div class="checkout-body">
+  <div class="checkout-left">
+
+    <!-- CONTACT -->
+    <div class="section-block">
+      <div class="section-block-header">
+        <div class="section-block-title"><div class="section-num">1</div> Contact Information</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name *</label>
+          <input class="form-input" type="text" id="first-name" placeholder="Kabir" required>
+          <div class="field-error" id="err-first-name">Please enter your first name</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name *</label>
+          <input class="form-input" type="text" id="last-name" placeholder="Sharma" required>
+          <div class="field-error" id="err-last-name">Please enter your last name</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="form-input" type="email" id="email" placeholder="you@email.com" required>
+          <div class="field-error" id="err-email">Please enter a valid email</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone *</label>
+          <input class="form-input" type="tel" id="phone" placeholder="98765 43210" maxlength="10" required>
+          <div class="field-error" id="err-phone">Please enter a valid 10-digit number</div>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="whatsapp-updates" checked>
+        <label for="whatsapp-updates">Send me order updates on WhatsApp</label>
+      </div>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="section-block">
+      <div class="section-block-header">
+        <div class="section-block-title"><div class="section-num">2</div> Delivery Address</div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label class="form-label">Address Line 1 *</label>
+          <input class="form-input" type="text" id="addr1" placeholder="Flat / House No., Building Name" required>
+          <div class="field-error" id="err-addr1">Please enter your address</div>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label class="form-label">Address Line 2 (optional)</label>
+          <input class="form-input" type="text" id="addr2" placeholder="Street, Area, Landmark">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Pincode *</label>
+          <input class="form-input" type="text" id="pincode" placeholder="400001" maxlength="6" required oninput="fetchCityState(this.value)">
+          <div class="field-error" id="err-pincode">Please enter a valid 6-digit pincode</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">City *</label>
+          <input class="form-input" type="text" id="city" placeholder="Mumbai" required>
+          <div class="field-error" id="err-city">Please enter your city</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">State *</label>
+          <select class="form-select" id="state" required>
+            <option value="">Select state</option>
+            <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+            <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+            <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+            <option>Himachal Pradesh</option><option>Jharkhand</option>
+            <option>Karnataka</option><option>Kerala</option>
+            <option>Madhya Pradesh</option><option>Maharashtra</option>
+            <option>Manipur</option><option>Meghalaya</option><option>Mizoram</option>
+            <option>Nagaland</option><option>Odisha</option><option>Punjab</option>
+            <option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option>
+            <option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option>
+            <option>Uttarakhand</option><option>West Bengal</option>
+            <option>Delhi</option><option>Jammu & Kashmir</option>
+            <option>Ladakh</option><option>Chandigarh</option>
+            <option>Puducherry</option>
+          </select>
+          <div class="field-error" id="err-state">Please select your state</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Address Type</label>
+          <select class="form-select" id="addr-type">
+            <option>Home</option>
+            <option>Work</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="billing-same" checked>
+        <label for="billing-same">Billing address same as delivery address</label>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="section-block">
+      <div class="section-block-header">
+        <div class="section-block-title"><div class="section-num">3</div> Payment Method</div>
+      </div>
+
+      <div class="pay-option selected" id="pay-online" onclick="selectPayment('online')">
+        <div class="pay-option-header">
+          <input type="radio" name="payment" id="radio-online" checked>
+          <div class="pay-option-name">Online Payment</div>
+          <div class="pay-icons">
+            <span class="pay-pill-sm">UPI</span>
+            <span class="pay-pill-sm">Cards</span>
+            <span class="pay-pill-sm">Net Banking</span>
+          </div>
+        </div>
+        <div class="pay-option-body" id="online-body">
+          <div class="pay-note">
+            <i class="ti ti-shield-check"></i>
+            You'll be redirected to PayU's secure payment gateway. Supports UPI, credit/debit cards, wallets, and net banking.
+          </div>
+        </div>
+      </div>
+
+      <div class="pay-option" id="pay-cod" onclick="selectPayment('cod')">
+        <div class="pay-option-header">
+          <input type="radio" name="payment" id="radio-cod">
+          <div class="pay-option-name">Cash on Delivery (COD)</div>
+          <div class="pay-icons">
+            <span class="pay-pill-sm">+₹49 fee</span>
+          </div>
+        </div>
+        <div class="pay-option-body" id="cod-body" style="display:none">
+          <div class="pay-note">
+            <i class="ti ti-currency-rupee"></i>
+            Pay in cash when your order is delivered. A ₹49 handling fee applies for COD orders.
+          </div>
+        </div>
+      </div>
+
+      <button class="place-order-btn" id="place-order-btn" onclick="placeOrder()">
+        <i class="ti ti-lock"></i> <span id="place-order-txt">Place Order — ₹0</span>
+      </button>
+      <p class="terms-note">
+        By placing your order you agree to Nooksy's
+        <a href="policies.html#terms">Terms &amp; Conditions</a> and
+        <a href="policies.html#privacy">Privacy Policy</a>
+      </p>
+    </div>
+
+    <button class="back-link" onclick="window.location.href='cart.html'">
+      <i class="ti ti-arrow-left"></i> Return to Cart
+    </button>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="checkout-right">
+    <div class="order-summary-title">Order Summary</div>
+    <div id="checkout-items"></div>
+    <div class="summary-divider"></div>
+    <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">₹0</span></div>
+    <div class="summary-row saving" id="co-discount-row" style="display:none"><span>Discount</span><span id="co-discount">₹0</span></div>
+    <div class="summary-row" id="co-shipping-row"><span>Shipping</span><span id="co-shipping" style="color:var(--green)">Free</span></div>
+    <div class="summary-divider"></div>
+    <div class="summary-total"><span>Total</span><span id="co-total">₹0</span></div>
+    <div class="trust-stack">
+      <div class="trust-stack-item"><i class="ti ti-shield-check"></i> 256-bit SSL secured</div>
+      <div class="trust-stack-item"><i class="ti ti-truck"></i> Dispatched in 1–2 business days</div>
+      <div class="trust-stack-item"><i class="ti ti-refresh"></i> 7-day hassle-free returns</div>
+      <div class="trust-stack-item"><i class="ti ti-brand-whatsapp"></i> Support: +91 73561 13346</div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script src="../js/products.js"></script>
+<script>
+  // ── PayU Config ──────────────────────────────────────────
+  // Replace with your real PayU credentials once verified
+  const PAYU_CONFIG = {
+    merchantKey: 'YOUR_PAYU_MERCHANT_KEY',   // e.g. 'gtKFFx'
+    salt: 'YOUR_PAYU_SALT',                   // e.g. 'eCwWELxi'
+    env: 'test',                              // change to 'prod' when live
+    testUrl: 'https://test.payu.in/_payment',
+    prodUrl: 'https://secure.payu.in/_payment'
+  };
+  // ────────────────────────────────────────────────────────
+
+  const FREE_SHIPPING = 499;
+  let paymentMethod = 'online';
+
+  function selectPayment(method) {
+    paymentMethod = method;
+    document.getElementById('pay-online').classList.toggle('selected', method === 'online');
+    document.getElementById('pay-cod').classList.toggle('selected', method === 'cod');
+    document.getElementById('radio-online').checked = method === 'online';
+    document.getElementById('radio-cod').checked = method === 'cod';
+    document.getElementById('online-body').style.display = method === 'online' ? 'block' : 'none';
+    document.getElementById('cod-body').style.display = method === 'cod' ? 'block' : 'none';
+    renderSummary();
+  }
+
+  function getSubtotal() {
+    return cart.reduce((s, i) => s + i.price * i.qty, 0);
+  }
+
+  function getShipping(subtotal) {
+    if (paymentMethod === 'cod') return 49;
+    return subtotal >= FREE_SHIPPING ? 0 : 49;
+  }
+
+  function renderSummary() {
+    const subtotal = getSubtotal();
+    const saleDiscount = cart.reduce((s, i) => {
+      const p = products.find(x => x.id === i.id);
+      return s + (p && p.originalPrice ? (p.originalPrice - p.price) * i.qty : 0);
+    }, 0);
+    const shipping = getShipping(subtotal);
+    const total = subtotal + shipping;
+
+    document.getElementById('co-subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
+    if (saleDiscount > 0) {
+      document.getElementById('co-discount-row').style.display = 'flex';
+      document.getElementById('co-discount').textContent = '−₹' + saleDiscount.toLocaleString('en-IN');
+    }
+    const shipEl = document.getElementById('co-shipping');
+    shipEl.textContent = shipping === 0 ? 'Free' : '₹' + shipping;
+    shipEl.style.color = shipping === 0 ? 'var(--green)' : '#000';
+    document.getElementById('co-total').textContent = '₹' + total.toLocaleString('en-IN');
+    document.getElementById('place-order-txt').textContent = 'Place Order — ₹' + total.toLocaleString('en-IN');
+  }
+
+  function renderCheckoutItems() {
+    const container = document.getElementById('checkout-items');
+    if (cart.length === 0) {
+      container.innerHTML = '<p style="font-size:13px;color:var(--muted)">Your cart is empty. <a href="shop.html">Shop now</a></p>';
+      return;
+    }
+    container.innerHTML = cart.map(item => `
+      <div class="order-item">
+        <div class="order-item-img">
+          ${item.image ? `<img src="../${item.image}" alt="${item.name}">` : `<i class="ti ti-photo"></i>`}
+          <span class="order-item-qty">${item.qty}</span>
+        </div>
+        <div style="flex:1">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-meta">${[item.color, item.size].filter(Boolean).join(' · ')}</div>
+        </div>
+        <div class="order-item-price">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+      </div>`).join('');
+  }
+
+  // Form validation
+  function validateForm() {
+    const fields = [
+      { id: 'first-name', err: 'err-first-name', check: v => v.trim().length > 0 },
+      { id: 'last-name',  err: 'err-last-name',  check: v => v.trim().length > 0 },
+      { id: 'email',      err: 'err-email',      check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { id: 'phone',      err: 'err-phone',      check: v => /^[6-9]\d{9}$/.test(v.replace(/\s/g,'')) },
+      { id: 'addr1',      err: 'err-addr1',      check: v => v.trim().length > 5 },
+      { id: 'pincode',    err: 'err-pincode',    check: v => /^\d{6}$/.test(v) },
+      { id: 'city',       err: 'err-city',       check: v => v.trim().length > 0 },
+      { id: 'state',      err: 'err-state',      check: v => v !== '' },
+    ];
+    let valid = true;
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      const errEl = document.getElementById(f.err);
+      const ok = f.check(el.value);
+      el.classList.toggle('error', !ok);
+      errEl.style.display = ok ? 'none' : 'block';
+      if (!ok) valid = false;
+    });
+    return valid;
+  }
+
+  // Pincode auto-fill (India Post API)
+  async function fetchCityState(pin) {
+    if (pin.length !== 6) return;
+    try {
+      const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+      const data = await res.json();
+      if (data[0].Status === 'Success') {
+        const post = data[0].PostOffice[0];
+        document.getElementById('city').value = post.District;
+        const stateEl = document.getElementById('state');
+        for (let opt of stateEl.options) {
+          if (opt.value === post.State) { stateEl.value = post.State; break; }
+        }
+      }
+    } catch(e) { /* silently fail */ }
+  }
+
+  // Build order data and submit to PayU or handle COD
+  function placeOrder() {
+    if (cart.length === 0) { alert('Your cart is empty.'); return; }
+    if (!validateForm()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+
+    const subtotal = getSubtotal();
+    const shipping = getShipping(subtotal);
+    const total = subtotal + shipping;
+    const txnId = 'NKY' + Date.now();
+    const firstName = document.getElementById('first-name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    // Save order info to sessionStorage for confirmation page
+    const orderData = {
+      txnId,
+      items: cart,
+      total,
+      shipping,
+      subtotal,
+      paymentMethod,
+      customer: {
+        name: firstName + ' ' + document.getElementById('last-name').value.trim(),
+        email,
+        phone,
+        address: [
+          document.getElementById('addr1').value,
+          document.getElementById('addr2').value,
+          document.getElementById('city').value,
+          document.getElementById('state').value,
+          document.getElementById('pincode').value
+        ].filter(Boolean).join(', ')
+      }
+    };
+    sessionStorage.setItem('nooksy_order', JSON.stringify(orderData));
+
+    if (paymentMethod === 'cod') {
+      // COD — go straight to confirmation
+      cart = [];
+      localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+      window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
+      return;
+    }
+
+    // PayU online payment — build form and submit
+    if (PAYU_CONFIG.merchantKey === 'YOUR_PAYU_MERCHANT_KEY') {
+      alert('PayU credentials not configured yet. Add your Merchant Key and Salt in checkout.html once PayU approves your account.');
+      return;
+    }
+
+    const payuUrl = PAYU_CONFIG.env === 'prod' ? PAYU_CONFIG.prodUrl : PAYU_CONFIG.testUrl;
+    const productInfo = cart.map(i => i.name).join(', ').substring(0, 100);
+
+    // NOTE: Hash must be generated server-side in production.
+    // For now this is a placeholder. Your developer or Vercel serverless function
+    // should compute: sha512(key|txnid|amount|productinfo|firstname|email|||||||||||salt)
+    const hashPlaceholder = 'SERVER_SIDE_HASH_REQUIRED';
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = payuUrl;
+    const fields = {
+      key: PAYU_CONFIG.merchantKey,
+      txnid: txnId,
+      amount: total.toFixed(2),
+      productinfo: productInfo,
+      firstname: firstName,
+      email: email,
+      phone: phone,
+      surl: 'https://nooksy.in/pages/order-confirmation.html?method=online',
+      furl: 'https://nooksy.in/pages/order-confirmation.html?status=failed',
+      hash: hashPlaceholder,
+      udf1: document.getElementById('addr1').value,
+      udf2: document.getElementById('city').value,
+    };
+    Object.entries(fields).forEach(([k, v]) => {
+      const inp = document.createElement('input');
+      inp.type = 'hidden'; inp.name = k; inp.value = v;
+      form.appendChild(inp);
+    });
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCheckoutItems();
+    renderSummary();
+  });
+</script>
+</body>
+</html>

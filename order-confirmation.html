@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    /* HERO */
+    .confirm-hero { padding: 2.5rem 2rem; text-align: center; border-bottom: 1px solid #c8e6d4; }
+    .confirm-hero.success { background: #edf7f1; }
+    .confirm-hero.failed { background: #fdf0f0; border-bottom-color: #f5c6c6; }
+    .confirm-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .confirm-icon.success { background: var(--green); }
+    .confirm-icon.failed { background: #c0392b; }
+    .confirm-icon i { font-size: 28px; color: #fff; }
+    .confirm-hero h1 { font-family: var(--font-heading); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .confirm-hero.success h1 { color: #1a4a2e; }
+    .confirm-hero.failed h1 { color: #7a1a1a; }
+    .confirm-hero p { font-size: 13px; max-width: 420px; margin: 0 auto; }
+    .confirm-hero.success p { color: #3a6b4e; }
+    .confirm-hero.failed p { color: #8a3a3a; }
+    .order-id-badge { display: inline-block; margin-top: 1rem; background: #fff; border: 1px solid #c8e6d4; padding: 6px 18px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; color: #1a4a2e; }
+    .order-id-badge.failed { border-color: #f5c6c6; color: #7a1a1a; }
+
+    /* STEPS */
+    .confirm-steps { background: #fff; border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: center; gap: 0; }
+    .step { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+    .step.done .step-num { background: #000; color: #fff; }
+    .step.inactive .step-num { background: #eee; color: var(--muted); }
+    .step.done .step-label { color: #000; font-weight: 600; }
+    .step.inactive .step-label { color: var(--muted); }
+    .step-divider { width: 48px; height: 1px; background: var(--border); margin: 0 10px; }
+
+    /* BODY */
+    .confirm-body { display: grid; grid-template-columns: 1fr 320px; gap: 0; background: var(--gray); }
+    .confirm-left { padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .card { background: #fff; border: 0.5px solid var(--border); padding: 1.5rem; }
+    .card-title { font-family: var(--font-heading); font-size: 13px; font-weight: 700; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+    .card-title i { font-size: 16px; color: var(--muted); }
+
+    /* TIMELINE */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-step { display: flex; gap: 1rem; position: relative; }
+    .timeline-step:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 32px; width: 1px; height: calc(100% - 8px); background: var(--border); }
+    .step-dot { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1; }
+    .step-dot.done { background: var(--green); color: #fff; }
+    .step-dot.active { background: #000; color: #fff; }
+    .step-dot.pending { background: #eee; color: var(--muted); }
+    .step-dot i { font-size: 14px; }
+    .step-info { padding-bottom: 1.5rem; }
+    .step-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .step-time { font-size: 11px; color: var(--green); font-weight: 500; margin-top: 3px; }
+
+    /* ORDER ITEMS */
+    .items-list { display: flex; flex-direction: column; gap: 0.875rem; }
+    .order-item { display: flex; gap: 10px; align-items: center; }
+    .item-img { background: var(--beige); width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; overflow: hidden; }
+    .item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .item-img i { font-size: 22px; color: #b8a48a; }
+    .item-qty-badge { position: absolute; top: -5px; right: -5px; background: #000; color: #fff; font-size: 9px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .item-name { font-size: 12px; font-weight: 600; font-family: var(--font-heading); margin-bottom: 2px; }
+    .item-meta { font-size: 11px; color: var(--muted); }
+    .item-price { font-size: 13px; font-weight: 700; font-family: var(--font-heading); margin-left: auto; white-space: nowrap; }
+
+    /* ADDRESS / PAYMENT */
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .detail-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .detail-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .detail-text { font-size: 13px; color: #444; line-height: 1.7; }
+    .pay-detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 12px; }
+    .pay-detail-row:last-child { border-bottom: none; }
+    .pay-detail-label { color: var(--muted); }
+    .pay-status-success { color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .pay-status-cod { color: #e67e22; font-weight: 600; }
+
+    /* ACTION BTNS */
+    .action-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-whatsapp { background: #25D366; color: #fff; border: none; font-family: var(--font-body); font-size: 13px; font-weight: 500; padding: 11px 20px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+    /* RIGHT PANEL */
+    .confirm-right { padding: 1.5rem; background: #fff; border-left: 0.5px solid var(--border); }
+    .summary-title { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin-bottom: 1.25rem; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 0.625rem; color: #444; }
+    .summary-row.saving { color: var(--green); font-weight: 500; }
+    .summary-divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
+    .summary-total { display: flex; justify-content: space-between; font-family: var(--font-heading); font-size: 15px; font-weight: 700; margin-bottom: 1.25rem; }
+    .invoice-btn { width: 100%; background: #fff; color: #000; border: 0.5px solid var(--border); font-family: var(--font-body); font-size: 13px; font-weight: 500; padding: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 0.75rem; }
+    .wa-track-btn { width: 100%; background: #25D366; color: #fff; border: none; font-family: var(--font-body); font-size: 13px; font-weight: 500; padding: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .referral-strip { background: var(--beige); padding: 1.25rem; margin-top: 1.25rem; text-align: center; }
+    .referral-strip h4 { font-family: var(--font-heading); font-size: 13px; font-weight: 700; color: #5a4a35; margin-bottom: 4px; }
+    .referral-strip p { font-size: 12px; color: #7a6448; margin-bottom: 10px; }
+    .referral-code { background: #fff; border: 1px dashed #b8a48a; padding: 6px 14px; display: inline-block; font-size: 13px; font-weight: 700; color: #5a4a35; letter-spacing: 1px; cursor: pointer; }
+
+    /* RECO */
+    .reco-section { padding: 2.5rem 2rem; background: var(--gray); }
+    .reco-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+
+    /* FAILED STATE */
+    .failed-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem; }
+
+    @media (max-width: 900px) {
+      .confirm-body { grid-template-columns: 1fr; }
+      .confirm-right { border-left: none; border-top: 0.5px solid var(--border); }
+      .detail-grid { grid-template-columns: 1fr; }
+      .reco-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">nooksy</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="cart.html" class="nav-icon" aria-label="Cart">
+      <i class="ti ti-shopping-bag"></i>
+      <span class="cart-badge">0</span>
+    </a>
+    <button class="nav-icon" aria-label="Account"><i class="ti ti-user"></i></button>
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- STEPS -->
+<div class="confirm-steps">
+  <div class="step done"><div class="step-num"><i class="ti ti-check" style="font-size:11px"></i></div><div class="step-label">Cart</div></div>
+  <div class="step-divider"></div>
+  <div class="step done"><div class="step-num"><i class="ti ti-check" style="font-size:11px"></i></div><div class="step-label">Checkout</div></div>
+  <div class="step-divider"></div>
+  <div class="step done"><div class="step-num"><i class="ti ti-check" style="font-size:11px"></i></div><div class="step-label">Confirmation</div></div>
+</div>
+
+<!-- HERO — injected by JS -->
+<div id="confirm-hero"></div>
+
+<!-- BODY -->
+<div class="confirm-body">
+  <div class="confirm-left" id="confirm-left"></div>
+  <div class="confirm-right" id="confirm-right"></div>
+</div>
+
+<!-- RECOMMENDATIONS -->
+<div class="reco-section" id="reco-section" style="display:none">
+  <p class="section-label">You might love</p>
+  <h2 class="section-title" style="margin-bottom:0">Complete your Nooksy collection</h2>
+  <div class="reco-grid" id="reco-grid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">nooksy</div>
+      <div class="footer-brand-tagline">Your Everyday, Reimagined</div>
+      <p class="footer-brand-desc">Thoughtfully designed everyday products that bring joy to your space.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="shop.html?cat=tote-bags">Tote Bags</a></li>
+        <li><a href="shop.html?cat=photo-frames">Photo Frames</a></li>
+        <li><a href="shop.html?cat=tumblers">Tumblers</a></li>
+        <li><a href="shop.html">All Products</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="contact.html">Track Order</a></li>
+        <li><a href="policies.html#returns">Returns</a></li>
+        <li><a href="policies.html#shipping">Shipping Info</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Nooksy</a></li>
+        <li><a href="policies.html#privacy">Privacy Policy</a></li>
+        <li><a href="policies.html#terms">Terms &amp; Conditions</a></li>
+        <li><a href="policies.html#returns">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com/nooksy.in" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      <a href="https://wa.me/917356113346" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+      <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
+    </div>
+    <div class="footer-payments">
+      <span class="pay-pill">UPI</span>
+      <span class="pay-pill">PayU</span>
+      <span class="pay-pill">COD</span>
+      <span class="pay-pill">Net Banking</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="../js/products.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get('status');
+  const method = params.get('method') || 'online';
+  const txnId = params.get('txn') || ('NKY' + Date.now());
+  const order = JSON.parse(sessionStorage.getItem('nooksy_order') || 'null');
+  const orderItems = order ? order.items : (JSON.parse(localStorage.getItem('nooksy_cart') || '[]'));
+  const customer = order ? order.customer : { name: 'Customer', email: '', phone: '', address: '' };
+  const total = order ? order.total : 0;
+  const subtotal = order ? order.subtotal : 0;
+  const shipping = order ? order.shipping : 0;
+
+  // Get today + estimated delivery dates
+  const today = new Date();
+  const fmt = d => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const packDate = fmt(addDays(today, 1));
+  const shipDate = fmt(addDays(today, 2));
+  const delFrom = fmt(addDays(today, 5));
+  const delTo = fmt(addDays(today, 7));
+
+  function renderSuccess() {
+    // Hero
+    document.getElementById('confirm-hero').innerHTML = `
+      <div class="confirm-hero success">
+        <div class="confirm-icon success"><i class="ti ti-check"></i></div>
+        <h1>Order Placed Successfully!</h1>
+        <p>Thank you ${customer.name.split(' ')[0]}, your order is confirmed. You'll receive a WhatsApp update shortly on ${customer.phone || '+91 XXXXX XXXXX'}.</p>
+        <div class="order-id-badge">Order #${txnId}</div>
+      </div>`;
+
+    // Left panel
+    document.getElementById('confirm-left').innerHTML = `
+      <div class="card">
+        <div class="card-title"><i class="ti ti-map-pin"></i> Order Tracking</div>
+        <div class="timeline">
+          <div class="timeline-step">
+            <div class="step-dot done"><i class="ti ti-check"></i></div>
+            <div class="step-info">
+              <div class="step-name">Order Confirmed</div>
+              <div class="step-desc">Your order has been received and is being processed</div>
+              <div class="step-time">Today, ${fmt(today)}</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-dot active"><i class="ti ti-package"></i></div>
+            <div class="step-info">
+              <div class="step-name">Being Packed</div>
+              <div class="step-desc">Your items are being carefully packed for dispatch</div>
+              <div class="step-time">Expected: ${packDate}</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-dot pending"><i class="ti ti-truck"></i></div>
+            <div class="step-info">
+              <div class="step-name">Shipped</div>
+              <div class="step-desc">Order handed over to delivery partner with tracking link</div>
+              <div class="step-time">Expected: ${shipDate}</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-dot pending"><i class="ti ti-home"></i></div>
+            <div class="step-info">
+              <div class="step-name">Delivered</div>
+              <div class="step-desc">Delivered to your doorstep</div>
+              <div class="step-time">Expected: ${delFrom} – ${delTo}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-shopping-bag"></i> Items Ordered</div>
+        <div class="items-list">
+          ${orderItems.map(item => `
+            <div class="order-item">
+              <div class="item-img">
+                ${item.image ? `<img src="../${item.image}" alt="${item.name}">` : `<i class="ti ti-photo"></i>`}
+                <span class="item-qty-badge">${item.qty}</span>
+              </div>
+              <div style="flex:1">
+                <div class="item-name">${item.name}</div>
+                <div class="item-meta">${[item.color, item.size].filter(Boolean).join(' · ')}</div>
+              </div>
+              <div class="item-price">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-map-pin"></i> Delivery &amp; Payment Details</div>
+        <div class="detail-grid">
+          <div>
+            <div class="detail-label">Delivering to</div>
+            <div class="detail-name">${customer.name}</div>
+            <div class="detail-text">${customer.address || '—'}<br>${customer.phone}</div>
+          </div>
+          <div>
+            <div class="detail-label">Payment</div>
+            <div class="pay-detail-row">
+              <span class="pay-detail-label">Method</span>
+              <span>${method === 'cod' ? 'Cash on Delivery' : 'Online (PayU)'}</span>
+            </div>
+            <div class="pay-detail-row">
+              <span class="pay-detail-label">Status</span>
+              ${method === 'cod'
+                ? `<span class="pay-status-cod">Pay on delivery</span>`
+                : `<span class="pay-status-success"><i class="ti ti-check"></i> Paid</span>`}
+            </div>
+            <div class="pay-detail-row">
+              <span class="pay-detail-label">Transaction ID</span>
+              <span style="font-size:11px">${txnId}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-headset"></i> Need Help?</div>
+        <div class="action-btns">
+          <a href="https://wa.me/917356113346?text=Hi! I need help with my order ${txnId}" target="_blank" class="btn-whatsapp"><i class="ti ti-brand-whatsapp"></i> Chat on WhatsApp</a>
+          <a href="contact.html" class="btn-outline"><i class="ti ti-mail"></i> Email Support</a>
+          <a href="contact.html" class="btn-outline"><i class="ti ti-refresh"></i> Request Return</a>
+        </div>
+      </div>`;
+
+    // Right panel
+    const saleDiscount = orderItems.reduce((s, i) => {
+      const p = products.find(x => x.id === i.id);
+      return s + (p && p.originalPrice ? (p.originalPrice - p.price) * i.qty : 0);
+    }, 0);
+
+    document.getElementById('confirm-right').innerHTML = `
+      <div class="summary-title">Order Summary</div>
+      <div class="summary-row"><span>Subtotal</span><span>₹${subtotal.toLocaleString('en-IN')}</span></div>
+      ${saleDiscount > 0 ? `<div class="summary-row saving"><span>Sale Discount</span><span>−₹${saleDiscount.toLocaleString('en-IN')}</span></div>` : ''}
+      <div class="summary-row" style="color:${shipping === 0 ? 'var(--green)' : '#000'}"><span>Shipping</span><span>${shipping === 0 ? 'Free' : '₹' + shipping}</span></div>
+      <div class="summary-divider"></div>
+      <div class="summary-total"><span>Total ${method === 'cod' ? '(Pay on delivery)' : 'Paid'}</span><span>₹${total.toLocaleString('en-IN')}</span></div>
+      <button class="invoice-btn" onclick="window.print()"><i class="ti ti-download"></i> Download / Print Invoice</button>
+      <a href="https://wa.me/917356113346?text=Hi! Please share tracking for order ${txnId}" target="_blank" class="wa-track-btn"><i class="ti ti-brand-whatsapp"></i> Track on WhatsApp</a>
+      <div class="referral-strip">
+        <h4>Share &amp; Earn</h4>
+        <p>Give friends ₹100 off. Get ₹100 when they order.</p>
+        <div class="referral-code" onclick="navigator.clipboard.writeText('NOOKSY100');showToast('Code copied!')" title="Click to copy">NOOKSY100</div>
+      </div>`;
+
+    // Recommendations
+    const orderedIds = orderItems.map(i => i.id);
+    const recos = products.filter(p => !orderedIds.includes(p.id)).slice(0, 4);
+    if (recos.length > 0) {
+      document.getElementById('reco-section').style.display = 'block';
+      document.getElementById('reco-grid').innerHTML = recos.map(p => renderProductCard(p, '../')).join('');
+    }
+
+    // Clear session order
+    sessionStorage.removeItem('nooksy_order');
+  }
+
+  function renderFailed() {
+    document.getElementById('confirm-hero').innerHTML = `
+      <div class="confirm-hero failed">
+        <div class="confirm-icon failed"><i class="ti ti-x"></i></div>
+        <h1>Payment Failed</h1>
+        <p>Your payment could not be processed. Your cart has been saved — please try again.</p>
+        <div class="order-id-badge failed">Ref: ${txnId}</div>
+      </div>`;
+
+    document.getElementById('confirm-left').innerHTML = `
+      <div class="card">
+        <div class="card-title"><i class="ti ti-alert-circle"></i> What happened?</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:1rem">
+          Your payment was not completed. This could be due to a bank decline, incorrect OTP, or a connection issue.
+          Your cart is still saved — no money has been deducted.
+        </p>
+        <div class="failed-actions">
+          <a href="checkout.html" class="btn-primary"><i class="ti ti-refresh"></i> Try Again</a>
+          <a href="cart.html" class="btn-outline"><i class="ti ti-shopping-bag"></i> Back to Cart</a>
+          <a href="https://wa.me/917356113346?text=Hi! My payment failed for order ${txnId}. Please help." target="_blank" class="btn-whatsapp"><i class="ti ti-brand-whatsapp"></i> Get Help</a>
+        </div>
+      </div>`;
+
+    document.getElementById('confirm-right').innerHTML = `
+      <div class="summary-title">Need Help?</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:1rem">
+        If money was deducted from your account but payment shows as failed, it will be automatically refunded within 5–7 business days.
+      </div>
+      <a href="https://wa.me/917356113346" target="_blank" class="wa-track-btn"><i class="ti ti-brand-whatsapp"></i> Contact Support</a>`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (status === 'failed') {
+      renderFailed();
+    } else {
+      // Clear cart on success
+      cart = [];
+      localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+      updateCartBadge();
+      renderSuccess();
+    }
+  });
+</script>
+</body>
+</html>

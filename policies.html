@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nooksy Policies — Shipping, Returns, Privacy Policy and Terms & Conditions." />
+  <title>Policies — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .page-hero { padding: 3rem 2rem; text-align: center; border-bottom: 0.5px solid var(--border); background: #fff; }
+    .page-hero h1 { font-family: var(--font-heading); font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.75rem; }
+    .page-hero p { font-size: 14px; color: var(--muted); max-width: 420px; margin: 0 auto; line-height: 1.7; }
+
+    /* POLICY TABS */
+    .policy-tabs { background: #fff; border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+    .policy-tab { font-size: 13px; font-weight: 500; padding: 1rem 1.5rem; cursor: pointer; border-bottom: 2px solid transparent; color: var(--muted); white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none; font-family: var(--font-body); transition: color 0.2s; }
+    .policy-tab:hover { color: #000; }
+    .policy-tab.active { color: #000; border-bottom-color: #000; font-weight: 600; }
+
+    /* BODY */
+    .policy-body { display: grid; grid-template-columns: 200px 1fr; min-height: 500px; }
+    .policy-sidebar { background: var(--gray); border-right: 0.5px solid var(--border); padding: 1.5rem; position: sticky; top: 64px; align-self: start; }
+    .policy-sidebar-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .sidebar-link { display: block; font-size: 13px; padding: 6px 8px; color: var(--muted); cursor: pointer; border-left: 2px solid transparent; margin-bottom: 3px; background: none; border-top: none; border-right: none; border-bottom: none; font-family: var(--font-body); text-align: left; width: 100%; transition: color 0.2s; }
+    .sidebar-link:hover { color: #000; }
+    .sidebar-link.active { color: #000; font-weight: 600; border-left-color: #000; }
+
+    /* CONTENT */
+    .policy-content { padding: 2.5rem 3rem; }
+    .policy-section { display: none; }
+    .policy-section.active { display: block; }
+    .policy-updated { font-size: 11px; color: var(--muted); margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--border); }
+    .policy-content h2 { font-family: var(--font-heading); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+    .policy-content h3 { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin: 1.75rem 0 0.75rem; letter-spacing: -0.3px; }
+    .policy-content h3:first-of-type { margin-top: 0; }
+    .policy-content p { font-size: 13px; color: #444; line-height: 1.85; margin-bottom: 0.875rem; }
+    .policy-content ul { margin: 0 0 0.875rem 1.5rem; }
+    .policy-content ul li { font-size: 13px; color: #444; line-height: 1.85; margin-bottom: 5px; }
+    .policy-content a { color: #000; text-decoration: underline; }
+    .policy-highlight { background: var(--beige); border-left: 3px solid #b8a48a; padding: 1rem 1.25rem; margin: 1.25rem 0; }
+    .policy-highlight p { margin: 0; font-size: 13px; color: #5a4a35; font-weight: 500; }
+
+    /* CONTACT CTA */
+    .policy-cta { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .policy-cta p { font-size: 13px; color: var(--muted); flex: 1; }
+
+    @media (max-width: 768px) {
+      .policy-body { grid-template-columns: 1fr; }
+      .policy-sidebar { position: static; border-right: none; border-bottom: 0.5px solid var(--border); }
+      .policy-content { padding: 1.5rem; }
+      .policy-tabs { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="announce-bar">Free shipping above ₹499 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns</div>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">nooksy</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" aria-label="Search"><i class="ti ti-search"></i></button>
+    <a href="cart.html" class="nav-icon" aria-label="Cart">
+      <i class="ti ti-shopping-bag"></i>
+      <span class="cart-badge">0</span>
+    </a>
+    <button class="nav-icon" aria-label="Account"><i class="ti ti-user"></i></button>
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <span>Policies</span></div>
+
+<div class="page-hero">
+  <p class="section-label">Legal &amp; policies</p>
+  <h1>Clear, honest policies</h1>
+  <p>We keep things simple and fair. Everything you need to know about shopping with Nooksy.</p>
+</div>
+
+<!-- TABS -->
+<div class="policy-tabs">
+  <button class="policy-tab active" onclick="switchPolicy('shipping')">Shipping Policy</button>
+  <button class="policy-tab" onclick="switchPolicy('returns')">Returns &amp; Refunds</button>
+  <button class="policy-tab" onclick="switchPolicy('privacy')">Privacy Policy</button>
+  <button class="policy-tab" onclick="switchPolicy('terms')">Terms &amp; Conditions</button>
+</div>
+
+<div class="policy-body">
+  <!-- SIDEBAR -->
+  <div class="policy-sidebar">
+    <div class="policy-sidebar-title">Jump to</div>
+    <button class="sidebar-link active" onclick="switchPolicy('shipping')">Shipping Policy</button>
+    <button class="sidebar-link" onclick="switchPolicy('returns')">Returns &amp; Refunds</button>
+    <button class="sidebar-link" onclick="switchPolicy('privacy')">Privacy Policy</button>
+    <button class="sidebar-link" onclick="switchPolicy('terms')">Terms &amp; Conditions</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="policy-content">
+
+    <!-- SHIPPING -->
+    <div class="policy-section active" id="section-shipping">
+      <h2>Shipping Policy</h2>
+      <div class="policy-updated">Last updated: 23 May 2025</div>
+
+      <div class="policy-highlight">
+        <p>🚚 Free standard shipping on all orders above ₹499. COD available pan-India.</p>
+      </div>
+
+      <h3>Dispatch Timeline</h3>
+      <p>All orders are dispatched within 1–2 business days of payment confirmation. Orders placed before 12:00 PM IST on business days are typically dispatched the same day.</p>
+
+      <h3>Delivery Timeline</h3>
+      <ul>
+        <li>Metro cities (Mumbai, Delhi, Bangalore, Chennai, Hyderabad, Kolkata): 2–4 business days</li>
+        <li>Tier 2 &amp; Tier 3 cities: 4–6 business days</li>
+        <li>Remote / rural areas: 5–8 business days</li>
+      </ul>
+
+      <h3>Shipping Charges</h3>
+      <ul>
+        <li>Standard delivery — Free on orders above ₹499</li>
+        <li>Standard delivery — ₹49 on orders below ₹499</li>
+        <li>Express delivery (1–2 days) — ₹99</li>
+        <li>Cash on Delivery — ₹49 handling fee (regardless of order value)</li>
+      </ul>
+
+      <h3>Tracking</h3>
+      <p>Once your order is dispatched, you will receive a WhatsApp message with your tracking link and courier partner details. You can also track your order by contacting us directly on WhatsApp with your order ID.</p>
+
+      <h3>Courier Partners</h3>
+      <p>We ship through trusted courier partners including Delhivery, Shiprocket, and DTDC depending on your location. The courier partner may vary based on serviceability in your area.</p>
+
+      <h3>Undelivered / Returned Shipments</h3>
+      <p>If a shipment is returned to us due to an incorrect address, failed delivery attempts, or refusal at delivery, we will contact you via WhatsApp. Re-shipping charges of ₹49 will apply. For COD orders refused at delivery, a ₹99 return fee will be deducted from any future refund.</p>
+
+      <div class="policy-cta">
+        <p>Have a shipping question? We're here to help.</p>
+        <a href="https://wa.me/917356113346" target="_blank" class="btn-primary" style="font-size:12px;padding:10px 18px"><i class="ti ti-brand-whatsapp"></i> WhatsApp Us</a>
+      </div>
+    </div>
+
+    <!-- RETURNS -->
+    <div class="policy-section" id="section-returns">
+      <h2>Returns &amp; Refund Policy</h2>
+      <div class="policy-updated">Last updated: 23 May 2025</div>
+
+      <div class="policy-highlight">
+        <p>✅ 7-day hassle-free returns. If you're not happy, we'll make it right.</p>
+      </div>
+
+      <h3>Return Eligibility</h3>
+      <p>You can return a product within 7 days of delivery if:</p>
+      <ul>
+        <li>The item is unused and in its original packaging</li>
+        <li>The item is not damaged due to misuse</li>
+        <li>All tags, accessories, and packaging materials are intact</li>
+      </ul>
+
+      <h3>How to Initiate a Return</h3>
+      <ul>
+        <li>WhatsApp us at +91 73561 13346 with your order ID and reason for return</li>
+        <li>Or email us at hello@nooksy.in with photos of the item</li>
+        <li>We'll confirm your return request within 24 hours</li>
+        <li>Reverse pickup will be arranged within 48 hours of confirmation</li>
+      </ul>
+
+      <h3>Damaged or Defective Items</h3>
+      <p>If you receive a damaged or defective item, please share a photo/video within 48 hours of delivery. We will offer a full replacement or complete refund — at no extra cost to you, including reverse shipping.</p>
+
+      <h3>Refund Timeline</h3>
+      <ul>
+        <li>Online payments (UPI / Cards / Net Banking): Refunded to original payment method within 5–7 business days</li>
+        <li>COD orders: Refunded via UPI or bank transfer within 5–7 business days</li>
+        <li>You will receive a WhatsApp confirmation once the refund is initiated</li>
+      </ul>
+
+      <h3>Non-Returnable Items</h3>
+      <ul>
+        <li>Items returned after 7 days of delivery</li>
+        <li>Items that are used, damaged due to misuse, or missing original packaging</li>
+        <li>Bulk orders above ₹10,000 (these are final sale)</li>
+        <li>Customised or personalised products</li>
+      </ul>
+
+      <div class="policy-cta">
+        <p>Want to return something? Reach out and we'll sort it out quickly.</p>
+        <a href="https://wa.me/917356113346?text=Hi! I want to return my order." target="_blank" class="btn-primary" style="font-size:12px;padding:10px 18px"><i class="ti ti-brand-whatsapp"></i> Start Return</a>
+      </div>
+    </div>
+
+    <!-- PRIVACY -->
+    <div class="policy-section" id="section-privacy">
+      <h2>Privacy Policy</h2>
+      <div class="policy-updated">Last updated: 23 May 2025</div>
+
+      <p>Nooksy ("we", "our", "us") is committed to protecting your personal information. This policy explains what data we collect, how we use it, and your rights as a customer.</p>
+
+      <h3>What Information We Collect</h3>
+      <ul>
+        <li>Name, email address, phone number</li>
+        <li>Delivery address and billing address</li>
+        <li>Payment reference (we do not store card or UPI details)</li>
+        <li>Order history and purchase preferences</li>
+        <li>Device information and browsing behaviour on our website (via cookies)</li>
+      </ul>
+
+      <h3>How We Use Your Information</h3>
+      <ul>
+        <li>To process and deliver your orders</li>
+        <li>To send order updates via WhatsApp and email</li>
+        <li>To handle returns, refunds, and customer support queries</li>
+        <li>To send promotional offers and new arrivals (you can opt out anytime)</li>
+        <li>To improve our website and product selection</li>
+      </ul>
+
+      <h3>Payment Data</h3>
+      <p>All payment transactions are processed securely by PayU. We do not store, access, or process your card, UPI, or net banking credentials. PayU's privacy policy governs the handling of your payment information.</p>
+
+      <h3>Data Sharing</h3>
+      <p>We do not sell or rent your personal data to third parties. We may share limited data with:</p>
+      <ul>
+        <li>Courier partners (name, phone, address) for order delivery</li>
+        <li>PayU for payment processing</li>
+        <li>WhatsApp / Meta for order update communications</li>
+      </ul>
+
+      <h3>Cookies</h3>
+      <p>Our website uses cookies to remember your cart, preferences, and browsing session. You can disable cookies in your browser settings, but this may affect cart functionality.</p>
+
+      <h3>Your Rights</h3>
+      <ul>
+        <li>Access the personal data we hold about you</li>
+        <li>Request correction of incorrect data</li>
+        <li>Request deletion of your data</li>
+        <li>Unsubscribe from marketing communications at any time</li>
+      </ul>
+      <p>To exercise any of these rights, email us at hello@nooksy.in. We will process your request within 7 business days.</p>
+
+      <h3>Data Security</h3>
+      <p>We implement appropriate security measures to protect your data from unauthorised access or disclosure. Our website uses HTTPS encryption for all data transmission.</p>
+
+      <div class="policy-cta">
+        <p>Questions about your data? Email us at hello@nooksy.in</p>
+        <a href="mailto:hello@nooksy.in" class="btn-outline" style="font-size:12px;padding:10px 18px"><i class="ti ti-mail"></i> Email Us</a>
+      </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="policy-section" id="section-terms">
+      <h2>Terms &amp; Conditions</h2>
+      <div class="policy-updated">Last updated: 23 May 2025</div>
+
+      <p>By accessing nooksy.in and placing an order, you agree to be bound by the following terms and conditions. These terms are governed by the laws of India.</p>
+
+      <h3>General</h3>
+      <ul>
+        <li>Nooksy reserves the right to update these terms at any time without prior notice</li>
+        <li>Continued use of the website constitutes acceptance of the updated terms</li>
+        <li>You must be 18 years or older to place an order on Nooksy</li>
+      </ul>
+
+      <h3>Pricing &amp; GST</h3>
+      <ul>
+        <li>All prices displayed are inclusive of GST where applicable</li>
+        <li>Prices are subject to change without prior notice</li>
+        <li>Nooksy reserves the right to cancel orders placed at incorrect prices due to technical errors</li>
+        <li>GST invoices are available for download from your order confirmation page</li>
+      </ul>
+
+      <h3>Orders &amp; Cancellations</h3>
+      <ul>
+        <li>Orders can be cancelled within 6 hours of placement by contacting us on WhatsApp</li>
+        <li>Once dispatched, orders cannot be cancelled — you may initiate a return after delivery</li>
+        <li>Nooksy reserves the right to cancel orders in case of stock unavailability or suspected fraud</li>
+      </ul>
+
+      <h3>Product Information</h3>
+      <ul>
+        <li>Product images are for reference only — minor colour variations may occur due to screen display differences</li>
+        <li>Product dimensions and weights are approximate</li>
+        <li>We strive to keep product descriptions accurate but do not warrant that all descriptions are error-free</li>
+      </ul>
+
+      <h3>COD Policy</h3>
+      <ul>
+        <li>A ₹49 handling fee applies on all COD orders</li>
+        <li>COD orders refused at delivery will incur a ₹99 return shipping fee</li>
+        <li>Repeated COD refusals may result in COD being disabled for your account</li>
+      </ul>
+
+      <h3>Intellectual Property</h3>
+      <p>All content on nooksy.in — including logos, images, product descriptions, and design — is the intellectual property of Nooksy. Unauthorised use or reproduction is prohibited.</p>
+
+      <h3>Limitation of Liability</h3>
+      <p>Nooksy's liability is limited to the value of the product purchased. We are not liable for indirect, incidental, or consequential damages arising from the use of our products or website.</p>
+
+      <h3>Dispute Resolution</h3>
+      <p>In case of any dispute, please contact us first at hello@nooksy.in. We aim to resolve all issues amicably within 7 business days. Unresolved disputes shall be subject to the jurisdiction of courts in India.</p>
+
+      <div class="policy-cta">
+        <p>Questions about our terms? We're happy to explain anything.</p>
+        <a href="contact.html" class="btn-outline" style="font-size:12px;padding:10px 18px"><i class="ti ti-message"></i> Contact Us</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">nooksy</div>
+      <div class="footer-brand-tagline">Your Everyday, Reimagined</div>
+      <p class="footer-brand-desc">Thoughtfully designed everyday products that bring joy to your space and routine.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="shop.html?cat=tote-bags">Tote Bags</a></li>
+        <li><a href="shop.html?cat=photo-frames">Photo Frames</a></li>
+        <li><a href="shop.html?cat=tumblers">Tumblers</a></li>
+        <li><a href="shop.html">All Products</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="contact.html">Track Order</a></li>
+        <li><a href="policies.html#returns">Returns</a></li>
+        <li><a href="policies.html#shipping">Shipping Info</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Nooksy</a></li>
+        <li><a href="policies.html#privacy">Privacy Policy</a></li>
+        <li><a href="policies.html#terms">Terms &amp; Conditions</a></li>
+        <li><a href="policies.html#returns">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com/nooksy.in" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      <a href="https://wa.me/917356113346" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
+      <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
+    </div>
+    <div class="footer-payments">
+      <span class="pay-pill">UPI</span>
+      <span class="pay-pill">PayU</span>
+      <span class="pay-pill">COD</span>
+      <span class="pay-pill">Net Banking</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  function switchPolicy(id) {
+    // Tabs
+    document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+
+    // Sections
+    document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+
+    // Activate correct tab and sidebar link
+    document.querySelectorAll('.policy-tab').forEach(t => {
+      if (t.getAttribute('onclick').includes(id)) t.classList.add('active');
+    });
+    document.querySelectorAll('.sidebar-link').forEach(l => {
+      if (l.getAttribute('onclick').includes(id)) l.classList.add('active');
+    });
+
+    // Update URL hash without scroll
+    history.replaceState(null, '', '#' + id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Handle direct URL hash links e.g. policies.html#returns
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    const valid = ['shipping', 'returns', 'privacy', 'terms'];
+    if (hash && valid.includes(hash)) {
+      switchPolicy(hash);
+    }
+  });
+</script>
+</body>
+</html>
