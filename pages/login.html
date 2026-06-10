@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .auth-page { min-height: 80vh; display: flex; align-items: center; justify-content: center; background: var(--gray); padding: 2rem; }
+    .auth-card { background: #fff; border: 0.5px solid var(--border); padding: 2.5rem; width: 100%; max-width: 420px; }
+    .auth-logo { font-family: var(--font-heading); font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+    .auth-title { font-family: var(--font-heading); font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 0.25rem; letter-spacing: -0.5px; }
+    .auth-sub { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 2rem; }
+    .auth-btn { width: 100%; background: #000; color: #fff; border: none; font-size: 14px; font-weight: 500; padding: 13px; cursor: pointer; letter-spacing: 0.5px; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .auth-btn:disabled { background: #888; cursor: not-allowed; }
+    .auth-divider { display: flex; align-items: center; gap: 1rem; margin: 1.25rem 0; }
+    .auth-divider span { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+    .auth-link { text-align: center; font-size: 13px; color: var(--muted); margin-top: 1.25rem; }
+    .auth-link a { color: #000; font-weight: 600; text-decoration: underline; }
+    .auth-error { background: #fdf0f0; border: 0.5px solid #f5c6c6; padding: 0.75rem 1rem; font-size: 13px; color: #c0392b; margin-bottom: 1rem; display: none; }
+    .auth-success { background: #edf7f1; border: 0.5px solid #c8e6d4; padding: 0.75rem 1rem; font-size: 13px; color: var(--green); margin-bottom: 1rem; display: none; }
+    .forgot-link { font-size: 12px; color: var(--muted); text-decoration: underline; cursor: pointer; background: none; border: none; font-family: var(--font-body); float: right; margin-top: 4px; }
+    .show-pw { font-size: 11px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: var(--font-body); position: absolute; right: 12px; top: 50%; transform: translateY(-50%); }
+    .input-wrap { position: relative; }
+  </style>
+</head>
+<body>
+
+<div class="announce-bar">Free shipping above ₹499 &nbsp;·&nbsp; COD available</div>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">nooksy</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="cart.html" class="nav-icon" aria-label="Cart">
+      <i class="ti ti-shopping-bag"></i>
+      <span class="cart-badge">0</span>
+    </a>
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">nooksy</div>
+    <div class="auth-title">Welcome back</div>
+    <div class="auth-sub">Login to your account</div>
+
+    <div class="auth-error" id="auth-error"></div>
+    <div class="auth-success" id="auth-success"></div>
+
+    <div class="form-group">
+      <label class="form-label">Email *</label>
+      <input class="form-input" type="email" id="login-email" placeholder="you@email.com" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password *</label>
+      <button class="forgot-link" onclick="showForgotPassword()">Forgot password?</button>
+      <div class="input-wrap">
+        <input class="form-input" type="password" id="login-password" placeholder="Enter your password" required>
+        <button class="show-pw" onclick="togglePassword('login-password', this)">Show</button>
+      </div>
+    </div>
+
+    <button class="auth-btn" id="login-btn" onclick="handleLogin()">
+      <i class="ti ti-login"></i> Login
+    </button>
+
+    <div class="auth-divider"><span>or</span></div>
+
+    <div class="auth-link">
+      New to Nooksy? <a href="register.html">Create an account</a>
+    </div>
+    <div class="auth-link" style="margin-top:0.5rem">
+      <a href="shop.html">Continue as guest →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="padding:1.5rem 2rem">
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com/nooksy.in" target="_blank"><i class="ti ti-brand-instagram"></i></a>
+      <a href="https://wa.me/917356113346" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script>
+  // Redirect if already logged in
+  onAuthStateChange(user => {
+    if (user) window.location.href = 'account.html';
+  });
+
+  function showError(msg) {
+    const el = document.getElementById('auth-error');
+    el.textContent = msg;
+    el.style.display = 'block';
+    document.getElementById('auth-success').style.display = 'none';
+  }
+
+  function showSuccess(msg) {
+    const el = document.getElementById('auth-success');
+    el.textContent = msg;
+    el.style.display = 'block';
+    document.getElementById('auth-error').style.display = 'none';
+  }
+
+  function togglePassword(id, btn) {
+    const input = document.getElementById(id);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    btn.textContent = isText ? 'Show' : 'Hide';
+  }
+
+  async function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const btn = document.getElementById('login-btn');
+
+    if (!email || !password) { showError('Please enter your email and password.'); return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ti ti-loader"></i> Logging in...';
+
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      // onAuthStateChange will redirect to account.html
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-login"></i> Login';
+      const msgs = {
+        'auth/user-not-found': 'No account found with this email.',
+        'auth/wrong-password': 'Incorrect password. Please try again.',
+        'auth/invalid-email': 'Please enter a valid email address.',
+        'auth/too-many-requests': 'Too many attempts. Please try again later.',
+        'auth/invalid-credential': 'Incorrect email or password.'
+      };
+      showError(msgs[err.code] || 'Login failed. Please try again.');
+    }
+  }
+
+  async function showForgotPassword() {
+    const email = document.getElementById('login-email').value.trim();
+    if (!email) { showError('Enter your email address first, then click Forgot password.'); return; }
+    try {
+      await firebase.auth().sendPasswordResetEmail(email);
+      showSuccess('Password reset email sent to ' + email + '. Check your inbox.');
+    } catch (err) {
+      showError('Could not send reset email. Check your email address.');
+    }
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>

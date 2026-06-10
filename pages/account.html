@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .account-body { display: grid; grid-template-columns: 220px 1fr; min-height: 70vh; background: var(--gray); }
+    .account-sidebar { background: #fff; border-right: 0.5px solid var(--border); padding: 1.5rem; }
+    .account-avatar { width: 64px; height: 64px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: #fff; margin: 0 auto 0.75rem; }
+    .account-name { font-family: var(--font-heading); font-size: 14px; font-weight: 700; text-align: center; margin-bottom: 3px; }
+    .account-email { font-size: 11px; color: var(--muted); text-align: center; margin-bottom: 1.5rem; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-link { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 10px 12px; cursor: pointer; border-left: 2px solid transparent; color: #444; background: none; border-top: none; border-right: none; border-bottom: none; font-family: var(--font-body); text-align: left; width: 100%; transition: all 0.2s; }
+    .sidebar-link:hover { color: #000; background: var(--gray); }
+    .sidebar-link.active { color: #000; font-weight: 600; border-left-color: #000; background: var(--gray); }
+    .sidebar-link i { font-size: 16px; }
+    .logout-btn { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 10px 12px; cursor: pointer; color: #c0392b; background: none; border: none; font-family: var(--font-body); width: 100%; margin-top: 1rem; }
+
+    .account-main { padding: 2rem; }
+    .account-section { display: none; }
+    .account-section.active { display: block; }
+    .section-title { font-family: var(--font-heading); font-size: 18px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 1.5rem; }
+
+    /* OVERVIEW */
+    .welcome-strip { background: #000; color: #fff; padding: 1.5rem 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .welcome-strip h2 { font-family: var(--font-heading); font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+    .welcome-strip p { font-size: 12px; color: #aaa; }
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: #fff; border: 0.5px solid var(--border); padding: 1.25rem; text-align: center; }
+    .stat-num { font-family: var(--font-heading); font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .stat-label { font-size: 12px; color: var(--muted); }
+
+    /* ORDERS */
+    .order-card { background: #fff; border: 0.5px solid var(--border); padding: 1.25rem; margin-bottom: 0.75rem; }
+    .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+    .order-id { font-family: var(--font-heading); font-size: 13px; font-weight: 700; }
+    .order-date { font-size: 12px; color: var(--muted); }
+    .order-status { font-size: 11px; padding: 3px 10px; letter-spacing: 0.5px; font-weight: 600; }
+    .status-confirmed { background: #edf7f1; color: var(--green); }
+    .status-shipped { background: #e8f4ff; color: #2980b9; }
+    .status-delivered { background: #f0f0f0; color: #555; }
+    .status-pending { background: #fff8e1; color: #e67e22; }
+    .order-items-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 0.75rem; }
+    .order-item-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #444; }
+    .order-item-row i { font-size: 14px; color: var(--muted); }
+    .order-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+    .order-total { font-family: var(--font-heading); font-size: 14px; font-weight: 700; }
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+    .empty-state i { font-size: 48px; margin-bottom: 1rem; display: block; color: #ddd; }
+
+    /* PROFILE */
+    .profile-card { background: #fff; border: 0.5px solid var(--border); padding: 1.75rem; margin-bottom: 1rem; }
+    .profile-card-title { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin-bottom: 1.25rem; }
+    .save-btn { background: #000; color: #fff; border: none; font-size: 13px; font-weight: 500; padding: 11px 24px; cursor: pointer; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; margin-top: 0.5rem; }
+    .profile-success { font-size: 12px; color: var(--green); margin-top: 8px; display: none; }
+
+    @media (max-width: 768px) {
+      .account-body { grid-template-columns: 1fr; }
+      .account-sidebar { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="announce-bar">Free shipping above ₹499 &nbsp;·&nbsp; COD available</div>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">nooksy</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="cart.html" class="nav-icon" aria-label="Cart">
+      <i class="ti ti-shopping-bag"></i>
+      <span class="cart-badge">0</span>
+    </a>
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <span>My Account</span></div>
+
+<!-- Loading state -->
+<div id="loading-state" style="text-align:center;padding:4rem 2rem;background:var(--gray)">
+  <i class="ti ti-loader" style="font-size:32px;margin-bottom:1rem;display:block"></i>
+  Loading your account...
+</div>
+
+<!-- Account body (hidden until auth check) -->
+<div class="account-body" id="account-body" style="display:none">
+
+  <!-- SIDEBAR -->
+  <div class="account-sidebar">
+    <div class="account-avatar" id="user-avatar">?</div>
+    <div class="account-name" id="user-name">Loading...</div>
+    <div class="account-email" id="user-email"></div>
+
+    <div class="sidebar-nav">
+      <button class="sidebar-link active" onclick="switchTab('overview')"><i class="ti ti-layout-dashboard"></i> Overview</button>
+      <button class="sidebar-link" onclick="switchTab('orders')"><i class="ti ti-package"></i> My Orders</button>
+      <button class="sidebar-link" onclick="switchTab('profile')"><i class="ti ti-user"></i> Profile</button>
+      <button class="sidebar-link" onclick="switchTab('addresses')"><i class="ti ti-map-pin"></i> Addresses</button>
+      <button class="sidebar-link" onclick="switchTab('wishlist')"><i class="ti ti-heart"></i> Wishlist</button>
+    </div>
+
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="ti ti-logout"></i> Logout
+    </button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="account-main">
+
+    <!-- OVERVIEW -->
+    <div class="account-section active" id="tab-overview">
+      <div class="welcome-strip">
+        <div>
+          <h2>Welcome back, <span id="welcome-name">there</span>!</h2>
+          <p>Manage your orders, profile and more from here.</p>
+        </div>
+        <a href="shop.html" class="btn-beige" style="font-size:12px;padding:9px 18px">Shop Now</a>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-orders">—</div>
+          <div class="stat-label">Total Orders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-spent">—</div>
+          <div class="stat-label">Total Spent</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-pending">—</div>
+          <div class="stat-label">Pending Delivery</div>
+        </div>
+      </div>
+      <div class="section-title">Recent Orders</div>
+      <div id="recent-orders-container"></div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="account-section" id="tab-orders">
+      <div class="section-title">My Orders</div>
+      <div id="all-orders-container"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="account-section" id="tab-profile">
+      <div class="section-title">My Profile</div>
+      <div class="profile-card">
+        <div class="profile-card-title">Personal Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" id="prof-fname" placeholder="Kabir">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" id="prof-lname" placeholder="Sharma">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="prof-email" disabled style="background:#f5f5f5;color:#999">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" id="prof-phone" placeholder="98765 43210" maxlength="10">
+        </div>
+        <button class="save-btn" onclick="saveProfile()"><i class="ti ti-check"></i> Save Changes</button>
+        <div class="profile-success" id="profile-success">✓ Profile updated successfully!</div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-card-title">Change Password</div>
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <input class="form-input" type="password" id="new-password" placeholder="Minimum 6 characters">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm New Password</label>
+          <input class="form-input" type="password" id="confirm-password" placeholder="Re-enter new password">
+        </div>
+        <button class="save-btn" onclick="changePassword()"><i class="ti ti-lock"></i> Update Password</button>
+        <div class="profile-success" id="password-success">✓ Password updated successfully!</div>
+      </div>
+    </div>
+
+    <!-- ADDRESSES -->
+    <div class="account-section" id="tab-addresses">
+      <div class="section-title">Saved Addresses</div>
+      <div class="profile-card">
+        <div class="profile-card-title">Default Address</div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Address Line 1</label>
+            <input class="form-input" type="text" id="addr-line1" placeholder="Flat / House No., Building">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="form-label">Address Line 2</label>
+            <input class="form-input" type="text" id="addr-line2" placeholder="Street, Area, Landmark">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input class="form-input" type="text" id="addr-city" placeholder="Mumbai">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pincode</label>
+            <input class="form-input" type="text" id="addr-pincode" placeholder="400001" maxlength="6">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">State</label>
+          <input class="form-input" type="text" id="addr-state" placeholder="Maharashtra">
+        </div>
+        <button class="save-btn" onclick="saveAddress()"><i class="ti ti-check"></i> Save Address</button>
+        <div class="profile-success" id="address-success">✓ Address saved successfully!</div>
+      </div>
+    </div>
+
+    <!-- WISHLIST -->
+    <div class="account-section" id="tab-wishlist">
+      <div class="section-title">My Wishlist</div>
+      <div class="empty-state">
+        <i class="ti ti-heart"></i>
+        <p style="margin-bottom:1rem">Your wishlist is empty.</p>
+        <a href="shop.html" class="btn-primary">Browse Products</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom" style="padding:1.5rem 2rem">
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com/nooksy.in" target="_blank"><i class="ti ti-brand-instagram"></i></a>
+      <a href="https://wa.me/917356113346" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script>
+  let userProfile = null;
+
+  onAuthStateChange(async user => {
+    document.getElementById('loading-state').style.display = 'none';
+    if (!user) { window.location.href = 'login.html'; return; }
+    document.getElementById('account-body').style.display = 'grid';
+
+    const name = user.displayName || 'Customer';
+    const initial = name.charAt(0).toUpperCase();
+    document.getElementById('user-avatar').textContent = initial;
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('user-email').textContent = user.email;
+    document.getElementById('welcome-name').textContent = name.split(' ')[0];
+    document.getElementById('prof-email').value = user.email;
+
+    userProfile = await getUserProfile();
+    if (userProfile) {
+      document.getElementById('prof-fname').value = userProfile.firstName || '';
+      document.getElementById('prof-lname').value = userProfile.lastName || '';
+      document.getElementById('prof-phone').value = userProfile.phone || '';
+      if (userProfile.address) {
+        document.getElementById('addr-line1').value = userProfile.address.line1 || '';
+        document.getElementById('addr-line2').value = userProfile.address.line2 || '';
+        document.getElementById('addr-city').value = userProfile.address.city || '';
+        document.getElementById('addr-pincode').value = userProfile.address.pincode || '';
+        document.getElementById('addr-state').value = userProfile.address.state || '';
+      }
+    }
+    loadOrders();
+  });
+
+  function switchTab(tab) {
+    document.querySelectorAll('.account-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  async function loadOrders() {
+    const orders = await getUserOrders();
+    const totalSpent = orders.reduce((s, o) => s + (o.total || 0), 0);
+    const pending = orders.filter(o => o.status !== 'delivered').length;
+    document.getElementById('stat-orders').textContent = orders.length;
+    document.getElementById('stat-spent').textContent = '₹' + totalSpent.toLocaleString('en-IN');
+    document.getElementById('stat-pending').textContent = pending;
+
+    const renderOrders = (orders) => orders.length === 0
+      ? `<div class="empty-state"><i class="ti ti-package"></i><p style="margin-bottom:1rem">No orders yet.</p><a href="shop.html" class="btn-primary">Start Shopping</a></div>`
+      : orders.map(o => `
+          <div class="order-card">
+            <div class="order-card-header">
+              <div>
+                <div class="order-id">#${o.id}</div>
+                <div class="order-date">${o.createdAt?.toDate ? o.createdAt.toDate().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'Recent'}</div>
+              </div>
+              <span class="order-status status-${o.status || 'confirmed'}">${(o.status || 'Confirmed').toUpperCase()}</span>
+            </div>
+            <div class="order-items-list">
+              ${(o.items || []).slice(0, 3).map(i => `<div class="order-item-row"><i class="ti ti-circle-dot"></i>${i.name} × ${i.qty}</div>`).join('')}
+              ${(o.items || []).length > 3 ? `<div class="order-item-row" style="color:var(--muted)">+${(o.items||[]).length - 3} more items</div>` : ''}
+            </div>
+            <div class="order-footer">
+              <span class="order-total">₹${(o.total || 0).toLocaleString('en-IN')}</span>
+              <a href="https://wa.me/917356113346?text=Hi! Please share tracking for order ${o.id}" target="_blank" style="font-size:12px;color:#000;text-decoration:underline">Track Order</a>
+            </div>
+          </div>`).join('');
+
+    document.getElementById('recent-orders-container').innerHTML = renderOrders(orders.slice(0, 3));
+    document.getElementById('all-orders-container').innerHTML = renderOrders(orders);
+  }
+
+  async function saveProfile() {
+    const fname = document.getElementById('prof-fname').value.trim();
+    const lname = document.getElementById('prof-lname').value.trim();
+    const phone = document.getElementById('prof-phone').value.trim();
+    await saveUserProfile({ firstName: fname, lastName: lname, phone });
+    await getCurrentUser().updateProfile({ displayName: fname + ' ' + lname });
+    document.getElementById('user-name').textContent = fname + ' ' + lname;
+    document.getElementById('welcome-name').textContent = fname;
+    document.getElementById('user-avatar').textContent = fname.charAt(0).toUpperCase();
+    const s = document.getElementById('profile-success');
+    s.style.display = 'block';
+    setTimeout(() => s.style.display = 'none', 3000);
+  }
+
+  async function changePassword() {
+    const np = document.getElementById('new-password').value;
+    const cp = document.getElementById('confirm-password').value;
+    if (np.length < 6) { alert('Password must be at least 6 characters.'); return; }
+    if (np !== cp) { alert('Passwords do not match.'); return; }
+    try {
+      await getCurrentUser().updatePassword(np);
+      const s = document.getElementById('password-success');
+      s.style.display = 'block';
+      setTimeout(() => s.style.display = 'none', 3000);
+      document.getElementById('new-password').value = '';
+      document.getElementById('confirm-password').value = '';
+    } catch (err) {
+      if (err.code === 'auth/requires-recent-login') {
+        alert('For security, please logout and login again before changing your password.');
+      }
+    }
+  }
+
+  async function saveAddress() {
+    const address = {
+      line1: document.getElementById('addr-line1').value.trim(),
+      line2: document.getElementById('addr-line2').value.trim(),
+      city: document.getElementById('addr-city').value.trim(),
+      pincode: document.getElementById('addr-pincode').value.trim(),
+      state: document.getElementById('addr-state').value.trim()
+    };
+    await saveUserProfile({ address });
+    const s = document.getElementById('address-success');
+    s.style.display = 'block';
+    setTimeout(() => s.style.display = 'none', 3000);
+  }
+
+  async function handleLogout() {
+    await logoutUser();
+    window.location.href = '../index.html';
+  }
+</script>
+</body>
+</html>
