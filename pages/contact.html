@@ -394,5 +394,15 @@
     result.textContent = 'Opening WhatsApp with your tracking request...';
   }
 </script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script>
+  onAuthStateChange(user => {
+    const link = document.querySelector('a[aria-label="Account"]');
+    if (!link) return;
+    link.href = user ? 'account.html' : 'login.html';
+  });
+</script>
 </body>
 </html>
