@@ -109,10 +109,11 @@
 <script src="../js/firebase-config.js"></script>
 <script>
   // Redirect if already logged in
-  onAuthStateChange(user => {
-    if (user) window.location.href = 'account.html';
-  });
+  let isLoggingIn = false;
 
+onAuthStateChange(user => {
+  if (user && !isLoggingIn) window.location.href = 'account.html';
+});
   function showError(msg) {
     const el = document.getElementById('auth-error');
     el.textContent = msg;
