@@ -63,3 +63,27 @@ async function getUserProfile() {
   const doc = await firebase.firestore().collection('users').doc(user.uid).get();
   return doc.exists ? doc.data() : null;
 }
+// Save cart to Firestore
+async function syncCartToFirestore() {
+  const user = getCurrentUser();
+  if (!user) return;
+  await firebase.firestore().collection('users').doc(user.uid)
+    .set({ cart: cart }, { merge: true });
+}
+
+// Restore cart from Firestore and merge with local cart
+async function restoreCartFromFirestore(uid) {
+  const doc = await firebase.firestore().collection('users').doc(uid).get();
+  if (!doc.exists || !doc.data().cart) return;
+  const savedCart = doc.data().cart;
+  // Merge — if item exists locally keep higher qty, otherwise add from saved
+  savedCart.forEach(savedItem => {
+    const existing = cart.find(i => i.id === savedItem.id);
+    if (existing) {
+      existing.qty = Math.max(existing.qty, savedItem.qty);
+    } else {
+      cart.push(savedItem);
+    }
+  });
+  localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+}
