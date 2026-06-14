@@ -145,8 +145,10 @@
     btn.innerHTML = '<i class="ti ti-loader"></i> Logging in...';
 
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      // onAuthStateChange will redirect to account.html
+  const cred = await firebase.auth().signInWithEmailAndPassword(email, password);
+  // Restore saved cart from Firestore and merge with local cart
+  await restoreCartFromFirestore(cred.user.uid);
+  window.location.href = 'account.html';
     } catch (err) {
       btn.disabled = false;
       btn.innerHTML = '<i class="ti ti-login"></i> Login';
