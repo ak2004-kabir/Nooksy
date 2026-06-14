@@ -383,9 +383,13 @@
   }
 
   async function handleLogout() {
-    await logoutUser();
-    window.location.href = '../index.html';
-  }
+  // Save cart to Firestore before logout
+  await syncCartToFirestore();
+  await logoutUser();
+  // Clear local cart
+  localStorage.removeItem('nooksy_cart');
+  window.location.href = '../index.html';
+}
 </script>
 </body>
 </html>
