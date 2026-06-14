@@ -136,33 +136,34 @@ onAuthStateChange(user => {
   }
 
   async function handleLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    const btn = document.getElementById('login-btn');
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const btn = document.getElementById('login-btn');
 
-    if (!email || !password) { showError('Please enter your email and password.'); return; }
+  if (!email || !password) { showError('Please enter your email and password.'); return; }
 
-    btn.disabled = true;
-    btn.innerHTML = '<i class="ti ti-loader"></i> Logging in...';
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Logging in...';
 
-    try {
-  const cred = await firebase.auth().signInWithEmailAndPassword(email, password);
-  // Restore saved cart from Firestore and merge with local cart
-  await restoreCartFromFirestore(cred.user.uid);
-  window.location.href = 'account.html';
-    } catch (err) {
-      btn.disabled = false;
-      btn.innerHTML = '<i class="ti ti-login"></i> Login';
-      const msgs = {
-        'auth/user-not-found': 'No account found with this email.',
-        'auth/wrong-password': 'Incorrect password. Please try again.',
-        'auth/invalid-email': 'Please enter a valid email address.',
-        'auth/too-many-requests': 'Too many attempts. Please try again later.',
-        'auth/invalid-credential': 'Incorrect email or password.'
-      };
-      showError(msgs[err.code] || 'Login failed. Please try again.');
-    }
+  try {
+    isLoggingIn = true;
+    const cred = await firebase.auth().signInWithEmailAndPassword(email, password);
+    await restoreCartFromFirestore(cred.user.uid);
+    window.location.href = 'account.html';
+  } catch (err) {
+    isLoggingIn = false;
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-login"></i> Login';
+    const msgs = {
+      'auth/user-not-found': 'No account found with this email.',
+      'auth/wrong-password': 'Incorrect password. Please try again.',
+      'auth/invalid-email': 'Please enter a valid email address.',
+      'auth/too-many-requests': 'Too many attempts. Please try again later.',
+      'auth/invalid-credential': 'Incorrect email or password.'
+    };
+    showError(msgs[err.code] || 'Login failed. Please try again.');
   }
+}
 
   async function showForgotPassword() {
     const email = document.getElementById('login-email').value.trim();
