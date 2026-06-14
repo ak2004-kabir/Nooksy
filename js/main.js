@@ -16,6 +16,8 @@ function addToCart(product) {
   localStorage.setItem('nooksy_cart', JSON.stringify(cart));
   updateCartBadge();
   showToast(product.name + ' added to cart!');
+  // Sync to Firestore if logged in
+  if (typeof syncCartToFirestore === 'function') syncCartToFirestore();
 }
 
 function showToast(message) {
