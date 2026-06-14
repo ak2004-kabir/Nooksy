@@ -424,6 +424,7 @@
     updateCartBadge();
     renderCartItems();
     renderSummary();
+    if (typeof syncCartToFirestore === 'function') syncCartToFirestore();
   }
 
   function removeItem(id) {
@@ -432,6 +433,7 @@
     updateCartBadge();
     renderCartItems();
     renderSummary();
+    if (typeof syncCartToFirestore === 'function') syncCartToFirestore();
   }
 
   function clearCart() {
