@@ -155,6 +155,46 @@ const products = [
   }
 ];
 
+// ── renderProductCard — used on Home, Shop, Cart, Related sections ──
+function getCardImage(p) {
+  if (p.images && p.images.length > 0) return p.images[0];
+  if (p.image) return p.image;
+  return '';
+}
+
+function renderProductCard(p, basePath = '') {
+  const badge = p.badge ? `<span class="prod-badge badge-${p.badge}">${p.badge}</span>` : '';
+  const oldPrice = p.originalPrice ? `<span class="prod-old">₹${p.originalPrice.toLocaleString('en-IN')}</span>` : '';
+  const imgSrc = getCardImage(p);
+  const imgTag = imgSrc
+    ? `<img src="${imgSrc}" alt="${p.name}" loading="lazy" />`
+    : `<i class="ti ti-photo" style="font-size:48px;color:#ccc"></i>`;
+
+  return `
+    <div class="product-card">
+      <a href="${basePath}pages/product.html?id=${p.id}">
+        <div class="product-img">
+          ${imgTag}
+          ${badge}
+          <button class="prod-wish" aria-label="Save to wishlist"><i class="ti ti-heart"></i></button>
+        </div>
+        <div class="product-info">
+          <div class="prod-cat">${p.categoryLabel}</div>
+          <div class="prod-name">${p.name}</div>
+          <div>
+            <span class="prod-price">₹${p.price.toLocaleString('en-IN')}</span>
+            ${oldPrice}
+          </div>
+        </div>
+      </a>
+      <div style="padding:0 1rem 1rem">
+        <button class="prod-add" onclick="addToCart({id:'${p.id}',name:'${p.name}',price:${p.price},image:'${imgSrc}'})">
+          Add to Cart
+        </button>
+      </div>
+    </div>`;
+}
+
 // Render a product card
 function renderProductCard(p, basePath = '') {
   const badge = p.badge ? `<span class="prod-badge badge-${p.badge}">${p.badge}</span>` : '';
