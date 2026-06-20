@@ -3,33 +3,49 @@
 
 const products = [
   {
-    id: 'tote-natural-01',
-    name: 'Canvas Tote — Natural',
-    category: 'tote-bags',
-    categoryLabel: 'Tote Bags',
-    price: 649,
-    originalPrice: 899,
-    badge: 'bestseller',
-    image: '../images/products/tote-natural.jpg',
-    colors: ['#D9C9B0', '#000000', '#A7B9A8', '#D8A7A7'],
-    sizes: ['Small', 'Medium', 'Large'],
-    description: '100% natural cotton canvas. Reinforced handles. Inner zip pocket. Machine washable.',
-    details: 'Dimensions: 38cm × 42cm × 12cm. Weight: 280g.',
+    id: 'tb-01',
+    name: 'Tumbler Bottle - Black',
+    category: 'tumbler-bottle',
+    categoryLabel: 'Tumbler Bottle',
+    price: 795,
+    originalPrice: 1299,
+    badge: 'sale',
+    image: [
+      'https://images.nooksy.in/tb1/tb1-1.jpg'
+      'https://images.nooksy.in/tb1/tb1-2.jpg'
+      'https://images.nooksy.in/tb1/tb1-3.jpg'
+      'https://images.nooksy.in/tb1/tb1-4.jpg'
+      'https://images.nooksy.in/tb1/tb1-5.jpg'
+      'https://images.nooksy.in/tb1/tb1-6.jpg'
+      'https://images.nooksy.in/tb1/tb1-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Stainless Steel Bottle. Stainless Steel Straw. Leak-Proof Lid',
+    details: 'Dimensions: 20oz. 600ml',
     inStock: true
   },
   {
-    id: 'tote-floral-02',
-    name: 'Printed Tote — Floral',
-    category: 'tote-bags',
-    categoryLabel: 'Tote Bags',
-    price: 749,
-    originalPrice: null,
-    badge: 'new',
-    image: '../images/products/tote-floral.jpg',
-    colors: ['#fff', '#D9C9B0'],
-    sizes: ['Medium', 'Large'],
-    description: 'Soft cotton canvas with hand-drawn floral print. Everyday essential.',
-    details: 'Dimensions: 36cm × 40cm. Weight: 260g.',
+   id: 'tb-02',
+    name: 'Tumbler Bottle - White',
+    category: 'tumbler-bottle',
+    categoryLabel: 'Tumbler Bottle',
+    price: 795,
+    originalPrice: 1299,
+    badge: 'sale',
+    image: [
+      'https://images.nooksy.in/tb2/tb2-1.jpg'
+      'https://images.nooksy.in/tb2/tb2-2.jpg'
+      'https://images.nooksy.in/tb2/tb2-3.jpg'
+      'https://images.nooksy.in/tb2/tb2-4.jpg'
+      'https://images.nooksy.in/tb2/tb2-5.jpg'
+      'https://images.nooksy.in/tb2/tb2-6.jpg'
+      'https://images.nooksy.in/tb2/tb2-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Stainless Steel Bottle. Stainless Steel Straw. Leak-Proof Lid',
+    details: 'Dimensions: 20oz. 600ml',
     inStock: true
   },
   {
