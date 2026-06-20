@@ -17,7 +17,7 @@ const products = [
       'https://images.nooksy.in/tb1/tb1-4.jpg',
       'https://images.nooksy.in/tb1/tb1-5.jpg',
       'https://images.nooksy.in/tb1/tb1-6.jpg',
-      'https://images.nooksy.in/tb1/tb1-7.jpg',
+      'https://images.nooksy.in/tb1/tb1-7.jpg'
       ],
     colors: [],
     sizes: [],
@@ -40,7 +40,7 @@ const products = [
       'https://images.nooksy.in/tb2/tb2-4.jpg',
       'https://images.nooksy.in/tb2/tb2-5.jpg',
       'https://images.nooksy.in/tb2/tb2-6.jpg',
-      'https://images.nooksy.in/tb2/tb2-7.jpg',
+      'https://images.nooksy.in/tb2/tb2-7.jpg'
       ],
     colors: [],
     sizes: [],
@@ -154,6 +154,12 @@ const products = [
     inStock: true
   }
 ];
+
+function getCardImage(p) {
+  if (p.images && p.images.length > 0) return p.images[0];
+  if (p.image) return p.image;
+  return '';
+}
 
 // Render a product card
 function renderProductCard(p, basePath = '') {
