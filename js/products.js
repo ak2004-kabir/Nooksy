@@ -11,12 +11,12 @@ const products = [
     originalPrice: 1299,
     badge: 'sale',
     image: [
-      'https://images.nooksy.in/tb1/tb1-1.jpg'
-      'https://images.nooksy.in/tb1/tb1-2.jpg'
-      'https://images.nooksy.in/tb1/tb1-3.jpg'
-      'https://images.nooksy.in/tb1/tb1-4.jpg'
-      'https://images.nooksy.in/tb1/tb1-5.jpg'
-      'https://images.nooksy.in/tb1/tb1-6.jpg'
+      'https://images.nooksy.in/tb1/tb1-1.jpg',
+      'https://images.nooksy.in/tb1/tb1-2.jpg',
+      'https://images.nooksy.in/tb1/tb1-3.jpg',
+      'https://images.nooksy.in/tb1/tb1-4.jpg',
+      'https://images.nooksy.in/tb1/tb1-5.jpg',
+      'https://images.nooksy.in/tb1/tb1-6.jpg',
       'https://images.nooksy.in/tb1/tb1-7.jpg'
       ],
     colors: [],
@@ -34,12 +34,12 @@ const products = [
     originalPrice: 1299,
     badge: 'sale',
     image: [
-      'https://images.nooksy.in/tb2/tb2-1.jpg'
-      'https://images.nooksy.in/tb2/tb2-2.jpg'
-      'https://images.nooksy.in/tb2/tb2-3.jpg'
-      'https://images.nooksy.in/tb2/tb2-4.jpg'
-      'https://images.nooksy.in/tb2/tb2-5.jpg'
-      'https://images.nooksy.in/tb2/tb2-6.jpg'
+      'https://images.nooksy.in/tb2/tb2-1.jpg',
+      'https://images.nooksy.in/tb2/tb2-2.jpg',
+      'https://images.nooksy.in/tb2/tb2-3.jpg',
+      'https://images.nooksy.in/tb2/tb2-4.jpg',
+      'https://images.nooksy.in/tb2/tb2-5.jpg',
+      'https://images.nooksy.in/tb2/tb2-6.jpg',
       'https://images.nooksy.in/tb2/tb2-7.jpg'
       ],
     colors: [],
