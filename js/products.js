@@ -155,13 +155,6 @@ const products = [
   }
 ];
 
-// ── renderProductCard — used on Home, Shop, Cart, Related sections ──
-function getCardImage(p) {
-  if (p.images && p.images.length > 0) return p.images[0];
-  if (p.image) return p.image;
-  return '';
-}
-
 // Render a product card
 function renderProductCard(p, basePath = '') {
   const badge = p.badge ? `<span class="prod-badge badge-${p.badge}">${p.badge}</span>` : '';
