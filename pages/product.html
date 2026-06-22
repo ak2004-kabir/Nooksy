@@ -13,7 +13,7 @@
     .main-img { background: var(--beige); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
     .main-img img { width: 100%; height: 100%; object-fit: cover; }
     .main-img .placeholder-icon { font-size: 80px; color: #b8a48a; }
-    .img-badge { position: absolute; top: 12px; left: 12px; font-size: 9px; letter-spacing: 1px; padding: 4px 10px; text-transform: uppercase; }
+    .img-badge { position: absolute; top: 12px; left: 12px; font-size: 9px; letter-spacing: 1px; padding: 4px 10px; text-transform: uppercase; z-index: 2; }
     .thumb-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .thumb { background: #e0d8cc; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1.5px solid transparent; overflow: hidden; }
     .thumb.active { border-color: #000; }
@@ -36,7 +36,6 @@
     .color-options { display: flex; gap: 10px; flex-wrap: wrap; }
     .color-swatch { width: 30px; height: 30px; cursor: pointer; border: 2px solid transparent; position: relative; }
     .color-swatch.active { border-color: #000; }
-    .color-swatch::after { content: ''; position: absolute; inset: 2px; background: inherit; }
     .size-options { display: flex; gap: 8px; flex-wrap: wrap; }
     .size-btn { border: 0.5px solid var(--border); background: #fff; font-family: var(--font-body); font-size: 12px; font-weight: 500; padding: 7px 16px; cursor: pointer; color: #000; transition: all 0.2s; }
     .size-btn.active, .size-btn:hover { background: #000; color: #fff; border-color: #000; }
@@ -76,15 +75,12 @@
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
-<div class="announce-bar">
-  Free shipping above ₹499 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns
-</div>
+<div class="announce-bar">Free shipping above ₹499 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns</div>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <a href="../index.html" class="nav-logo">
-  <img src="../images/logo-black.png" alt="Nooksy" style="height:110px;width:auto;display:block"> </a>
+    <img src="../images/logo-black.png" alt="Nooksy" style="height:36px;width:auto;display:block">
+  </a>
   <ul class="nav-links">
     <li><a href="../index.html">Home</a></li>
     <li><a href="shop.html">Shop</a></li>
@@ -102,7 +98,6 @@
   </div>
 </nav>
 
-<!-- MOBILE NAV -->
 <nav class="mobile-nav">
   <a href="../index.html">Home</a>
   <a href="shop.html">Shop</a>
@@ -110,27 +105,21 @@
   <a href="contact.html">Contact</a>
 </nav>
 
-<!-- BREADCRUMB -->
 <div class="breadcrumb" id="breadcrumb">
   <a href="../index.html">Home</a> &rsaquo;
   <a href="shop.html">Shop</a> &rsaquo;
   <span id="bc-name">Product</span>
 </div>
 
-<!-- PDP BODY -->
 <div class="pdp-body">
 
-  <!-- GALLERY -->
   <div class="gallery-col">
     <div class="main-img" id="main-img">
       <i class="ti ti-photo placeholder-icon"></i>
     </div>
-    <div class="thumb-row" id="thumb-row">
-      <div class="thumb active"><i class="ti ti-photo"></i></div>
-    </div>
+    <div class="thumb-row" id="thumb-row"></div>
   </div>
 
-  <!-- INFO -->
   <div class="info-col">
     <div>
       <div class="prod-cat-label" id="prod-cat">Category</div>
@@ -154,19 +143,16 @@
 
     <div class="divider"></div>
 
-    <!-- COLORS -->
     <div id="color-section">
       <div class="option-label">Colour — <span id="selected-color" style="font-weight:400;text-transform:none;letter-spacing:0"></span></div>
       <div class="color-options" id="color-options"></div>
     </div>
 
-    <!-- SIZES -->
     <div id="size-section">
       <div class="option-label">Size</div>
       <div class="size-options" id="size-options"></div>
     </div>
 
-    <!-- QTY -->
     <div class="qty-row">
       <div class="qty-label">Qty</div>
       <div class="qty-ctrl">
@@ -177,14 +163,12 @@
       <span class="stock-note" id="stock-note">In stock</span>
     </div>
 
-    <!-- CTAs -->
     <div class="cta-row">
       <button class="btn-cart" id="add-to-cart-btn"><i class="ti ti-shopping-bag"></i> Add to Cart</button>
       <button class="btn-buy" id="buy-now-btn">Buy Now</button>
       <button class="btn-wish-full"><i class="ti ti-heart"></i> Add to Wishlist</button>
     </div>
 
-    <!-- DELIVERY INFO -->
     <div class="delivery-info">
       <div class="delivery-row"><i class="ti ti-truck"></i> Free delivery on orders above ₹499</div>
       <div class="delivery-row"><i class="ti ti-currency-rupee"></i> COD available at checkout</div>
@@ -192,7 +176,6 @@
       <div class="delivery-row"><i class="ti ti-shield-check"></i> Secure payment via PayU</div>
     </div>
 
-    <!-- ACCORDION -->
     <div class="accordion-section">
       <div class="accordion-item">
         <div class="accordion-header">
@@ -226,7 +209,6 @@
   </div>
 </div>
 
-<!-- RELATED PRODUCTS -->
 <div class="related-section">
   <div class="section-header" style="text-align:left;margin-bottom:1.5rem">
     <p class="section-label">You may also like</p>
@@ -235,11 +217,11 @@
   <div class="related-grid" id="related-grid"></div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
-      <img src="../images/logo-black.png" alt="Nooksy" style="height:120px;width:auto;filter:invert(1)">
+      <img src="../images/logo-black.png" alt="Nooksy" style="height:28px;width:auto;filter:invert(1)">
+      <div class="footer-brand-tagline" style="margin-top:8px">Your Everyday, Reimagined</div>
       <p class="footer-brand-desc">Thoughtfully designed everyday products that bring joy to your space.</p>
     </div>
     <div class="footer-col">
@@ -271,15 +253,11 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">&copy; 2026 Nooksy. All rights reserved.</p>
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
     <div class="footer-socials">
       <a href="https://instagram.com/nooksy.in" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
       <a href="https://wa.me/917356113346" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
       <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
-    </div>
-     <div style="text-align:center;font-size:11px;color:#555;line-height:1.7">
-       <strong style="color:#888">Legal Name:</strong> Abdul Kabir &nbsp;|&nbsp;
-       <strong style="color:#888">Address:</strong> 69/3609, 1st Floor, Nimdha Building, Nair Samajam Road, SRM Road, Kaloor, Kochi, Ernakulam, Kerala - 682017
     </div>
     <div class="footer-payments">
       <span class="pay-pill">UPI</span>
@@ -290,7 +268,11 @@
   </div>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/firebase-config.js"></script>
 <script src="../js/products.js"></script>
 <script>
   let currentProduct = null;
@@ -302,6 +284,14 @@
     return new URLSearchParams(window.location.search).get('id');
   }
 
+  // Returns the array of image URLs for a product — supports both
+  // the new `images: [...]` array and the old single `image: '...'` field.
+  function getProductImages(product) {
+    if (product.images && product.images.length > 0) return product.images;
+    if (product.image) return [product.image];
+    return [];
+  }
+
   function loadProduct() {
     const id = getProductId();
     currentProduct = products.find(p => p.id === id);
@@ -310,14 +300,12 @@
       return;
     }
 
-    // Meta
     document.title = currentProduct.name + ' — Nooksy';
     document.getElementById('bc-name').textContent = currentProduct.name;
     document.getElementById('prod-cat').textContent = currentProduct.categoryLabel;
     document.getElementById('prod-name').textContent = currentProduct.name;
-    document.getElementById('prod-details').textContent = currentProduct.description + ' ' + currentProduct.details;
+    document.getElementById('prod-details').textContent = (currentProduct.description || '') + ' ' + (currentProduct.details || '');
 
-    // Price
     document.getElementById('prod-price').textContent = '₹' + currentProduct.price.toLocaleString('en-IN');
     if (currentProduct.originalPrice) {
       document.getElementById('prod-old').textContent = '₹' + currentProduct.originalPrice.toLocaleString('en-IN');
@@ -327,22 +315,22 @@
       saveEl.style.display = 'inline-block';
     }
 
-    // Badge
-    if (currentProduct.badge) {
-      const badgeEl = document.createElement('span');
-      badgeEl.className = 'img-badge badge-' + currentProduct.badge;
-      badgeEl.textContent = currentProduct.badge;
-      document.getElementById('main-img').appendChild(badgeEl);
-    }
+    // ── IMAGE GALLERY — real images from products.js ──
+    const images = getProductImages(currentProduct);
+    const mainImg = document.getElementById('main-img');
+    const thumbRow = document.getElementById('thumb-row');
 
-    // Image
-    if (currentProduct.image) {
-      const img = document.createElement('img');
-      img.src = '../' + currentProduct.image;
-      img.alt = currentProduct.name;
-      const mainImg = document.getElementById('main-img');
+    function renderMainImage(src) {
       mainImg.innerHTML = '';
-      mainImg.appendChild(img);
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = currentProduct.name;
+        img.loading = 'eager';
+        mainImg.appendChild(img);
+      } else {
+        mainImg.innerHTML = '<i class="ti ti-photo placeholder-icon"></i>';
+      }
       if (currentProduct.badge) {
         const b = document.createElement('span');
         b.className = 'img-badge badge-' + currentProduct.badge;
@@ -351,12 +339,16 @@
       }
     }
 
-    // Thumbs (placeholder — 4 thumbs)
-    const thumbRow = document.getElementById('thumb-row');
-    thumbRow.innerHTML = [1,2,3,4].map((_, i) => `
-      <div class="thumb ${i === 0 ? 'active' : ''}" onclick="selectThumb(this)">
-        <i class="ti ti-photo"></i>
-      </div>`).join('');
+    if (images.length > 0) {
+      renderMainImage(images[0]);
+      thumbRow.innerHTML = images.map((src, i) => `
+        <div class="thumb ${i === 0 ? 'active' : ''}" onclick="selectThumb(this, '${src}')">
+          <img src="${src}" alt="${currentProduct.name} view ${i + 1}" loading="lazy">
+        </div>`).join('');
+    } else {
+      renderMainImage(null);
+      thumbRow.innerHTML = '';
+    }
 
     // Colors
     const colorSection = document.getElementById('color-section');
@@ -367,6 +359,7 @@
           onclick="selectColor(this, '${c}')"></div>`
       ).join('');
       document.getElementById('selected-color').textContent = currentProduct.colors[0];
+      colorSection.style.display = 'block';
     } else {
       colorSection.style.display = 'none';
     }
@@ -378,6 +371,7 @@
       document.getElementById('size-options').innerHTML = currentProduct.sizes.map((s, i) =>
         `<button class="size-btn ${i === 0 ? 'active' : ''}" onclick="selectSize(this, '${s}')">${s}</button>`
       ).join('');
+      sizeSection.style.display = 'block';
     } else {
       sizeSection.style.display = 'none';
     }
@@ -388,21 +382,22 @@
     const relatedFinal = [...related, ...extra].slice(0, 4);
     document.getElementById('related-grid').innerHTML = relatedFinal.map(p => renderProductCard(p, '../')).join('');
 
-    // Cart button
     document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-      addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, image: currentProduct.image, color: selectedColor, size: selectedSize, qty });
+      addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
     });
 
-    // Buy now
     document.getElementById('buy-now-btn').addEventListener('click', () => {
-      addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, image: currentProduct.image, color: selectedColor, size: selectedSize, qty });
+      addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
       window.location.href = 'cart.html';
     });
   }
 
-  function selectThumb(el) {
+  function selectThumb(el, src) {
     document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+    const mainImg = document.getElementById('main-img');
+    const existingImg = mainImg.querySelector('img');
+    if (existingImg) existingImg.src = src;
   }
 
   function selectColor(el, color) {
@@ -424,12 +419,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', loadProduct);
-</script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../js/firebase-config.js"></script>
-<script>
+
   onAuthStateChange(user => {
     const link = document.querySelector('a[aria-label="Account"]');
     if (!link) return;
