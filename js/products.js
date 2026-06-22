@@ -165,9 +165,9 @@ function getCardImage(p) {
 function renderProductCard(p, basePath = '') {
   const badge = p.badge ? `<span class="prod-badge badge-${p.badge}">${p.badge}</span>` : '';
   const oldPrice = p.originalPrice ? `<span class="prod-old">₹${p.originalPrice.toLocaleString('en-IN')}</span>` : '';
-  const imgSrc = p.image || '';
+  const imgSrc = getCardImage(p);
   const imgTag = imgSrc
-    ? `<img src="${basePath}${imgSrc}" alt="${p.name}" loading="lazy" />`
+    ? `<img src="${imgSrc}" alt="${p.name}" loading="lazy" />`
     : `<i class="ti ti-photo" style="font-size:48px;color:#ccc"></i>`;
 
   return `
