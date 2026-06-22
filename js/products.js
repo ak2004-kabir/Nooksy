@@ -11,7 +11,7 @@ const products = [
     originalPrice: 1299,
     badge: 'sale',
     image: [
-      https://images.nooksy.in/tb1/tb1-1.jpg
+      'https://images.nooksy.in/tb1/tb1-1.jpg'
       ],
     colors: [],
     sizes: [],
