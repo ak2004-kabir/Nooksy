@@ -12,7 +12,8 @@ const products = [
     badge: 'sale',
     images: [
       'https://images.nooksy.in/tb1/tb1-1.jpg',
-      'https://images.nooksy.in/tb1/tb1-2.jpg'
+      'https://images.nooksy.in/tb1/tb1-2.jpg',
+      'https://images.nooksy.in/tb1/tb1-4.jpg'
       ],
     colors: [],
     sizes: [],
