@@ -15,9 +15,7 @@ const products = [
       'https://images.nooksy.in/tb1/tb1-2.jpg',
       'https://images.nooksy.in/tb1/tb1-3.jpg',
       'https://images.nooksy.in/tb1/tb1-4.jpg',
-      'https://images.nooksy.in/tb1/tb1-5.jpg',
-      'https://images.nooksy.in/tb1/tb1-6.jpg',
-      'https://images.nooksy.in/tb1/tb1-7.jpg'
+      'https://images.nooksy.in/tb1/tb1-5.jpg'
       ],
     colors: [],
     sizes: [],
