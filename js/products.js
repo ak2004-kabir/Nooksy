@@ -34,13 +34,13 @@ const products = [
     originalPrice: 1299,
     badge: 'sale',
     images: [
-      'https://images.nooksy.in/tb2/tb2-1.jpg',
-      'https://images.nooksy.in/tb2/tb2-2.jpg',
-      'https://images.nooksy.in/tb2/tb2-3.jpg',
-      'https://images.nooksy.in/tb2/tb2-4.jpg',
-      'https://images.nooksy.in/tb2/tb2-5.jpg',
-      'https://images.nooksy.in/tb2/tb2-6.jpg',
-      'https://images.nooksy.in/tb2/tb2-7.jpg'
+      'https://images.nooksy.in/tb2-v2/tb2-1-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-2-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-3-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-4-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-5-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-6-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-7-v2.jpg'
       ],
     colors: [],
     sizes: [],
