@@ -67,7 +67,7 @@ const products = [
     colors: [],
     sizes: [],
     description: 'This tote bag can be used for several purposes, such as grocery shopping, carrying books, laptop bags, gym bags, or even as a fashion accessory. Our tote bags are a more sustainable alternative to plastic shopping bags.,
-    details: '',
+    details: [],
     inStock: true
   },
   {
@@ -88,7 +88,7 @@ const products = [
     colors: [],
     sizes: ['8×10 inch', '8×12 inch', 10x12 inch],
     description: 'Turn your memories into a sketch',
-    details: '',
+    details: [],
     inStock: true
   },
   {
