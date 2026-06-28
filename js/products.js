@@ -5,7 +5,7 @@ const products = [
   {
     id: 'tb-01',
     name: 'Tumbler Bottle - Black',
-    category: 'tumbler-bottle',
+    category: 'tumblers',
     categoryLabel: 'Tumbler Bottle',
     price: 795,
     originalPrice: 1299,
@@ -28,7 +28,7 @@ const products = [
   {
    id: 'tb-02',
     name: 'Tumbler Bottle - White',
-    category: 'tumbler-bottle',
+    category: 'tumblers',
     categoryLabel: 'Tumbler Bottle',
     price: 795,
     originalPrice: 1299,
