@@ -67,7 +67,7 @@ const products = [
     colors: [],
     sizes: [],
     description: 'Carry the outdoors with you, everywhere.<br>The Nooksy Adventure Tote features a vibrant nature-inspired print — mountains, rivers, trees, and golden skies — on a durable cream canvas base.<br>Spacious enough for your daily essentials, playful enough to make a statement.',
-    details: '<br><br>· Size: 13×13 inches ·<br>Material: Canvas (Cloth) ·<br>Closure: Main zipper compartment ·<br>Handles: Printed canvas straps ·<br>Print: Full allover nature illustration ·<br>Colour: White base with multicolour print ·<br>Machine washable.',
+    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Printed canvas straps<br>· Print: Full allover nature illustration<br>· Colour: White base with multicolour print<br>· Machine washable.',
     inStock: true
   },
   {
