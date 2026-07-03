@@ -4,7 +4,7 @@
 const products = [
   {
     id: 'tb-01',
-    name: 'Tumbler Bottle - Black',
+    name: 'Nooksy Skinny Tumbler — Midnight Black',
     category: 'tumblers',
     categoryLabel: 'Tumbler Bottle',
     price: 795,
@@ -14,20 +14,20 @@ const products = [
       'https://images.nooksy.in/tb1-v2/tb1-1-v2.jpg',
       'https://images.nooksy.in/tb1-v2/tb1-2-v2.jpg',
       'https://images.nooksy.in/tb1-v2/tb1-3-v2.jpg',
-      'https://images.nooksy.in/tb1-v2/tb1-4-v2.jpg',
-      'https://images.nooksy.in/tb1-v2/tb1-5-v2.jpg',
+      'https://images.nooksy.in/tb1-v2/tb1-4-v3.jpg',
+      'https://images.nooksy.in/tb1-v2/tb1-5-v3.jpg',
       'https://images.nooksy.in/tb1-v2/tb1-6-v2.jpg',
       'https://images.nooksy.in/tb1-v2/tb1-7-v2.jpg'
       ],
     colors: [],
     sizes: [],
-    description: 'Stainless Steel Bottle. Stainless Steel Straw. Leak-Proof Lid',
-    details: 'Dimensions: 20oz. 600ml',
+    description: 'Your everyday drink, elevated. The Nooksy Skinny Tumbler keeps your coffee hot and your water cold — all day, wherever you go. Built slim enough to fit any cupholder, bold enough to turn heads.',
+    details: 'Capacity: 600ml (20oz) · Material: Food-grade stainless steel · Finish: High-gloss black · Includes: Leak-proof clear lid + stainless steel straw · Fits standard car cupholders · Hand wash recommended',
     inStock: true
   },
   {
    id: 'tb-02',
-    name: 'Tumbler Bottle - White',
+    name: 'Nooksy Skinny Tumbler — Cloud White',
     category: 'tumblers',
     categoryLabel: 'Tumbler Bottle',
     price: 795,
@@ -37,15 +37,15 @@ const products = [
       'https://images.nooksy.in/tb2-v2/tb2-1-v2.jpg',
       'https://images.nooksy.in/tb2-v2/tb2-2-v2.jpg',
       'https://images.nooksy.in/tb2-v2/tb2-3-v2.jpg',
-      'https://images.nooksy.in/tb2-v2/tb2-4-v2.jpg',
-      'https://images.nooksy.in/tb2-v2/tb2-5-v2.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-4-v3.jpg',
+      'https://images.nooksy.in/tb2-v2/tb2-5-v3.jpg',
       'https://images.nooksy.in/tb2-v2/tb2-6-v2.jpg',
       'https://images.nooksy.in/tb2-v2/tb2-7-v2.jpg'
       ],
     colors: [],
     sizes: [],
-    description: 'Stainless Steel Bottle. Stainless Steel Straw. Leak-Proof Lid',
-    details: 'Dimensions: 20oz. 600ml',
+    description: 'Clean lines, calm energy. The Nooksy Skinny Tumbler in Cloud White features a minimal wave art print that is as effortless as your morning routine. Double-wall insulated to keep your drinks at the perfect temperature all day long.',
+    details: 'Capacity: 600ml (20oz) · Material: Food-grade stainless steel · Finish: Matte white with line art print · Includes: Leak-proof clear lid + stainless steel straw · Fits standard car cupholders · Hand wash recommended',
     inStock: true
   },
   {
