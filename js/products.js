@@ -87,7 +87,7 @@ const products = [
     colors: [],
     sizes: ['8×10 inch', '8×12 inch', '10x12 inch'],
     description: 'Your favourite photo, reimagined as a hand-style sketch.<br>Send us any memory — a wedding moment, anniversary photo, family portrait, or a candid — and we will transform it into a beautiful pencil sketch, framed and ready to gift or display. Every piece is one of a kind, just like the memory behind it.',
-    details: 'Frame material: Premium black wood<br>· Size: 8×10 inches<br>· Includes: High-quality sketch print + frame<br>· Turnaround: 7-10 business days after photo submission<br>· How it works: Place order → WhatsApp your photo to +91 73561 13346 → Approve sketch preview → Dispatched<br>· Perfect for: Weddings, anniversaries, birthdays, Valentines Day',
+    details: <br><br>'Frame material: Premium black wood<br>· Size: 8×10 inches<br>· Includes: High-quality sketch print + frame<br>· Turnaround: 7-10 business days after photo submission<br>· How it works: Place order → WhatsApp your photo to +91 73561 13346 → Approve sketch preview → Dispatched<br>· Perfect for: Weddings, anniversaries, birthdays, Valentines Day',
     inStock: true
   },
 ];
