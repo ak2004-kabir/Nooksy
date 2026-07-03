@@ -308,7 +308,7 @@
     document.getElementById('bc-name').textContent = currentProduct.name;
     document.getElementById('prod-cat').textContent = currentProduct.categoryLabel;
     document.getElementById('prod-name').textContent = currentProduct.name;
-    document.getElementById('prod-details').textContent = (currentProduct.description || '') + ' ' + (currentProduct.details || '');
+    document.getElementById('prod-details').innerHTML = (currentProduct.description || '') + ' ' + (currentProduct.details || '');
 
     document.getElementById('prod-price').textContent = '₹' + currentProduct.price.toLocaleString('en-IN');
     if (currentProduct.originalPrice) {
