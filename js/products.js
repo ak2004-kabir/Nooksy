@@ -71,6 +71,29 @@ const products = [
     inStock: true
   },
   {
+    id: 'ltb-01',
+    name: 'Nooksy Large Tote — Be Kind',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 545,
+    originalPrice: 1099,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/ltb1/ltb1-1.jpg',
+      'https://images.nooksy.in/ltb1/ltb1-2.jpg',
+      'https://images.nooksy.in/ltb1/ltb1-3.jpg',
+      'https://images.nooksy.in/ltb1/ltb1-4.jpg',
+      'https://images.nooksy.in/ltb1/ltb1-5.jpg',
+      'https://images.nooksy.in/ltb1/ltb1-6.jpg',
+      'https://images.nooksy.in/ltb1/ltb1-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'More than a bag — it is a mindset. The Nooksy Be Kind Tote is your everyday carry, done right.<br>Roomy enough for your laptop, notebook, water bottle, and everything in between.<br>The vibrant floral wreath print with honeybees makes it a conversation starter wherever you go.',
+    details: '<br><br>· Size: 14×14 inches<br>· Material: Canvas (Cloth)<br>· Colour: White<br>· Closure: Top zipper<br>· Compartments: 2 spacious main compartments<br>· Pockets: 1 large inner pocket + 2 small inner pockets + 1 inner zipper pocket<br>· Extras: Built-in key holder<br>· Print: Be Kind floral wreath with <br>· Machine washable',
+    inStock: true
+  },
+  {
     id: 'fps-01',
     name: 'Nooksy Sketch Frame — Turn Your Memory into Art',
     category: 'photo-frames',
