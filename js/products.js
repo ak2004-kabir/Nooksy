@@ -71,7 +71,7 @@ const products = [
   },
   {
     id: 'fps-01',
-    name: 'Sketch Photo Frame',
+    name: 'Nooksy Sketch Frame — Turn Your Memory into Art',
     category: 'photo-frames',
     categoryLabel: 'Photo Frames',
     price: 400,
@@ -86,8 +86,8 @@ const products = [
       ],
     colors: [],
     sizes: ['8×10 inch', '8×12 inch', '10x12 inch'],
-    description: 'Turn your memories into a sketch',
-    details: 'Dimensions: 20oz. 600ml',
+    description: 'Your favourite photo, reimagined as a hand-style sketch. Send us any memory — a wedding moment, anniversary photo, family portrait, or a candid — and we will transform it into a beautiful pencil sketch, framed and ready to gift or display. Every piece is one of a kind, just like the memory behind it.',
+    details: 'Frame material: Premium black wood · Size: 8×10 inches · Includes: High-quality sketch print + frame · Turnaround: 3–5 business days after photo submission · How it works: Place order → WhatsApp your photo to +91 73561 13346 → Approve sketch preview → Dispatched · Perfect for: Weddings, anniversaries, birthdays, Valentine's Day',
     inStock: true
   },
 ];
