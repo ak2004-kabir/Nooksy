@@ -50,7 +50,7 @@ const products = [
   },
   {
     id: 'atb-01',
-    name: 'Zipper Tote Bag - Nature',
+    name: 'Nooksy Adventure Tote — Nature Print',
     category: 'tote-bags',
     categoryLabel: 'Tote Bags',
     price: 445,
@@ -59,14 +59,15 @@ const products = [
     images: [
       'https://images.nooksy.in/atb1/atb1-1.jpg',
       'https://images.nooksy.in/atb1/atb1-2.jpg',
-      'https://images.nooksy.in/atb1/atb1-3.jpg',
+      'https://images.nooksy.in/atb1/atb1-3-v2.jpg',
       'https://images.nooksy.in/atb1/atb1-4.jpg',
       'https://images.nooksy.in/atb1/atb1-5.jpg',
-      'https://images.nooksy.in/atb1/atb1-6.jpg'
+      'https://images.nooksy.in/atb1/atb1-6-v2.jpg'
       ],
     colors: [],
     sizes: [],
-    description: 'This tote bag can be used for several purposes.',
+    description: 'Carry the outdoors with you, everywhere.<br>The Nooksy Adventure Tote features a vibrant nature-inspired print — mountains, rivers, trees, and golden skies — on a durable cream canvas base.<br>Spacious enough for your daily essentials, playful enough to make a statement.',
+    details: '<br><br>· Size: 13×13 inches ·<br>Material: Canvas (Cloth) ·<br>Closure: Main zipper compartment ·<br>Handles: Printed canvas straps ·<br>Print: Full allover nature illustration ·<br>Colour: White base with multicolour print ·<br>Machine washable.',
     inStock: true
   },
   {
