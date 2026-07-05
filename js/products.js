@@ -115,6 +115,28 @@ const products = [
     inStock: true
   },
   {
+    id: 'atb-05',
+    name: 'Nooksy Fuji Tote — Japanese Art Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 445,
+    originalPrice: 999,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/atb5/atb5-1.jpg',
+      'https://images.nooksy.in/atb5/atb5-2.jpg',
+      'https://images.nooksy.in/atb5/atb5-3.jpg',
+      'https://images.nooksy.in/atb5/atb5-4.jpg',
+      'https://images.nooksy.in/atb5/atb5-5.jpg',
+      'https://images.nooksy.in/atb5/atb5-6.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'alm, bold, unforgettable.<br>The Fuji Tote draws from classic Japanese art — a fiery maple tree, a torii gate, and Mount Fuji rising through the mist — all set against a deep navy canvas.<br>Carries your day with the quiet confidence of someone who has good taste.',
+    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Natural cream canvas straps<br>· Colour: Deep navy base with red and cream print<br>· Print: Japanese landscape art — Mount Fuji, maple tree, torii gate<br> · Machine washable.',
+    inStock: true
+  },
+  {
     id: 'ltb-01',
     name: 'Nooksy Large Tote — Be Kind',
     category: 'tote-bags',
