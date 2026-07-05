@@ -132,8 +132,30 @@ const products = [
       ],
     colors: [],
     sizes: [],
-    description: 'alm, bold, unforgettable.<br>The Fuji Tote draws from classic Japanese art — a fiery maple tree, a torii gate, and Mount Fuji rising through the mist — all set against a deep navy canvas.<br>Carries your day with the quiet confidence of someone who has good taste.',
-    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Natural cream canvas straps<br>· Colour: Deep navy base with red and cream print<br>· Print: Japanese landscape art — Mount Fuji, maple tree, torii gate<br> · Machine washable.',
+    description: 'Calm, bold, unforgettable.<br>The Fuji Tote draws from classic Japanese art — a fiery maple tree, a torii gate, and Mount Fuji rising through the mist — all set against a deep navy canvas.<br>Carries your day with the quiet confidence of someone who has good taste.',
+    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Natural cream canvas straps<br>· Colour: Deep navy base with red and white print<br>· Print: Japanese landscape art — Mount Fuji, maple tree, torii gate<br> · Machine washable.',
+    inStock: true
+  },
+  {
+    id: 'atb-07',
+    name: 'Nooksy Noir Bloom Tote — Floral Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 445,
+    originalPrice: 999,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/atb7/atb7-1.jpg',
+      'https://images.nooksy.in/atb7/atb7-2.jpg',
+      'https://images.nooksy.in/atb7/atb7-3.jpg',
+      'https://images.nooksy.in/atb7/atb7-4.jpg',
+      'https://images.nooksy.in/atb7/atb7-5.jpg',
+      'https://images.nooksy.in/atb7/atb7-6.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Classic contrast, bold florals.<br>The Noir Bloom Tote features an allover white botanical print on deep black canvas — the kind of design that works just as well with a kurta as it does with a dress.<br>imeless, versatile, and always in style.',
+    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Printed canvas straps<br>· Colour: Black base with white print<br>· Print: Allover white floral botanical<br> · Machine washable.',
     inStock: true
   },
   {
