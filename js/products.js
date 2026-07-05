@@ -71,6 +71,50 @@ const products = [
     inStock: true
   },
   {
+    id: 'atb-02',
+    name: 'Nooksy Wonderland Tote — Fantasy Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 445,
+    originalPrice: 999,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/atb2/atb2-1.jpg',
+      'https://images.nooksy.in/atb2/atb2-2.jpg',
+      'https://images.nooksy.in/atb2/atb2-3.jpg',
+      'https://images.nooksy.in/atb2/atb2-4.jpg',
+      'https://images.nooksy.in/atb2/atb2-5.jpg',
+      'https://images.nooksy.in/atb2/atb2-6.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Not your average tote.<br>The Nooksy Wonderland Tote is a wearable work of art — bursting with unicorns, owls, forests, and hidden creatures across a vivid illustrated canvas.<br>Bold, playful, and impossible to miss.<br>For the ones who refuse to blend in.',
+    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Fully printed canvas straps<br>· Print: Full allover fantasy illustration<br> · Machine washable.',
+    inStock: true
+  },
+  {
+    id: 'atb-03',
+    name: 'Nooksy Sunday Ride Tote — Watercolour Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 445,
+    originalPrice: 999,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/atb3/atb3-1.jpg',
+      'https://images.nooksy.in/atb3/atb3-2.jpg',
+      'https://images.nooksy.in/atb3/atb3-3.jpg',
+      'https://images.nooksy.in/atb3/atb3-4.jpg',
+      'https://images.nooksy.in/atb3/atb3-5.jpg',
+      'https://images.nooksy.in/atb3/atb3-6.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Soft colours, easy days.<br>The Sunday Ride Tote brings a whimsical watercolour bicycle illustration to your everyday carry — delicate brushstrokes in peach, mint, and blush on a natural cream canvas.<br>The kind of bag that makes a simple outing feel a little more special.',
+    details: '<br><br>· Size: 13×13 inches<br>· Material: Canvas (Cloth)<br>· Closure: Main zipper compartment<br>· Handles: Natural canvas straps<br>· Colour: Cream base with pastel multicolour print<br>· Print: Watercolour bicycle illustration<br> · Machine washable.',
+    inStock: true
+  },
+  {
     id: 'ltb-01',
     name: 'Nooksy Large Tote — Be Kind',
     category: 'tote-bags',
