@@ -228,6 +228,52 @@ const products = [
     inStock: true
   },
   {
+    id: 'ltb-05',
+    name: 'Nooksy Golden Valley Tote — Autumn Landscape Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 545,
+    originalPrice: 1099,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/ltb5/ltb5-1.jpg',
+      'https://images.nooksy.in/ltb5/ltb5-2.jpg',
+      'https://images.nooksy.in/ltb5/ltb5-3.jpg',
+      'https://images.nooksy.in/ltb5/ltb5-4.jpg',
+      'https://images.nooksy.in/ltb5/ltb5-5.jpg',
+      'https://images.nooksy.in/ltb5/ltb5-6.jpg',
+      'https://images.nooksy.in/ltb5/ltb5-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'That feeling of an open road, warm light, and nowhere to be.<br>The Golden Valley Tote captures an autumn countryside at golden hour — rolling hills, fiery trees, and a winding path home — printed on a bold black canvas.<br>Organised enough for your everyday, beautiful enough to notice.',
+    details: '<br><br>· Size: 14×14 inches<br>· Material: Canvas (Cloth)<br>· Colour: Black with warm autumn landscape print<br>· Closure: Top zipper<br>· Compartments: 2 spacious main compartments<br>· Pockets: 1 large inner pocket + 2 small inner pockets + 1 inner zipper pocket<br>· Extras: Built-in key holder<br>· Machine washable',
+    inStock: true
+  },
+  {
+    id: 'ltb-07',
+    name: 'Nooksy Youniverse Tote — Galaxy Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 545,
+    originalPrice: 1099,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/ltb7/ltb7-1.jpg',
+      'https://images.nooksy.in/ltb7/ltb7-2.jpg',
+      'https://images.nooksy.in/ltb7/ltb7-3.jpg',
+      'https://images.nooksy.in/ltb7/ltb7-4.jpg',
+      'https://images.nooksy.in/ltb7/ltb7-5.jpg',
+      'https://images.nooksy.in/ltb7/ltb7-6.jpg',
+      'https://images.nooksy.in/ltb7/ltb7-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'The universe is yours — carry it.<br>The Youniverse Tote makes a statement without saying much — bold retro type, scattered constellations, shooting stars, and a lone UFO on deep black canvas.<br>For the dreamers, the late-night thinkers, and everyone who is ever felt like the main character..',
+    details: '<br><br>· Size: 14×14 inches<br>· Material: Canvas (Cloth)<br>· Colour: Black with blue and white galaxy print<br>· Closure: Top zipper<br>· Compartments: 2 spacious main compartments<br>· Pockets: 1 large inner pocket + 2 small inner pockets + 1 inner zipper pocket<br>· Extras: Built-in key holder<br>· Machine washable',
+    inStock: true
+  },
+  {
     id: 'fps-01',
     name: 'Nooksy Sketch Frame — Turn Your Memory into Art',
     category: 'photo-frames',
