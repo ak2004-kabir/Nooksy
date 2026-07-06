@@ -45,7 +45,30 @@ const products = [
     colors: [],
     sizes: [],
     description: 'Clean lines, calm energy. The Nooksy Skinny Tumbler in Cloud White features a minimal wave art print that is as effortless as your morning routine.<br>Double-wall insulated to keep your drinks at the perfect temperature all day long.',
-    details: '<br><br>· Capacity: 600ml (20oz)<br>· Material: Food-grade stainless steel<br>· Finish: Matte white with line art print<br>· Includes: Leak-proof clear lid + stainless steel straw<br>· Fits standard car cupholders<br>· Hand wash recommended',
+    details: '<br><br>· Capacity: 600ml (20oz)<br>· Material: Food-grade stainless steel<br>· Finish: Glossy white with line art print<br>· Includes: Leak-proof clear lid + stainless steel straw<br>· Fits standard car cupholders<br>· Hand wash recommended',
+    inStock: true
+  },
+  {
+   id: 'tb-03',
+    name: 'Nooksy Skinny Tumbler — Pastel Bloom',
+    category: 'tumblers',
+    categoryLabel: 'Tumbler Bottle',
+    price: 795,
+    originalPrice: 1299,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/tb3/tb3-1.jpg',
+      'https://images.nooksy.in/tb3/tb3-2.jpg',
+      'https://images.nooksy.in/tb3/tb3-3.jpg',
+      'https://images.nooksy.in/tb3/tb3-4.jpg',
+      'https://images.nooksy.in/tb3/tb3-5.jpg',
+      'https://images.nooksy.in/tb3/tb3-6.jpg',
+      'https://images.nooksy.in/tb3/tb3-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Soft mornings, quieter days.<br>The Pastel Bloom Tumbler wears its art lightly — overlapping watercolour circles in blush, peach, and sage drift across a clean white finish.<br>The kind of tumbler you actually want on your desk, not just in your bag.',
+    details: '<br><br>· Capacity: 600ml (20oz)<br>· Material: Food-grade stainless steel<br>· Finish: Glossy white with pastel watercolour print<br>· Includes: Leak-proof clear lid + stainless steel straw<br>· Fits standard car cupholders<br>· Hand wash recommended',
     inStock: true
   },
   {
