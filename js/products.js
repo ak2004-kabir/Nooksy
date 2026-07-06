@@ -182,6 +182,52 @@ const products = [
     inStock: true
   },
   {
+    id: 'ltb-02',
+    name: 'Nooksy Vitamin Sea Tote — Ocean Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 545,
+    originalPrice: 1099,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/ltb2/ltb2-1.jpg',
+      'https://images.nooksy.in/ltb2/ltb2-2.jpg',
+      'https://images.nooksy.in/ltb2/ltb2-3.jpg',
+      'https://images.nooksy.in/ltb2/ltb2-4.jpg',
+      'https://images.nooksy.in/ltb2/ltb2-5.jpg',
+      'https://images.nooksy.in/ltb2/ltb2-6.jpg',
+      'https://images.nooksy.in/ltb2/ltb2-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'For those who run on saltwater and good vibes.<br>The Vitamin Sea Tote features a glowing ocean-inspired print — coral reefs, starfish, and sea shells in electric blue and lime — on a sleek black canvas.<br>Built bigger and smarter than your average tote, with enough pockets to actually stay organised.',
+    details: '<br><br>· Size: 14×14 inches<br>· Material: Canvas (Cloth)<br>· Colour: Black with neon ocean print<br>· Closure: Top zipper<br>· Compartments: 2 spacious main compartments<br>· Pockets: 1 large inner pocket + 2 small inner pockets + 1 inner zipper pocket<br>· Extras: Built-in key holder<br>· Machine washable',
+    inStock: true
+  },
+  {
+    id: 'ltb-03',
+    name: 'Nooksy Les Fauves Tote — Art Exhibition Print',
+    category: 'tote-bags',
+    categoryLabel: 'Tote Bags',
+    price: 545,
+    originalPrice: 1099,
+    badge: 'sale',
+    images: [
+      'https://images.nooksy.in/ltb3/ltb3-1.jpg',
+      'https://images.nooksy.in/ltb3/ltb3-2.jpg',
+      'https://images.nooksy.in/ltb3/ltb3-3.jpg',
+      'https://images.nooksy.in/ltb3/ltb3-4.jpg',
+      'https://images.nooksy.in/ltb3/ltb3-5.jpg',
+      'https://images.nooksy.in/ltb3/ltb3-6.jpg',
+      'https://images.nooksy.in/ltb3/ltb3-7.jpg'
+      ],
+    colors: [],
+    sizes: [],
+    description: 'Carry a piece of art history.<br>The Les Fauves Tote is inspired by the bold colours and abstract forms of the French Fauvist movement — tropical leaves, graphic cut-outs, and vivid contrasts on a clean off-white canvas.<br>The tote for people with an eye for design and a life that demands more than one pocket.',
+    details: '<br><br>· Size: 14×14 inches<br>· Material: Canvas (Cloth)<br>· Colour: Off-white with multicolour art print<br>· Closure: Top zipper<br>· Compartments: 2 spacious main compartments<br>· Pockets: 1 large inner pocket + 2 small inner pockets + 1 inner zipper pocket<br>· Extras: Built-in key holder<br>· Machine washable',
+    inStock: true
+  },
+  {
     id: 'fps-01',
     name: 'Nooksy Sketch Frame — Turn Your Memory into Art',
     category: 'photo-frames',
