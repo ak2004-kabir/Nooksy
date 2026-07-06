@@ -68,7 +68,7 @@ const products = [
     colors: [],
     sizes: [],
     description: 'Soft mornings, quieter days.<br>The Pastel Bloom Tumbler wears its art lightly — overlapping watercolour circles in blush, peach, and sage drift across a clean white finish.<br>The kind of tumbler you actually want on your desk, not just in your bag.',
-    details: '<br><br>· Capacity: 600ml (20oz)<br>· Material: Food-grade stainless steel<br>· Finish: Glossy white with pastel watercolour print<br>· Includes: Leak-proof clear lid + stainless steel straw<br>· Fits standard car cupholders<br>· Hand wash recommended',
+    details: '<br><br>· Capacity: 600ml (20oz)<br>· Material: Food-grade stainless steel<br>· Finish: Glossy white with pastel watercolour print<br>· Includes: Leak-proof clear lid + stainless steel straw<br>· Fits standard car cupholders<br>· Hand wash recommended.',
     inStock: true
   },
   {
