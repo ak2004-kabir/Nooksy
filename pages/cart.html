@@ -384,8 +384,8 @@
     container.innerHTML = cart.map(item => {
       const prod = products.find(p => p.id === item.id);
       const imgTag = item.image
-        ? `<img src="../${item.image}" alt="${item.name}">`
-        : `<i class="ti ti-photo"></i>`;
+  ? `<img src="${item.image}" alt="${item.name}">`
+  : `<i class="ti ti-photo"></i>`;
       const oldPrice = prod && prod.originalPrice
         ? `<div class="item-price-old">₹${prod.originalPrice.toLocaleString('en-IN')}</div>
            <div class="item-saving">Save ₹${((prod.originalPrice - prod.price) * item.qty).toLocaleString('en-IN')}</div>`
@@ -452,7 +452,7 @@
       <div class="product-card">
         <a href="product.html?id=${p.id}">
           <div class="product-img" style="height:100px">
-            ${p.image ? `<img src="../${p.image}" alt="${p.name}">` : `<i class="ti ti-photo" style="font-size:28px;color:#ccc"></i>`}
+            ${getCardImage(p) ? `<img src="${getCardImage(p)}" alt="${p.name}">` : `<i class="ti ti-photo" style="font-size:28px;color:#ccc"></i>`}
           </div>
           <div class="product-info" style="padding:0.75rem">
             <div class="prod-name" style="font-size:12px">${p.name}</div>
