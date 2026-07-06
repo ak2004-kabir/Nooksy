@@ -10,7 +10,11 @@ function updateCartBadge() {
 }
 
 function addToCart(product) {
-  const existing = cart.find(i => i.id === product.id);
+  const existing = cart.find(i => 
+    i.id === product.id && 
+    i.size === product.size && 
+    i.color === product.color
+  );
   if (existing) { existing.qty += 1; }
   else { cart.push({ ...product, qty: 1 }); }
   localStorage.setItem('nooksy_cart', JSON.stringify(cart));
