@@ -370,15 +370,38 @@
 
     // Sizes
     const sizeSection = document.getElementById('size-section');
-    if (currentProduct.sizes && currentProduct.sizes.length > 0) {
-      selectedSize = currentProduct.sizes[0];
-      document.getElementById('size-options').innerHTML = currentProduct.sizes.map((s, i) =>
-        `<button class="size-btn ${i === 0 ? 'active' : ''}" onclick="selectSize(this, '${s}')">${s}</button>`
-      ).join('');
-      sizeSection.style.display = 'block';
-    } else {
-      sizeSection.style.display = 'none';
-    }
+if (currentProduct.variants && currentProduct.variants.length > 0) {
+  const first = currentProduct.variants[0];
+  selectedSize = first.size;
+
+  // Set first variant price on load
+  document.getElementById('prod-price').textContent = '₹' + first.price.toLocaleString('en-IN');
+  if (first.originalPrice) {
+    document.getElementById('prod-old').textContent = '₹' + first.originalPrice.toLocaleString('en-IN');
+    const saveEl = document.getElementById('prod-save');
+    saveEl.textContent = 'Save ₹' + (first.originalPrice - first.price).toLocaleString('en-IN');
+    saveEl.style.display = 'inline-block';
+  } else {
+    document.getElementById('prod-old').textContent = '';
+    document.getElementById('prod-save').style.display = 'none';
+  }
+
+  document.getElementById('size-options').innerHTML = currentProduct.variants.map((v, i) =>
+    `<button class="size-btn ${i === 0 ? 'active' : ''}"
+      onclick="selectVariant(this, '${v.size}', ${v.price}, ${v.originalPrice || null})">
+      ${v.size}
+    </button>`
+  ).join('');
+  sizeSection.style.display = 'block';
+} else if (currentProduct.sizes && currentProduct.sizes.length > 0) {
+  selectedSize = currentProduct.sizes[0];
+  document.getElementById('size-options').innerHTML = currentProduct.sizes.map((s, i) =>
+    `<button class="size-btn ${i === 0 ? 'active' : ''}" onclick="selectSize(this, '${s}')">${s}</button>`
+  ).join('');
+  sizeSection.style.display = 'block';
+} else {
+  sizeSection.style.display = 'none';
+}
 
     // Related products
     const related = products.filter(p => p.id !== currentProduct.id && p.category === currentProduct.category).slice(0, 4);
@@ -387,13 +410,21 @@
     document.getElementById('related-grid').innerHTML = relatedFinal.map(p => renderProductCard(p, '../')).join('');
 
     document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-      addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
-    });
+  const currentVariant = currentProduct.variants
+    ? currentProduct.variants.find(v => v.size === selectedSize)
+    : null;
+  const currentPrice = currentVariant ? currentVariant.price : currentProduct.price;
+  addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentPrice, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
+});
 
     document.getElementById('buy-now-btn').addEventListener('click', () => {
-      addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
-      window.location.href = 'cart.html';
-    });
+  const currentVariant = currentProduct.variants
+    ? currentProduct.variants.find(v => v.size === selectedSize)
+    : null;
+  const currentPrice = currentVariant ? currentVariant.price : currentProduct.price;
+  addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentPrice, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
+  window.location.href = 'cart.html';
+});
   }
 
   function selectThumb(el, src) {
@@ -411,11 +442,23 @@
     document.getElementById('selected-color').textContent = color;
   }
 
-  function selectSize(el, size) {
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    selectedSize = size;
+  function selectVariant(el, size, price, originalPrice) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  selectedSize = size;
+
+  document.getElementById('prod-price').textContent = '₹' + price.toLocaleString('en-IN');
+
+  if (originalPrice && originalPrice !== 'null') {
+    document.getElementById('prod-old').textContent = '₹' + originalPrice.toLocaleString('en-IN');
+    const saveEl = document.getElementById('prod-save');
+    saveEl.textContent = 'Save ₹' + (originalPrice - price).toLocaleString('en-IN');
+    saveEl.style.display = 'inline-block';
+  } else {
+    document.getElementById('prod-old').textContent = '';
+    document.getElementById('prod-save').style.display = 'none';
   }
+}
 
   function changeQty(delta) {
     qty = Math.max(1, qty + delta);
