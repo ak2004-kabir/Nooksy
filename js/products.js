@@ -297,13 +297,18 @@ const products = [
     inStock: true
   },
   {
-    id: 'fps-01',
+    id: 'sfp-01',
     name: 'Nooksy Sketch Frame — Turn Your Memory into Art',
     category: 'photo-frames',
     categoryLabel: 'Photo Frames',
     price: 400,
-    originalPrice: 899,
+    originalPrice: null,
     badge: 'bestseller',
+    variants: [
+    { size: '8×10 inches',  price: 400, originalPrice: 899 },
+    { size: '8×12 inches', price: 450, originalPrice: 999 },
+    { size: '10×12 inches', price: 500, originalPrice: 1099 }
+  ],
    images: [
       'https://images.nooksy.in/spf1/spf1-1.jpg',
       'https://images.nooksy.in/spf1/spf1-2.jpg',
@@ -312,7 +317,7 @@ const products = [
       'https://images.nooksy.in/spf1/spf1-5.jpg'
       ],
     colors: [],
-    sizes: ['8×10 inch', '8×12 inch', '10x12 inch'],
+    sizes: [],
     description: 'Your favourite photo, reimagined as a hand-style sketch.<br>Send us any memory — a wedding moment, anniversary photo, family portrait, or a candid — and we will transform it into a beautiful pencil sketch, framed and ready to gift or display. Every piece is one of a kind, just like the memory behind it.',
     details: '<br><br>· Frame material: Premium black wood<br>· Size: 8×10 inches<br>· Includes: High-quality sketch print + frame<br>· Turnaround: 7-10 business days after photo submission<br>· How it works: Place order → WhatsApp your photo to +91 73561 13346 → Approve sketch preview → Dispatched<br>· Perfect for: Weddings, anniversaries, birthdays, Valentines Day',
     inStock: true
