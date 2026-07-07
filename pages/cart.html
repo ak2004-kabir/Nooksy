@@ -460,7 +460,7 @@
           </div>
         </a>
         <div style="padding:0 0.75rem 0.75rem">
-          <button class="prod-add" style="font-size:11px;padding:7px" onclick="addToCart({id:'${p.id}',name:'${p.name}',price:${p.price}});renderCartItems();renderSummary()">Add to Cart</button>
+          <button class="prod-add" style="font-size:11px;padding:7px" onclick="addToCart({id:'${p.id}',name:'${p.name}',price:${p.price},image:'${getCardImage(p)}'});renderCartItems();renderSummary()">Add to Cart</button>
         </div>
       </div>`).join('');
   }
