@@ -331,9 +331,20 @@
   function renderSummary() {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
     const saleDiscount = cart.reduce((s, i) => {
-      const prod = products.find(p => p.id === i.id);
-      return s + (prod && prod.originalPrice ? (prod.originalPrice - prod.price) * i.qty : 0);
-    }, 0);
+  const prod = products.find(x => x.id === i.id);
+  if (!prod) return s;
+  // Check variant original price first, then fall back to product-level
+  if (prod.variants && prod.variants.length > 0) {
+    const variant = prod.variants.find(v => v.size === i.size);
+    if (variant && variant.originalPrice) {
+      return s + (variant.originalPrice - variant.price) * i.qty;
+    }
+  }
+  if (prod.originalPrice) {
+    return s + (prod.originalPrice - prod.price) * i.qty;
+  }
+  return s;
+}, 0);
 
     let promoDiscount = 0;
     if (appliedPromo) {
