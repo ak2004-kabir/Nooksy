@@ -32,7 +32,7 @@ const products = [
     categoryLabel: 'Tumbler Bottle',
     price: 795,
     originalPrice: 1299,
-    badge: 'sale',
+    badge: 'bestseller',
     images: [
       'https://images.nooksy.in/tb2-v2/tb2-1-v2.jpg',
       'https://images.nooksy.in/tb2-v2/tb2-2-v2.jpg',
@@ -100,7 +100,7 @@ const products = [
     categoryLabel: 'Tote Bags',
     price: 445,
     originalPrice: 999,
-    badge: 'sale',
+    badge: 'bestseller',
     images: [
       'https://images.nooksy.in/atb2/atb2-1.jpg',
       'https://images.nooksy.in/atb2/atb2-2.jpg',
