@@ -471,13 +471,34 @@ if (currentProduct.variants && currentProduct.variants.length > 0) {
     document.getElementById('qty-display').textContent = qty;
   }
 
-  document.addEventListener('DOMContentLoaded', loadProduct);
+  document.addEventListener('DOMContentLoaded', () => {
+  loadProduct();
+  setTimeout(initWishlistButton, 100);
+});
 
   onAuthStateChange(user => {
     const link = document.querySelector('a[aria-label="Account"]');
     if (!link) return;
     link.href = user ? 'account.html' : 'login.html';
   });
+  
+  function toggleWishlistPDP() {
+  if (!currentProduct) return;
+  toggleWishlist(currentProduct.id);
+  const wishlisted = isWishlisted(currentProduct.id);
+  document.getElementById('wishlist-icon').className = wishlisted ? 'ti ti-heart-filled' : 'ti ti-heart';
+  document.getElementById('wishlist-txt').textContent = wishlisted ? 'Wishlisted' : 'Add to Wishlist';
+  document.getElementById('wishlist-btn').style.color = wishlisted ? '#c0392b' : '#000';
+}
+
+// Call after product loads to set initial state
+function initWishlistButton() {
+  if (!currentProduct) return;
+  const wishlisted = isWishlisted(currentProduct.id);
+  document.getElementById('wishlist-icon').className = wishlisted ? 'ti ti-heart-filled' : 'ti ti-heart';
+  document.getElementById('wishlist-txt').textContent = wishlisted ? 'Wishlisted' : 'Add to Wishlist';
+  document.getElementById('wishlist-btn').style.color = wishlisted ? '#c0392b' : '#000';
+}
 </script>
 </body>
 </html>
