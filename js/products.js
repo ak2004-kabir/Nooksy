@@ -333,7 +333,12 @@ function getCardImage(p) {
 // Render a product card
 function renderProductCard(p, basePath = '') {
   const badge = p.badge ? `<span class="prod-badge badge-${p.badge}">${p.badge}</span>` : '';
-  const oldPrice = p.originalPrice ? `<span class="prod-old">₹${p.originalPrice.toLocaleString('en-IN')}</span>` : '';
+  // Get original price — check product level first, then first variant
+let displayOriginal = p.originalPrice;
+if (!displayOriginal && p.variants && p.variants.length > 0) {
+  displayOriginal = p.variants[0].originalPrice || null;
+}
+const oldPrice = displayOriginal ? `<span class="prod-old">₹${displayOriginal.toLocaleString('en-IN')}</span>` : '';
   const imgSrc = getCardImage(p);
   const imgTag = imgSrc
     ? `<img src="${imgSrc}" alt="${p.name}" loading="lazy" />`
