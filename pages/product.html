@@ -414,7 +414,10 @@ if (currentProduct.variants && currentProduct.variants.length > 0) {
     ? currentProduct.variants.find(v => v.size === selectedSize)
     : null;
   const currentPrice = currentVariant ? currentVariant.price : currentProduct.price;
-  addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentPrice, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
+  const currentOriginalPrice = currentVariant
+    ? (currentVariant.originalPrice || null)
+    : (currentProduct.originalPrice || null);
+  addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentPrice, originalPrice: currentOriginalPrice, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
 });
 
     document.getElementById('buy-now-btn').addEventListener('click', () => {
@@ -422,7 +425,10 @@ if (currentProduct.variants && currentProduct.variants.length > 0) {
     ? currentProduct.variants.find(v => v.size === selectedSize)
     : null;
   const currentPrice = currentVariant ? currentVariant.price : currentProduct.price;
-  addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentPrice, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
+  const currentOriginalPrice = currentVariant
+    ? (currentVariant.originalPrice || null)
+    : (currentProduct.originalPrice || null);
+  addToCart({ id: currentProduct.id, name: currentProduct.name, price: currentPrice, originalPrice: currentOriginalPrice, image: images[0] || '', color: selectedColor, size: selectedSize, qty });
   window.location.href = 'cart.html';
 });
   }
