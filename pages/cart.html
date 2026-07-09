@@ -307,13 +307,20 @@
   }
 
   function getEffectiveOriginalPrice(item) {
-    // First check if originalPrice is stored directly on cart item (variant products)
-    if (item.originalPrice) return item.originalPrice;
-    // Fallback — look up from products array (non-variant products)
-    const prod = products.find(x => x.id === item.id);
-    if (prod && prod.originalPrice) return prod.originalPrice;
-    return null;
+  // Check cart item directly first (set when added via product page)
+  if (item.originalPrice) return item.originalPrice;
+  // Look up product
+  const prod = products.find(x => x.id === item.id);
+  if (!prod) return null;
+  // Check variant originalPrice using item's size
+  if (prod.variants && prod.variants.length > 0 && item.size) {
+    const variant = prod.variants.find(v => v.size === item.size);
+    if (variant && variant.originalPrice) return variant.originalPrice;
   }
+  // Fall back to product level originalPrice
+  if (prod.originalPrice) return prod.originalPrice;
+  return null;
+}
 
   function renderSummary() {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
