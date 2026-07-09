@@ -127,6 +127,11 @@
         <span class="fcount" id="count-tote-bags"></span>
       </div>
       <div class="filter-option">
+  <input type="radio" name="cat" id="cat-large-tote" value="large-tote-bags" onchange="applyFilters()">
+  <label for="cat-large-tote">Large Tote Bags</label>
+  <span class="fcount" id="count-large-tote-bags"></span>
+</div>
+      <div class="filter-option">
         <input type="radio" name="cat" id="cat-frames" value="photo-frames" onchange="applyFilters()">
         <label for="cat-frames">Photo Frames</label>
         <span class="fcount" id="count-photo-frames"></span>
@@ -245,7 +250,7 @@
 
   function initCategoryCounts() {
     document.getElementById('count-all').textContent = products.length;
-    ['tote-bags', 'photo-frames', 'tumblers'].forEach(cat => {
+    ['tote-bags', 'photo-frames', 'tumblers', 'large-tote-bags'].forEach(cat => {
       const el = document.getElementById('count-' + cat);
       if (el) el.textContent = products.filter(p => p.category === cat).length;
     });
