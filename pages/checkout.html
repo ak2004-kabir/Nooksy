@@ -328,9 +328,15 @@
   function renderSummary() {
     const subtotal = getSubtotal();
     const saleDiscount = cart.reduce((s, i) => {
-      const p = products.find(x => x.id === i.id);
-      return s + (p && p.originalPrice ? (p.originalPrice - p.price) * i.qty : 0);
-    }, 0);
+  if (i.originalPrice) return s + (i.originalPrice - i.price) * i.qty;
+  const p = products.find(x => x.id === i.id);
+  if (p && p.variants && i.size) {
+    const v = p.variants.find(x => x.size === i.size);
+    if (v && v.originalPrice) return s + (v.originalPrice - i.price) * i.qty;
+  }
+  if (p && p.originalPrice) return s + (p.originalPrice - p.price) * i.qty;
+  return s;
+}, 0);
     const shipping = getShipping(subtotal);
     const total = subtotal + shipping;
 
@@ -355,7 +361,7 @@
     container.innerHTML = cart.map(item => `
       <div class="order-item">
         <div class="order-item-img">
-          ${item.image ? `<img src="../${item.image}" alt="${item.name}">` : `<i class="ti ti-photo"></i>`}
+          ${item.image ? `<img src="${item.image}" alt="${item.name}">` : `<i class="ti ti-photo"></i>`}
           <span class="order-item-qty">${item.qty}</span>
         </div>
         <div style="flex:1">
