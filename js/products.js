@@ -230,7 +230,7 @@ const products = [
   {
     id: 'ltb-03',
     name: 'Nooksy Les Fauves Tote — Art Exhibition Print',
-    category: 'tote-bags',
+    category: 'large-tote-bags',
     categoryLabel: 'Tote Bags',
     price: 545,
     originalPrice: 1099,
@@ -253,7 +253,7 @@ const products = [
   {
     id: 'ltb-05',
     name: 'Nooksy Golden Valley Tote — Autumn Landscape Print',
-    category: 'tote-bags',
+    category: 'large-tote-bags',
     categoryLabel: 'Tote Bags',
     price: 545,
     originalPrice: 1099,
@@ -276,7 +276,7 @@ const products = [
   {
     id: 'ltb-07',
     name: 'Nooksy Youniverse Tote — Galaxy Print',
-    category: 'tote-bags',
+    category: 'large-tote-bags',
     categoryLabel: 'Tote Bags',
     price: 545,
     originalPrice: 1099,
