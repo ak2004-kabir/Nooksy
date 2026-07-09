@@ -238,13 +238,9 @@
 
     <!-- WISHLIST -->
     <div class="account-section" id="tab-wishlist">
-      <div class="section-title">My Wishlist</div>
-      <div class="empty-state">
-        <i class="ti ti-heart"></i>
-        <p style="margin-bottom:1rem">Your wishlist is empty.</p>
-        <a href="shop.html" class="btn-primary">Browse Products</a>
-      </div>
-    </div>
+  <div class="section-title">My Wishlist</div>
+  <div id="wishlist-container"></div>
+</div>
 
   </div>
 </div>
@@ -342,11 +338,12 @@
   });
 
   function switchTab(tab) {
-    document.querySelectorAll('.account-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    event.currentTarget.classList.add('active');
-  }
+  document.querySelectorAll('.account-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (tab === 'wishlist') renderWishlist();
+}
 
   async function loadOrders() {
     const orders = await getUserOrders();
@@ -435,6 +432,23 @@
   // Clear local cart
   localStorage.removeItem('nooksy_cart');
   window.location.href = '../index.html';
+}
+  function renderWishlist() {
+  const container = document.getElementById('wishlist-container');
+  if (!container) return;
+  const wishlist = JSON.parse(localStorage.getItem('nooksy_wishlist') || '[]');
+  if (wishlist.length === 0) {
+    container.innerHTML = '<div class="empty-state"><i class="ti ti-heart" style="font-size:48px;color:#ddd;display:block;margin-bottom:1rem"></i><p style="margin-bottom:1rem">Your wishlist is empty.</p><a href="shop.html" class="btn-primary">Browse Products</a></div>';
+    return;
+  }
+  const wishedProducts = products.filter(p => wishlist.includes(p.id));
+  if (wishedProducts.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>No products found.</p></div>';
+    return;
+  }
+  container.innerHTML = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">'
+    + wishedProducts.map(p => renderProductCard(p, '../')).join('')
+    + '</div>';
 }
 </script>
 </body>
