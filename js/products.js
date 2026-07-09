@@ -184,7 +184,7 @@ const products = [
   {
     id: 'ltb-01',
     name: 'Nooksy Large Tote — Be Kind',
-    category: 'tote-bags',
+    category: 'large-tote-bags',
     categoryLabel: 'Tote Bags',
     price: 545,
     originalPrice: 1099,
@@ -207,7 +207,7 @@ const products = [
   {
     id: 'ltb-02',
     name: 'Nooksy Vitamin Sea Tote — Ocean Print',
-    category: 'tote-bags',
+    category: 'large-tote-bags',
     categoryLabel: 'Tote Bags',
     price: 545,
     originalPrice: 1099,
