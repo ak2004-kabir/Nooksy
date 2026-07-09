@@ -343,7 +343,7 @@
   document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   event.currentTarget.classList.add('active');
-  if (tab === 'wishlist') renderWishlist();
+  if (tab === 'wishlist') renderWishlist(); // ← this line must be here
 }
 
   async function loadOrders() {
