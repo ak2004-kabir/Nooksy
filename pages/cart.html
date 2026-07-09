@@ -331,8 +331,10 @@
   function renderSummary() {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
     const saleDiscount = cart.reduce((s, i) => {
-  if (i.originalPrice) {
-    return s + (i.originalPrice - i.price) * i.qty;
+  const prod = products.find(x => x.id === i.id);
+  const effectiveOriginal = i.originalPrice || (prod && prod.originalPrice) || null;
+  if (effectiveOriginal) {
+    return s + (effectiveOriginal - i.price) * i.qty;
   }
   return s;
 }, 0);
@@ -388,9 +390,11 @@
       const imgTag = item.image
   ? `<img src="${item.image}" alt="${item.name}">`
   : `<i class="ti ti-photo"></i>`;
-     const oldPrice = item.originalPrice
-  ? `<div class="item-price-old">₹${item.originalPrice.toLocaleString('en-IN')}</div>
-     <div class="item-saving">Save ₹${((item.originalPrice - item.price) * item.qty).toLocaleString('en-IN')}</div>`
+     const prod = products.find(x => x.id === item.id);
+const effectiveOriginal = item.originalPrice || (prod && prod.originalPrice) || null;
+const oldPrice = effectiveOriginal
+  ? `<div class="item-price-old">₹${effectiveOriginal.toLocaleString('en-IN')}</div>
+     <div class="item-saving">Save ₹${((effectiveOriginal - item.price) * item.qty).toLocaleString('en-IN')}</div>`
   : '';
       const meta = [item.color, item.size].filter(Boolean).join(' · ');
 
