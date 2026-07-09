@@ -350,7 +350,7 @@ const oldPrice = displayOriginal ? `<span class="prod-old">₹${displayOriginal.
         <div class="product-img">
           ${imgTag}
           ${badge}
-          <button class="prod-wish" aria-label="Save to wishlist"><i class="ti ti-heart"></i></button>
+          <button class="prod-wish" data-id="${p.id}" aria-label="Save to wishlist" onclick="event.preventDefault();toggleWishlist('${p.id}')"><i class="ti ti-heart"></i></button>
         </div>
         <div class="product-info">
           <div class="prod-cat">${p.categoryLabel}</div>
