@@ -331,17 +331,8 @@
   function renderSummary() {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
     const saleDiscount = cart.reduce((s, i) => {
-  const prod = products.find(x => x.id === i.id);
-  if (!prod) return s;
-  // Check variant original price first, then fall back to product-level
-  if (prod.variants && prod.variants.length > 0) {
-    const variant = prod.variants.find(v => v.size === i.size);
-    if (variant && variant.originalPrice) {
-      return s + (variant.originalPrice - variant.price) * i.qty;
-    }
-  }
-  if (prod.originalPrice) {
-    return s + (prod.originalPrice - prod.price) * i.qty;
+  if (i.originalPrice) {
+    return s + (i.originalPrice - i.price) * i.qty;
   }
   return s;
 }, 0);
@@ -397,10 +388,10 @@
       const imgTag = item.image
   ? `<img src="${item.image}" alt="${item.name}">`
   : `<i class="ti ti-photo"></i>`;
-      const oldPrice = prod && prod.originalPrice
-        ? `<div class="item-price-old">₹${prod.originalPrice.toLocaleString('en-IN')}</div>
-           <div class="item-saving">Save ₹${((prod.originalPrice - prod.price) * item.qty).toLocaleString('en-IN')}</div>`
-        : '';
+     const oldPrice = item.originalPrice
+  ? `<div class="item-price-old">₹${item.originalPrice.toLocaleString('en-IN')}</div>
+     <div class="item-saving">Save ₹${((item.originalPrice - item.price) * item.qty).toLocaleString('en-IN')}</div>`
+  : '';
       const meta = [item.color, item.size].filter(Boolean).join(' · ');
 
       return `
