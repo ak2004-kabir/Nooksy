@@ -11,15 +11,11 @@
     .cart-title { font-family: var(--font-heading); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
     .cart-count { font-size: 13px; color: var(--muted); margin-top: 2px; }
     .clear-cart-btn { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; text-decoration: underline; }
-
-    /* FREE SHIPPING BAR */
     .ship-bar { background: #fff; border: 0.5px solid var(--border); padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
     .ship-bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
     .ship-bar-label .goal { color: var(--green); font-weight: 500; }
     .progress-bg { background: var(--border); height: 4px; }
     .progress-fill { background: var(--green); height: 4px; transition: width 0.4s; }
-
-    /* CART ITEM */
     .cart-item { background: #fff; border: 0.5px solid var(--border); padding: 1.25rem; display: grid; grid-template-columns: 80px 1fr auto; gap: 1rem; align-items: center; margin-bottom: 0.75rem; }
     .item-img { background: var(--beige); width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
     .item-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -36,19 +32,13 @@
     .item-price-main { font-family: var(--font-heading); font-size: 15px; font-weight: 700; }
     .item-price-old { font-size: 11px; color: var(--muted); text-decoration: line-through; margin-top: 2px; }
     .item-saving { font-size: 10px; color: var(--green); margin-top: 2px; font-weight: 500; }
-
-    /* EMPTY CART */
     .empty-cart { background: #fff; border: 0.5px solid var(--border); padding: 4rem 2rem; text-align: center; }
     .empty-cart i { font-size: 48px; color: #ddd; margin-bottom: 1rem; display: block; }
     .empty-cart h2 { font-family: var(--font-heading); font-size: 18px; font-weight: 600; margin-bottom: 0.5rem; }
     .empty-cart p { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
-
-    /* ALSO LIKE */
     .also-like { margin-top: 1.5rem; }
     .also-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
     .also-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-
-    /* ORDER SUMMARY */
     .summary-box { background: #fff; border: 0.5px solid var(--border); padding: 1.5rem; position: sticky; top: 80px; }
     .summary-title { font-family: var(--font-heading); font-size: 15px; font-weight: 700; margin-bottom: 1.25rem; }
     .promo-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
@@ -69,23 +59,14 @@
     .summary-divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
     .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 0.625rem; color: #444; }
     .summary-row.saving { color: var(--green); font-weight: 500; }
-    .summary-row.free-ship { color: var(--green); }
     .summary-total { display: flex; justify-content: space-between; font-family: var(--font-heading); font-size: 16px; font-weight: 700; margin-bottom: 1.25rem; }
     .checkout-btn { width: 100%; background: #000; color: #fff; border: none; font-size: 14px; font-weight: 500; padding: 15px; cursor: pointer; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
     .continue-btn { width: 100%; background: #fff; color: #000; border: 0.5px solid var(--border); font-size: 13px; padding: 12px; cursor: pointer; }
     .trust-row { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
     .trust-item-sm { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
     .trust-item-sm i { font-size: 14px; color: #000; }
-
-    @media (max-width: 900px) {
-      .cart-page { grid-template-columns: 1fr; }
-      .summary-box { position: static; }
-    }
-    @media (max-width: 600px) {
-      .cart-item { grid-template-columns: 64px 1fr; }
-      .item-price-col { grid-column: 2; }
-      .also-grid { grid-template-columns: 1fr 1fr; }
-    }
+    @media (max-width: 900px) { .cart-page { grid-template-columns: 1fr; } .summary-box { position: static; } }
+    @media (max-width: 600px) { .cart-item { grid-template-columns: 64px 1fr; } .item-price-col { grid-column: 2; } .also-grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
@@ -93,8 +74,9 @@
 <div class="announce-bar">Free shipping above ₹499 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns</div>
 
 <nav class="navbar">
-  <a href="../index.html" class="nav-logo">   
-  <img src="../images/logo-black.png" alt="Nooksy" style="height:110px;width:auto;display:block"> </a>
+  <a href="../index.html" class="nav-logo">
+    <img src="../images/logo-black.png" alt="Nooksy" style="height:36px;width:auto;display:block">
+  </a>
   <ul class="nav-links">
     <li><a href="../index.html">Home</a></li>
     <li><a href="shop.html">Shop</a></li>
@@ -122,7 +104,6 @@
 <div class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; <span>Cart</span></div>
 
 <div class="cart-page">
-  <!-- LEFT -->
   <div>
     <div class="cart-header">
       <div>
@@ -132,7 +113,6 @@
       <button class="clear-cart-btn" onclick="clearCart()">Clear cart</button>
     </div>
 
-    <!-- SHIPPING PROGRESS -->
     <div class="ship-bar" id="ship-bar">
       <div class="ship-bar-label">
         <span id="ship-msg">Add ₹499 more for free shipping</span>
@@ -141,22 +121,18 @@
       <div class="progress-bg"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
 
-    <!-- CART ITEMS -->
     <div id="cart-items-container"></div>
 
-    <!-- ALSO LIKE -->
     <div class="also-like" id="also-like-section">
       <div class="also-label">You may also like</div>
       <div class="also-grid" id="also-grid"></div>
     </div>
   </div>
 
-  <!-- RIGHT — ORDER SUMMARY -->
   <div>
     <div class="summary-box">
       <div class="summary-title">Order Summary</div>
 
-      <!-- PROMO -->
       <div class="promo-label">Promo Code</div>
       <div class="promo-row">
         <input class="promo-input" type="text" id="promo-input" placeholder="Enter code">
@@ -165,7 +141,6 @@
       <div class="promo-success" id="promo-success"><i class="ti ti-check"></i> <span id="promo-msg"></span></div>
       <div class="promo-error" id="promo-error">Invalid promo code.</div>
 
-      <!-- DELIVERY -->
       <div class="delivery-label">Delivery Method</div>
       <div class="delivery-opt selected" id="del-standard" onclick="selectDelivery('standard')">
         <input type="radio" name="delivery" checked>
@@ -196,7 +171,7 @@
       <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
       <div class="summary-row saving" id="discount-row" style="display:none"><span id="discount-label">Discount</span><span id="discount-val"></span></div>
       <div class="summary-row saving" id="promo-row" style="display:none"><span id="promo-label-txt">Promo</span><span id="promo-val"></span></div>
-      <div class="summary-row" id="shipping-row"><span>Shipping</span><span id="shipping-val" class="free-ship" style="color:var(--green)">Free</span></div>
+      <div class="summary-row" id="shipping-row"><span>Shipping</span><span id="shipping-val" style="color:var(--green)">Free</span></div>
       <div class="summary-divider"></div>
       <div class="summary-total"><span>Total</span><span id="total">₹0</span></div>
 
@@ -214,19 +189,19 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
-      <img src="../images/logo-black.png" alt="Nooksy" style="height:120px;width:auto;filter:invert(1)">
-      <p class="footer-brand-desc">Thoughtfully designed everyday products that bring joy to your space and routine.</p>
+      <img src="../images/logo-black.png" alt="Nooksy" style="height:28px;width:auto;filter:invert(1)">
+      <div class="footer-brand-tagline" style="margin-top:8px">Your Everyday, Reimagined</div>
+      <p class="footer-brand-desc">Thoughtfully designed everyday products that bring joy to your space.</p>
     </div>
     <div class="footer-col">
       <h4>Shop</h4>
       <ul>
         <li><a href="shop.html?cat=tote-bags">Tote Bags</a></li>
         <li><a href="shop.html?cat=photo-frames">Photo Frames</a></li>
-        <li><a href="shop.html?cat=tumblers">Tumblers</a></li>
+        <li><a href="shop.html?cat=tumbler-bottle">Tumblers</a></li>
         <li><a href="shop.html">All Products</a></li>
       </ul>
     </div>
@@ -250,29 +225,32 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">&copy; 2026 Nooksy. All rights reserved.</p>
+    <p class="footer-copy">&copy; 2025 Nooksy. All rights reserved.</p>
     <div class="footer-socials">
       <a href="https://instagram.com/nooksy.in" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
       <a href="https://wa.me/917356113346" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
       <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
     </div>
-    <div style="text-align:center;font-size:11px;color:#555;line-height:1.7">
-  <strong style="color:#888">Legal Name:</strong> Abdul Kabir &nbsp;|&nbsp;
-  <strong style="color:#888">Address:</strong> 69/3609, 1st Floor, Nimdha Building, Nair Samajam Road, SRM Road, Kaloor, Kochi, Ernakulam, Kerala - 682017
-</div>
     <div class="footer-payments">
       <span class="pay-pill">UPI</span>
       <span class="pay-pill">PayU</span>
       <span class="pay-pill">COD</span>
       <span class="pay-pill">Net Banking</span>
     </div>
+    <div style="border-top:1px solid #1a1a1a;margin-top:0.75rem;padding-top:0.75rem;text-align:center;font-size:11px;color:#555;line-height:1.7;width:100%">
+      <strong style="color:#888">Legal Name:</strong> Abdul Kabir &nbsp;|&nbsp;
+      <strong style="color:#888">Address:</strong> 69/3609, 1st Floor, Nimdha Building, Nair Samajam Road, SRM Road, Kaloor, Kochi, Ernakulam, Kerala - 682017
+    </div>
   </div>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/products.js"></script>
+<script src="../js/firebase-config.js"></script>
 <script>
-  // Promo codes — add yours here
   const PROMO_CODES = {
     'NOOKSY10': { type: 'percent', value: 10, label: '10% off applied!' },
     'WELCOME50': { type: 'flat', value: 50, label: '₹50 off applied!' },
@@ -323,21 +301,27 @@
       document.getElementById('ship-msg').textContent = 'You qualify for free shipping!';
       document.getElementById('ship-goal-txt').textContent = '🎉 Unlocked!';
     } else {
-      document.getElementById('ship-msg').textContent = `Add ₹${remaining} more for free shipping`;
+      document.getElementById('ship-msg').textContent = 'Add ₹' + remaining + ' more for free shipping';
       document.getElementById('ship-goal-txt').textContent = 'Almost there!';
     }
   }
 
+  function getEffectiveOriginalPrice(item) {
+    // First check if originalPrice is stored directly on cart item (variant products)
+    if (item.originalPrice) return item.originalPrice;
+    // Fallback — look up from products array (non-variant products)
+    const prod = products.find(x => x.id === item.id);
+    if (prod && prod.originalPrice) return prod.originalPrice;
+    return null;
+  }
+
   function renderSummary() {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
     const saleDiscount = cart.reduce((s, i) => {
-  const prod = products.find(x => x.id === i.id);
-  const effectiveOriginal = i.originalPrice || (prod && prod.originalPrice) || null;
-  if (effectiveOriginal) {
-    return s + (effectiveOriginal - i.price) * i.qty;
-  }
-  return s;
-}, 0);
+      const orig = getEffectiveOriginalPrice(i);
+      return orig ? s + (orig - i.price) * i.qty : s;
+    }, 0);
 
     let promoDiscount = 0;
     if (appliedPromo) {
@@ -353,11 +337,13 @@
     if (saleDiscount > 0) {
       document.getElementById('discount-row').style.display = 'flex';
       document.getElementById('discount-val').textContent = '−₹' + saleDiscount.toLocaleString('en-IN');
+    } else {
+      document.getElementById('discount-row').style.display = 'none';
     }
 
     if (promoDiscount > 0) {
       document.getElementById('promo-row').style.display = 'flex';
-      document.getElementById('promo-label-txt').textContent = 'Promo (' + appliedPromo.code + ')';
+      document.getElementById('promo-label-txt').textContent = 'Promo (' + (appliedPromo.code || '') + ')';
       document.getElementById('promo-val').textContent = '−₹' + promoDiscount.toLocaleString('en-IN');
     }
 
@@ -374,56 +360,53 @@
     document.getElementById('cart-count').textContent = cart.length + ' item' + (cart.length !== 1 ? 's' : '');
 
     if (cart.length === 0) {
-      container.innerHTML = `
-        <div class="empty-cart">
-          <i class="ti ti-shopping-bag"></i>
-          <h2>Your cart is empty</h2>
-          <p>Looks like you haven't added anything yet.</p>
-          <a href="shop.html" class="btn-primary">Shop Now</a>
-        </div>`;
+      container.innerHTML = '<div class="empty-cart"><i class="ti ti-shopping-bag"></i><h2>Your cart is empty</h2><p>Looks like you haven\'t added anything yet.</p><a href="shop.html" class="btn-primary">Shop Now</a></div>';
       document.getElementById('also-like-section').style.display = 'none';
       return;
     }
 
-    container.innerHTML = cart.map(item => {
-      const prod = products.find(p => p.id === item.id);
-      const imgTag = item.image
-  ? `<img src="${item.image}" alt="${item.name}">`
-  : `<i class="ti ti-photo"></i>`;
-     const prod = products.find(x => x.id === item.id);
-const effectiveOriginal = item.originalPrice || (prod && prod.originalPrice) || null;
-const oldPrice = effectiveOriginal
-  ? `<div class="item-price-old">₹${effectiveOriginal.toLocaleString('en-IN')}</div>
-     <div class="item-saving">Save ₹${((effectiveOriginal - item.price) * item.qty).toLocaleString('en-IN')}</div>`
-  : '';
+    container.innerHTML = cart.map(function(item) {
+      const prod = products.find(function(p) { return p.id === item.id; });
+      const imgSrc = item.image || '';
+      const imgTag = imgSrc
+        ? '<img src="' + imgSrc + '" alt="' + item.name + '">'
+        : '<i class="ti ti-photo"></i>';
+
+      const orig = getEffectiveOriginalPrice(item);
+      const oldPriceHTML = orig
+        ? '<div class="item-price-old">₹' + orig.toLocaleString('en-IN') + '</div>'
+          + '<div class="item-saving">Save ₹' + ((orig - item.price) * item.qty).toLocaleString('en-IN') + '</div>'
+        : '';
+
       const meta = [item.color, item.size].filter(Boolean).join(' · ');
 
-      return `
-        <div class="cart-item">
-          <div class="item-img">${imgTag}</div>
-          <div>
-            <div class="item-cat">${prod ? prod.categoryLabel : ''}</div>
-            <div class="item-name">${item.name}</div>
-            ${meta ? `<div class="item-meta">${meta}</div>` : ''}
-            <div class="item-actions">
-              <div class="qty-ctrl">
-                <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
-                <div class="qty-val">${item.qty}</div>
-                <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-              </div>
-              <button class="remove-btn" onclick="removeItem('${item.id}')"><i class="ti ti-trash"></i> Remove</button>
-            </div>
-          </div>
-          <div class="item-price-col">
-            <div class="item-price-main">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
-            ${oldPrice}
-          </div>
-        </div>`;
+      return '<div class="cart-item">'
+        + '<div class="item-img">' + imgTag + '</div>'
+        + '<div>'
+        + '<div class="item-cat">' + (prod ? prod.categoryLabel : '') + '</div>'
+        + '<div class="item-name">' + item.name + '</div>'
+        + (meta ? '<div class="item-meta">' + meta + '</div>' : '')
+        + '<div class="item-actions">'
+        + '<div class="qty-ctrl">'
+        + '<button class="qty-btn" onclick="updateQty(\'' + item.id + '\', \'' + (item.size || '') + '\', \'' + (item.color || '') + '\', -1)">−</button>'
+        + '<div class="qty-val">' + item.qty + '</div>'
+        + '<button class="qty-btn" onclick="updateQty(\'' + item.id + '\', \'' + (item.size || '') + '\', \'' + (item.color || '') + '\', 1)">+</button>'
+        + '</div>'
+        + '<button class="remove-btn" onclick="removeItem(\'' + item.id + '\', \'' + (item.size || '') + '\', \'' + (item.color || '') + '\')"><i class="ti ti-trash"></i> Remove</button>'
+        + '</div>'
+        + '</div>'
+        + '<div class="item-price-col">'
+        + '<div class="item-price-main">₹' + (item.price * item.qty).toLocaleString('en-IN') + '</div>'
+        + oldPriceHTML
+        + '</div>'
+        + '</div>';
     }).join('');
   }
 
-  function updateQty(id, delta) {
-    const item = cart.find(i => i.id === id);
+  function updateQty(id, size, color, delta) {
+    const item = cart.find(function(i) {
+      return i.id === id && (i.size || '') === size && (i.color || '') === color;
+    });
     if (!item) return;
     item.qty = Math.max(1, item.qty + delta);
     localStorage.setItem('nooksy_cart', JSON.stringify(cart));
@@ -433,8 +416,10 @@ const oldPrice = effectiveOriginal
     if (typeof syncCartToFirestore === 'function') syncCartToFirestore();
   }
 
-  function removeItem(id) {
-    cart = cart.filter(i => i.id !== id);
+  function removeItem(id, size, color) {
+    cart = cart.filter(function(i) {
+      return !(i.id === id && (i.size || '') === size && (i.color || '') === color);
+    });
     localStorage.setItem('nooksy_cart', JSON.stringify(cart));
     updateCartBadge();
     renderCartItems();
@@ -452,40 +437,37 @@ const oldPrice = effectiveOriginal
   }
 
   function renderAlsoLike() {
-    const cartIds = cart.map(i => i.id);
-    const suggestions = products.filter(p => !cartIds.includes(p.id)).slice(0, 3);
-    document.getElementById('also-grid').innerHTML = suggestions.map(p => `
-      <div class="product-card">
-        <a href="product.html?id=${p.id}">
-          <div class="product-img" style="height:100px">
-            ${getCardImage(p) ? `<img src="${getCardImage(p)}" alt="${p.name}">` : `<i class="ti ti-photo" style="font-size:28px;color:#ccc"></i>`}
-          </div>
-          <div class="product-info" style="padding:0.75rem">
-            <div class="prod-name" style="font-size:12px">${p.name}</div>
-            <div class="prod-price" style="font-size:13px">₹${p.price.toLocaleString('en-IN')}</div>
-          </div>
-        </a>
-        <div style="padding:0 0.75rem 0.75rem">
-          <button class="prod-add" style="font-size:11px;padding:7px" onclick="addToCart({id:'${p.id}',name:'${p.name}',price:${p.price},image:'${getCardImage(p)}'});renderCartItems();renderSummary()">Add to Cart</button>
-        </div>
-      </div>`).join('');
+    const cartIds = cart.map(function(i) { return i.id; });
+    const suggestions = products.filter(function(p) { return !cartIds.includes(p.id); }).slice(0, 3);
+    document.getElementById('also-grid').innerHTML = suggestions.map(function(p) {
+      const imgSrc = getCardImage(p);
+      return '<div class="product-card">'
+        + '<a href="product.html?id=' + p.id + '">'
+        + '<div class="product-img" style="height:100px">'
+        + (imgSrc ? '<img src="' + imgSrc + '" alt="' + p.name + '">' : '<i class="ti ti-photo" style="font-size:28px;color:#ccc"></i>')
+        + '</div>'
+        + '<div class="product-info" style="padding:0.75rem">'
+        + '<div class="prod-name" style="font-size:12px">' + p.name + '</div>'
+        + '<div class="prod-price" style="font-size:13px">₹' + p.price.toLocaleString('en-IN') + '</div>'
+        + '</div>'
+        + '</a>'
+        + '<div style="padding:0 0.75rem 0.75rem">'
+        + '<button class="prod-add" style="font-size:11px;padding:7px" onclick="addToCart({id:\'' + p.id + '\',name:\'' + p.name + '\',price:' + p.price + ',image:\'' + imgSrc + '\'});renderCartItems();renderSummary()">Add to Cart</button>'
+        + '</div>'
+        + '</div>';
+    }).join('');
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    renderCartItems();
-    renderSummary();
-    renderAlsoLike();
-  });
-</script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="../js/firebase-config.js"></script>
-<script>
-  onAuthStateChange(user => {
+  onAuthStateChange(function(user) {
     const link = document.querySelector('a[aria-label="Account"]');
     if (!link) return;
     link.href = user ? 'account.html' : 'login.html';
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    renderCartItems();
+    renderSummary();
+    renderAlsoLike();
   });
 </script>
 </body>
