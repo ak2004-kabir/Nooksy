@@ -57,3 +57,39 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initAccordion();
 });
+
+// WISHLIST
+let wishlist = JSON.parse(localStorage.getItem('nooksy_wishlist') || '[]');
+
+function toggleWishlist(productId) {
+  const index = wishlist.indexOf(productId);
+  if (index === -1) {
+    wishlist.push(productId);
+    showToast('Added to wishlist!');
+  } else {
+    wishlist.splice(index, 1);
+    showToast('Removed from wishlist');
+  }
+  localStorage.setItem('nooksy_wishlist', JSON.stringify(wishlist));
+  updateWishlistButtons();
+  if (typeof syncWishlistToFirestore === 'function') syncWishlistToFirestore();
+}
+
+function isWishlisted(productId) {
+  return wishlist.includes(productId);
+}
+
+function updateWishlistButtons() {
+  document.querySelectorAll('.prod-wish').forEach(btn => {
+    const id = btn.getAttribute('data-id');
+    if (!id) return;
+    const icon = btn.querySelector('i');
+    if (isWishlisted(id)) {
+      icon.className = 'ti ti-heart-filled';
+      btn.style.color = '#c0392b';
+    } else {
+      icon.className = 'ti ti-heart';
+      btn.style.color = '#000';
+    }
+  });
+}
