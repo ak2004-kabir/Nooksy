@@ -7,7 +7,7 @@ const products = [
     name: 'Nooksy Skinny Tumbler — Midnight Black',
     category: 'tumblers',
     categoryLabel: 'Tumbler Bottle',
-    price: 795,
+    price: 10,
     originalPrice: 1299,
     badge: 'sale',
     images: [
@@ -76,7 +76,7 @@ const products = [
     name: 'Nooksy Adventure Tote — Nature Print',
     category: 'tote-bags',
     categoryLabel: 'Tote Bags',
-    price: 445,
+    price: 10,
     originalPrice: 999,
     badge: 'sale',
     images: [
