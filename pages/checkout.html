@@ -414,81 +414,76 @@
   }
 
   // Build order data and submit to PayU or handle COD
-  function placeOrder() {
-    if (cart.length === 0) { alert('Your cart is empty.'); return; }
-    if (!validateForm()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  async function placeOrder() {
+  if (cart.length === 0) { alert('Your cart is empty.'); return; }
+  if (!validateForm()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
 
-    const subtotal = getSubtotal();
-    const shipping = getShipping(subtotal);
-    const total = subtotal + shipping;
-    const txnId = 'NKY' + Date.now();
-    const firstName = document.getElementById('first-name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
+  const subtotal = getSubtotal();
+  const shipping = getShipping(subtotal);
+  const total = subtotal + shipping;
+  const txnId = 'NKY' + Date.now();
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
 
-    // Save order info to sessionStorage for confirmation page
-    const orderData = {
-      txnId,
-      items: cart,
-      total,
-      shipping,
-      subtotal,
-      paymentMethod,
-      customer: {
-        name: firstName + ' ' + document.getElementById('last-name').value.trim(),
-        email,
-        phone,
-        address: [
-          document.getElementById('addr1').value,
-          document.getElementById('addr2').value,
-          document.getElementById('city').value,
-          document.getElementById('state').value,
-          document.getElementById('pincode').value
-        ].filter(Boolean).join(', ')
-      }
-    };
-    sessionStorage.setItem('nooksy_order', JSON.stringify(orderData));
-
-    if (paymentMethod === 'cod') {
-      // COD — go straight to confirmation
-      cart = [];
-      localStorage.setItem('nooksy_cart', JSON.stringify(cart));
-      window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
-      return;
+  // Save order data
+  const orderData = {
+    txnId, items: cart, total, shipping, subtotal, paymentMethod,
+    status: 'confirmed',
+    customer: {
+      name: firstName + ' ' + lastName, email, phone,
+      address: [
+        document.getElementById('addr1').value,
+        document.getElementById('addr2').value,
+        document.getElementById('city').value,
+        document.getElementById('state').value,
+        document.getElementById('pincode').value
+      ].filter(Boolean).join(', ')
     }
+  };
+  sessionStorage.setItem('nooksy_order', JSON.stringify(orderData));
+  if (typeof saveOrder === 'function') {
+    saveOrder(orderData).catch(e => console.log('Order save error:', e));
+  }
 
-    // PayU online payment — build form and submit
-   const productInfo = cart.map(i => i.name).join(', ').substring(0, 100);
+  // COD — skip payment
+  if (paymentMethod === 'cod') {
+    cart = [];
+    localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+    window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
+    return;
+  }
 
-const btn = document.getElementById('place-order-btn');
-btn.disabled = true;
-btn.innerHTML = '<i class="ti ti-loader"></i> Processing...';
+  // Online payment via PayU
+  const productInfo = cart.map(i => i.name).join(', ').substring(0, 100);
+  const btn = document.getElementById('place-order-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Processing...';
 
-try {
-  const hashRes = await fetch('https://nooksy-payu.nooksyin.workers.dev/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      txnid: txnId,
-      amount: total.toFixed(2),
-      productinfo: productInfo,
-      firstname: firstName,
-      email: email
-    })
-  });
+  try {
+    const hashRes = await fetch('https://nooksy-payu.nooksyin.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        txnid: txnId,
+        amount: total.toFixed(2),
+        productinfo: productInfo,
+        firstname: firstName,
+        email: email
+      })
+    });
 
-  const hashData = await hashRes.json();
-  if (!hashData.hash) throw new Error('Hash generation failed');
+    const hashData = await hashRes.json();
+    if (!hashData.hash) throw new Error('Hash generation failed');
 
-  const payuUrl = 'https://secure.payu.in/_payment';
-    // NOTE: Hash must be generated server-side in production.
-    // For now this is a placeholder. Your developer or Vercel serverless function
-    // should compute: sha512(key|txnid|amount|productinfo|firstname|email|||||||||||salt)
+    const payuUrl = 'https://secure.payu.in/_payment';
     const form = document.createElement('form');
-form.method = 'POST';
-form.action = payuUrl;
-const fields = {
-  key: hashData.key,
+    form.method = 'POST';
+    form.action = payuUrl;
+
+    const fields = {
+      key: hashData.key,
       txnid: txnId,
       amount: total.toFixed(2),
       productinfo: productInfo,
@@ -501,20 +496,22 @@ const fields = {
       udf1: document.getElementById('addr1').value,
       udf2: document.getElementById('city').value,
     };
+
     Object.entries(fields).forEach(([k, v]) => {
       const inp = document.createElement('input');
       inp.type = 'hidden'; inp.name = k; inp.value = v;
       form.appendChild(inp);
     });
-    document.body.appendChild(form);
-form.submit();
 
-} catch(err) {
-  btn.disabled = false;
-  btn.innerHTML = '<i class="ti ti-lock"></i> Place Order — ₹' + total.toLocaleString('en-IN');
-  alert('Payment could not be initiated. Please try again or use COD.');
-}
+    document.body.appendChild(form);
+    form.submit();
+
+  } catch(err) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-lock"></i> Place Order — ₹' + total.toLocaleString('en-IN');
+    alert('Payment could not be initiated. Please try again or use COD.');
   }
+}
 
   document.addEventListener('DOMContentLoaded', () => {
     renderCheckoutItems();
