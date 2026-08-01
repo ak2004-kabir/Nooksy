@@ -465,13 +465,15 @@
     const hashRes = await fetch('https://nooksy-payu.nooksyin.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        txnid: txnId,
-        amount: total.toFixed(2),
-        productinfo: productInfo,
-        firstname: firstName,
-        email: email
-      })
+     body: JSON.stringify({
+  txnid: txnId,
+  amount: total.toFixed(2),
+  productinfo: productInfo,
+  firstname: firstName,
+  email: email,
+  udf1: document.getElementById('addr1').value,
+  udf2: document.getElementById('city').value
+})
     });
 
     const hashData = await hashRes.json();
