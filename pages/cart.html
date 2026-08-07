@@ -71,7 +71,7 @@
 </head>
 <body>
 
-<div class="announce-bar">Free shipping above ₹499 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns</div>
+<div class="announce-bar">Free shipping above ₹999 &nbsp;·&nbsp; COD available &nbsp;·&nbsp; Easy 7-day returns</div>
 
 <nav class="navbar">
   <a href="../index.html" class="nav-logo">
@@ -146,23 +146,15 @@
         <input type="radio" name="delivery" checked>
         <div class="delivery-opt-info">
           <div class="delivery-opt-name">Standard Delivery</div>
-          <div class="delivery-opt-sub">3–7 business days</div>
+          <div class="delivery-opt-sub">7–10 business days</div>
         </div>
         <div class="delivery-opt-price free" id="standard-price">Free</div>
-      </div>
-      <div class="delivery-opt" id="del-express" onclick="selectDelivery('express')">
-        <input type="radio" name="delivery">
-        <div class="delivery-opt-info">
-          <div class="delivery-opt-name">Express Delivery</div>
-          <div class="delivery-opt-sub">1–2 business days</div>
-        </div>
-        <div class="delivery-opt-price">₹99</div>
       </div>
       <div class="delivery-opt" id="del-cod" onclick="selectDelivery('cod')">
         <input type="radio" name="delivery">
         <div class="delivery-opt-info">
           <div class="delivery-opt-name">Cash on Delivery</div>
-          <div class="delivery-opt-sub">3–7 business days</div>
+          <div class="delivery-opt-sub">7–10 business days</div>
         </div>
         <div class="delivery-opt-price">₹49</div>
       </div>
@@ -257,7 +249,7 @@
     'FREESHIP': { type: 'shipping', value: 0, label: 'Free shipping applied!' }
   };
 
-  const FREE_SHIPPING_THRESHOLD = 499;
+  const FREE_SHIPPING_THRESHOLD = 999;
   let deliveryMethod = 'standard';
   let appliedPromo = null;
 
