@@ -276,12 +276,14 @@
     if (PROMO_CODES[code]) {
       appliedPromo = PROMO_CODES[code];
       appliedPromo.code = code;
+      localStorage.setItem('nooksy_promo', JSON.stringify(appliedPromo));
       document.getElementById('promo-msg').textContent = appliedPromo.label;
       successEl.style.display = 'flex';
       renderSummary();
     } else {
       errorEl.style.display = 'block';
       appliedPromo = null;
+      localStorage.removeItem('nooksy_promo');
     }
   }
 
