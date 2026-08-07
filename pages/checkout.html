@@ -304,6 +304,15 @@
 
   const FREE_SHIPPING = 999;
   let paymentMethod = 'online';
+  // Restore promo from cart
+const savedPromo = localStorage.getItem('nooksy_promo');
+let appliedPromo = savedPromo ? JSON.parse(savedPromo) : null;
+let promoDiscount = 0;
+if (appliedPromo) {
+  const subtotalForPromo = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  if (appliedPromo.type === 'percent') promoDiscount = Math.round(subtotalForPromo * appliedPromo.value / 100);
+  else if (appliedPromo.type === 'flat') promoDiscount = appliedPromo.value;
+}
 
   function selectPayment(method) {
     paymentMethod = method;
@@ -321,36 +330,54 @@
   }
 
   function getShipping(subtotal) {
-    if (paymentMethod === 'cod') return 49;
-    return subtotal >= FREE_SHIPPING ? 0 : 49;
-  }
+  if (paymentMethod === 'cod') return 49;
+  if (appliedPromo && appliedPromo.type === 'shipping') return 0;
+  return subtotal >= FREE_SHIPPING ? 0 : 49;
+}
 
-  function renderSummary() {
-    const subtotal = getSubtotal();
-    const saleDiscount = cart.reduce((s, i) => {
-  if (i.originalPrice) return s + (i.originalPrice - i.price) * i.qty;
-  const p = products.find(x => x.id === i.id);
-  if (p && p.variants && i.size) {
-    const v = p.variants.find(x => x.size === i.size);
-    if (v && v.originalPrice) return s + (v.originalPrice - i.price) * i.qty;
-  }
-  if (p && p.originalPrice) return s + (p.originalPrice - p.price) * i.qty;
-  return s;
-}, 0);
-    const shipping = getShipping(subtotal);
-    const total = subtotal + shipping;
-
-    document.getElementById('co-subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
-    if (saleDiscount > 0) {
-      document.getElementById('co-discount-row').style.display = 'flex';
-      document.getElementById('co-discount').textContent = '−₹' + saleDiscount.toLocaleString('en-IN');
+ function renderSummary() {
+  const subtotal = getSubtotal();
+  const saleDiscount = cart.reduce((s, i) => {
+    if (i.originalPrice) return s + (i.originalPrice - i.price) * i.qty;
+    const p = products.find(x => x.id === i.id);
+    if (p && p.variants && i.size) {
+      const v = p.variants.find(x => x.size === i.size);
+      if (v && v.originalPrice) return s + (v.originalPrice - i.price) * i.qty;
     }
-    const shipEl = document.getElementById('co-shipping');
-    shipEl.textContent = shipping === 0 ? 'Free' : '₹' + shipping;
-    shipEl.style.color = shipping === 0 ? 'var(--green)' : '#000';
-    document.getElementById('co-total').textContent = '₹' + total.toLocaleString('en-IN');
-    document.getElementById('place-order-txt').textContent = 'Place Order — ₹' + total.toLocaleString('en-IN');
+    if (p && p.originalPrice) return s + (p.originalPrice - p.price) * i.qty;
+    return s;
+  }, 0);
+
+  const shipping = getShipping(subtotal);
+  const total = subtotal + shipping - promoDiscount;
+
+  document.getElementById('co-subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
+
+  if (saleDiscount > 0) {
+    document.getElementById('co-discount-row').style.display = 'flex';
+    document.getElementById('co-discount').textContent = '−₹' + saleDiscount.toLocaleString('en-IN');
   }
+
+  if (promoDiscount > 0) {
+    // Add promo row if not already in HTML — show below discount row
+    let promoRow = document.getElementById('co-promo-row');
+    if (!promoRow) {
+      promoRow = document.createElement('div');
+      promoRow.id = 'co-promo-row';
+      promoRow.className = 'summary-row saving';
+      promoRow.innerHTML = '<span>Promo (' + appliedPromo.code + ')</span><span>−₹' + promoDiscount.toLocaleString('en-IN') + '</span>';
+      document.getElementById('co-discount-row').after(promoRow);
+    }
+    promoRow.style.display = 'flex';
+  }
+
+  const shipEl = document.getElementById('co-shipping');
+  shipEl.textContent = shipping === 0 ? 'Free' : '₹' + shipping;
+  shipEl.style.color = shipping === 0 ? 'var(--green)' : '#000';
+
+  document.getElementById('co-total').textContent = '₹' + total.toLocaleString('en-IN');
+  document.getElementById('place-order-txt').textContent = 'Place Order — ₹' + total.toLocaleString('en-IN');
+}
 
   function renderCheckoutItems() {
     const container = document.getElementById('checkout-items');
@@ -420,7 +447,7 @@
 
   const subtotal = getSubtotal();
   const shipping = getShipping(subtotal);
-  const total = subtotal + shipping;
+  const total = subtotal + shipping - promoDiscount;
   const txnId = 'NKY' + Date.now();
   const firstName = document.getElementById('first-name').value.trim();
   const lastName = document.getElementById('last-name').value.trim();
@@ -451,6 +478,7 @@
   if (paymentMethod === 'cod') {
     cart = [];
     localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+    localStorage.removeItem('nooksy_promo');
     window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
     return;
   }
@@ -505,6 +533,7 @@
       form.appendChild(inp);
     });
 
+    localStorage.removeItem('nooksy_promo');
     document.body.appendChild(form);
     form.submit();
 
