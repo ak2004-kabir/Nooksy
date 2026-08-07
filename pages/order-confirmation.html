@@ -236,9 +236,9 @@
   const fmt = d => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
   const packDate = fmt(addDays(today, 1));
-  const shipDate = fmt(addDays(today, 2));
-  const delFrom = fmt(addDays(today, 5));
-  const delTo = fmt(addDays(today, 7));
+  const shipDate = fmt(addDays(today, 3));
+  const delFrom = fmt(addDays(today, 7));
+  const delTo = fmt(addDays(today, 10));
 
   function renderSuccess() {
     // Hero
