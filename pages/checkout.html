@@ -471,8 +471,12 @@ if (appliedPromo) {
   };
   sessionStorage.setItem('nooksy_order', JSON.stringify(orderData));
   if (typeof saveOrder === 'function') {
-    saveOrder(orderData).catch(e => console.log('Order save error:', e));
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    orderData.uid = currentUser.uid;
   }
+  await saveOrder(orderData).catch(e => console.log('Order save error:', e));
+}
 
   // COD — skip payment
   if (paymentMethod === 'cod') {
@@ -550,6 +554,7 @@ if (appliedPromo) {
   });
 </script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../js/firebase-config.js"></script>
 <script>
