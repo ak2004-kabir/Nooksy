@@ -43,7 +43,6 @@ async function getUserOrders() {
   const snapshot = await firebase.firestore()
     .collection('orders')
     .where('uid', '==', user.uid)
-    .orderBy('createdAt', 'desc')
     .limit(20)
     .get();
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
