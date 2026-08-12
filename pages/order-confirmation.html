@@ -415,17 +415,30 @@
       <a href="https://wa.me/917356113346" target="_blank" class="wa-track-btn"><i class="ti ti-brand-whatsapp"></i> Contact Support</a>`;
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    if (status === 'failed') {
-      renderFailed();
-    } else {
-      // Clear cart on success
-      cart = [];
-      localStorage.setItem('nooksy_cart', JSON.stringify(cart));
-      updateCartBadge();
-      renderSuccess();
+  document.addEventListener('DOMContentLoaded', async function() {
+  if (status === 'failed') {
+    renderFailed();
+    return;
+  }
+
+  if (method === 'online') {
+    try {
+      const res = await fetch('https://nooksy-payu.nooksyin.workers.dev/status?txn=' + txnId);
+      const data = await res.json();
+      if (data.status !== 'confirmed') {
+        renderFailed();
+        return;
+      }
+    } catch (e) {
+      // if check itself fails, continue — Firestore already has correct status from Worker
     }
-  });
+  }
+
+  cart = [];
+  localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+  updateCartBadge();
+  renderSuccess();
+});
 </script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
