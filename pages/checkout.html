@@ -456,8 +456,8 @@ if (appliedPromo) {
 
   // Save order data
   const orderData = {
-    txnId, items: cart, total, shipping, subtotal, paymentMethod,
-    status: 'confirmed',
+  txnId, items: cart, total, shipping, subtotal, paymentMethod,
+  status: paymentMethod === 'cod' ? 'confirmed' : 'pending_payment',
     customer: {
       name: firstName + ' ' + lastName, email, phone,
       address: [
@@ -499,7 +499,8 @@ if (appliedPromo) {
       headers: { 'Content-Type': 'application/json' },
      body: JSON.stringify({
   txnid: txnId,
-  amount: total.toFixed(2),
+  items: cart,
+  shipping: shipping,
   productinfo: productInfo,
   firstname: firstName,
   email: email,
@@ -519,7 +520,7 @@ if (appliedPromo) {
     const fields = {
       key: hashData.key,
       txnid: txnId,
-      amount: total.toFixed(2),
+      amount: hashData.amount,
       productinfo: productInfo,
       firstname: firstName,
       email: email,
