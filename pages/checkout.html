@@ -497,10 +497,11 @@ if (appliedPromo) {
     const hashRes = await fetch('https://nooksy-payu.nooksyin.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-     body: JSON.stringify({
+    body: JSON.stringify({
   txnid: txnId,
   items: cart,
   shipping: shipping,
+  promoCode: appliedPromo ? appliedPromo.code : null,
   productinfo: productInfo,
   firstname: firstName,
   email: email,
