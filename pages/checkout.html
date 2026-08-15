@@ -291,6 +291,12 @@
 <script src="../js/main.js"></script>
 <script src="../js/products.js"></script>
 <script>
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+
   // ── PayU Config ──────────────────────────────────────────
   // Replace with your real PayU credentials once verified
   const PAYU_CONFIG = {
