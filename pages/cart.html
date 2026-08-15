@@ -45,17 +45,11 @@
     .promo-row { display: flex; }
     .promo-input { flex: 1; border: 0.5px solid var(--border); border-right: none; font-size: 13px; padding: 9px 12px; outline: none; color: #000; }
     .promo-btn { background: #000; color: #fff; border: none; font-size: 12px; font-weight: 500; padding: 9px 16px; cursor: pointer; letter-spacing: 0.5px; white-space: nowrap; }
-    .promo-success { font-size: 12px; color: var(--green); margin-top: 6px; display: none; align-items: center; gap: 5px; }
+    .promo-success { font-size: 12px; color: var(--green); margin-top: 6px; display: none; align-items: center; gap: 6px; }
     .promo-error { font-size: 12px; color: #c0392b; margin-top: 6px; display: none; }
+    .promo-remove-link { background: none; border: none; color: var(--muted); text-decoration: underline; font-size: 11px; cursor: pointer; margin-left: 4px; font-family: var(--font-body); }
     .delivery-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin: 1.25rem 0 8px; }
-    .delivery-opt { display: flex; align-items: center; gap: 10px; padding: 10px; border: 0.5px solid var(--border); margin-bottom: 6px; cursor: pointer; }
-    .delivery-opt.selected { border-color: #000; }
-    .delivery-opt input { accent-color: #000; }
-    .delivery-opt-info { flex: 1; }
-    .delivery-opt-name { font-size: 13px; font-weight: 500; }
-    .delivery-opt-sub { font-size: 11px; color: var(--muted); }
-    .delivery-opt-price { font-size: 13px; font-weight: 600; }
-    .delivery-opt-price.free { color: var(--green); }
+    .delivery-note { font-size: 12px; color: var(--muted); padding: 10px; border: 0.5px solid var(--border); line-height: 1.6; }
     .summary-divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
     .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 0.625rem; color: #444; }
     .summary-row.saving { color: var(--green); font-weight: 500; }
@@ -75,7 +69,7 @@
 
 <nav class="navbar">
   <a href="../index.html" class="nav-logo">
-    <img src="../images/logo-black.png" alt="Nooksy" style="height:110px;width:auto;display:block">
+    <img src="../images/logo-black.png" alt="Nooksy" style="height:36px;width:auto;display:block">
   </a>
   <ul class="nav-links">
     <li><a href="../index.html">Home</a></li>
@@ -115,7 +109,7 @@
 
     <div class="ship-bar" id="ship-bar">
       <div class="ship-bar-label">
-        <span id="ship-msg">Add ₹499 more for free shipping</span>
+        <span id="ship-msg">Add ₹999 more for free shipping</span>
         <span class="goal"><i class="ti ti-truck" style="font-size:13px;vertical-align:-2px"></i> <span id="ship-goal-txt">Almost there!</span></span>
       </div>
       <div class="progress-bg"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
@@ -138,13 +132,16 @@
         <input class="promo-input" type="text" id="promo-input" placeholder="Enter code">
         <button class="promo-btn" onclick="applyPromo()">Apply</button>
       </div>
-      <div class="promo-success" id="promo-success"><i class="ti ti-check"></i> <span id="promo-msg"></span></div>
+      <div class="promo-success" id="promo-success">
+        <i class="ti ti-check"></i> <span id="promo-msg"></span>
+        <button class="promo-remove-link" id="promo-remove-btn" onclick="removePromo()">Remove</button>
+      </div>
       <div class="promo-error" id="promo-error">Invalid promo code.</div>
 
       <div class="delivery-label">Delivery</div>
-<div style="font-size:13px;color:var(--muted);padding:10px;border:0.5px solid var(--border)">
-  Standard delivery, 7–10 business days. Payment method (including COD) is selected at checkout.
-</div>
+      <div class="delivery-note">
+        Standard delivery, 7–10 business days. Payment method (including Cash on Delivery) is chosen at checkout — COD adds a ₹49 handling fee there.
+      </div>
 
       <div class="summary-divider"></div>
       <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
@@ -203,16 +200,16 @@
       </ul>
     </div>
   </div>
-    <div class="footer-bottom">
+  <div class="footer-bottom">
     <p class="footer-copy">&copy; 2026 Nooksy. All rights reserved.</p>
     <div class="footer-socials">
       <a href="https://instagram.com/nooksy.in" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
       <a href="https://wa.me/917356113346" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
       <a href="#" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
     </div>
-     <div style="text-align:center;font-size:11px;color:#555;line-height:1.7">
-       <strong style="color:#888">Legal Name:</strong> Abdul Kabir &nbsp;|&nbsp;
-       <strong style="color:#888">Address:</strong> 69/3609, 1st Floor, Nimdha Building, Nair Samajam Road, SRM Road, Kaloor, Kochi, Ernakulam, Kerala - 682017
+    <div style="text-align:center;font-size:11px;color:#555;line-height:1.7">
+      <strong style="color:#888">Legal Name:</strong> Abdul Kabir &nbsp;|&nbsp;
+      <strong style="color:#888">Address:</strong> 69/3609, 1st Floor, Nimdha Building, Nair Samajam Road, SRM Road, Kaloor, Kochi, Ernakulam, Kerala - 682017
     </div>
     <div class="footer-payments">
       <span class="pay-pill">UPI</span>
@@ -230,6 +227,11 @@
 <script src="../js/products.js"></script>
 <script src="../js/firebase-config.js"></script>
 <script>
+  // Reload if browser restores this page from bfcache (back/forward) — guarantees fresh state
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) window.location.reload();
+  });
+
   const PROMO_CODES = {
     'NOOKSY10': { type: 'percent', value: 10, label: '10% off applied!' },
     'WELCOME50': { type: 'flat', value: 50, label: '₹50 off applied!' },
@@ -237,13 +239,31 @@
   };
 
   const FREE_SHIPPING_THRESHOLD = 999;
-  let deliveryMethod = 'standard';
+  const STANDARD_SHIPPING_FEE = 49;
   let appliedPromo = null;
 
-  function getDeliveryCost(subtotal) {
-  if (appliedPromo && appliedPromo.type === 'shipping') return 0;
-  return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 49;
-}
+  // Restore any promo saved from a previous visit
+  (function restorePromo() {
+    const saved = localStorage.getItem('nooksy_promo');
+    if (saved) {
+      try { appliedPromo = JSON.parse(saved); } catch (e) { appliedPromo = null; }
+    }
+  })();
+
+  function getShippingCost(subtotal) {
+    if (appliedPromo && appliedPromo.type === 'shipping') return 0;
+    return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
+  }
+
+  function reflectPromoUI() {
+    const successEl = document.getElementById('promo-success');
+    if (appliedPromo) {
+      document.getElementById('promo-msg').textContent = appliedPromo.label || ('Code ' + appliedPromo.code + ' applied');
+      successEl.style.display = 'flex';
+    } else {
+      successEl.style.display = 'none';
+    }
+  }
 
   function applyPromo() {
     const code = document.getElementById('promo-input').value.trim().toUpperCase();
@@ -251,18 +271,35 @@
     const errorEl = document.getElementById('promo-error');
     successEl.style.display = 'none';
     errorEl.style.display = 'none';
+
+    if (code === '') {
+      appliedPromo = null;
+      localStorage.removeItem('nooksy_promo');
+      renderSummary();
+      return;
+    }
+
     if (PROMO_CODES[code]) {
-      appliedPromo = PROMO_CODES[code];
-      appliedPromo.code = code;
+      // Clone the promo object — never store a reference to the shared PROMO_CODES constant
+      appliedPromo = Object.assign({}, PROMO_CODES[code], { code: code });
       localStorage.setItem('nooksy_promo', JSON.stringify(appliedPromo));
-      document.getElementById('promo-msg').textContent = appliedPromo.label;
-      successEl.style.display = 'flex';
+      reflectPromoUI();
       renderSummary();
     } else {
       errorEl.style.display = 'block';
       appliedPromo = null;
       localStorage.removeItem('nooksy_promo');
+      renderSummary();
     }
+  }
+
+  function removePromo() {
+    appliedPromo = null;
+    localStorage.removeItem('nooksy_promo');
+    document.getElementById('promo-input').value = '';
+    document.getElementById('promo-error').style.display = 'none';
+    reflectPromoUI();
+    renderSummary();
   }
 
   function updateShippingBar(subtotal) {
@@ -279,20 +316,16 @@
   }
 
   function getEffectiveOriginalPrice(item) {
-  // Check cart item directly first (set when added via product page)
-  if (item.originalPrice) return item.originalPrice;
-  // Look up product
-  const prod = products.find(x => x.id === item.id);
-  if (!prod) return null;
-  // Check variant originalPrice using item's size
-  if (prod.variants && prod.variants.length > 0 && item.size) {
-    const variant = prod.variants.find(v => v.size === item.size);
-    if (variant && variant.originalPrice) return variant.originalPrice;
+    if (item.originalPrice) return item.originalPrice;
+    const prod = products.find(x => x.id === item.id);
+    if (!prod) return null;
+    if (prod.variants && prod.variants.length > 0 && item.size) {
+      const variant = prod.variants.find(v => v.size === item.size);
+      if (variant && variant.originalPrice) return variant.originalPrice;
+    }
+    if (prod.originalPrice) return prod.originalPrice;
+    return null;
   }
-  // Fall back to product level originalPrice
-  if (prod.originalPrice) return prod.originalPrice;
-  return null;
-}
 
   function renderSummary() {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
@@ -305,11 +338,11 @@
     let promoDiscount = 0;
     if (appliedPromo) {
       if (appliedPromo.type === 'percent') promoDiscount = Math.round(subtotal * appliedPromo.value / 100);
-      else if (appliedPromo.type === 'flat') promoDiscount = appliedPromo.value;
+      else if (appliedPromo.type === 'flat') promoDiscount = Math.min(appliedPromo.value, subtotal);
     }
 
-    const shipping = getDeliveryCost(subtotal);
-    const total = subtotal + shipping - promoDiscount;
+    const shipping = getShippingCost(subtotal);
+    const total = Math.max(0, subtotal + shipping - promoDiscount);
 
     document.getElementById('subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
 
@@ -324,6 +357,8 @@
       document.getElementById('promo-row').style.display = 'flex';
       document.getElementById('promo-label-txt').textContent = 'Promo (' + (appliedPromo.code || '') + ')';
       document.getElementById('promo-val').textContent = '−₹' + promoDiscount.toLocaleString('en-IN');
+    } else {
+      document.getElementById('promo-row').style.display = 'none';
     }
 
     const shipEl = document.getElementById('shipping-val');
@@ -444,6 +479,7 @@
   });
 
   document.addEventListener('DOMContentLoaded', function() {
+    reflectPromoUI();
     renderCartItems();
     renderSummary();
     renderAlsoLike();
