@@ -141,23 +141,10 @@
       <div class="promo-success" id="promo-success"><i class="ti ti-check"></i> <span id="promo-msg"></span></div>
       <div class="promo-error" id="promo-error">Invalid promo code.</div>
 
-      <div class="delivery-label">Delivery Method</div>
-      <div class="delivery-opt selected" id="del-standard" onclick="selectDelivery('standard')">
-        <input type="radio" name="delivery" checked>
-        <div class="delivery-opt-info">
-          <div class="delivery-opt-name">Standard Delivery</div>
-          <div class="delivery-opt-sub">7–10 business days</div>
-        </div>
-        <div class="delivery-opt-price free" id="standard-price">Free</div>
-      </div>
-      <div class="delivery-opt" id="del-cod" onclick="selectDelivery('cod')">
-        <input type="radio" name="delivery">
-        <div class="delivery-opt-info">
-          <div class="delivery-opt-name">Cash on Delivery</div>
-          <div class="delivery-opt-sub">7–10 business days</div>
-        </div>
-        <div class="delivery-opt-price">₹49</div>
-      </div>
+      <div class="delivery-label">Delivery</div>
+<div style="font-size:13px;color:var(--muted);padding:10px;border:0.5px solid var(--border)">
+  Standard delivery, 7–10 business days. Payment method (including COD) is selected at checkout.
+</div>
 
       <div class="summary-divider"></div>
       <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
@@ -254,18 +241,9 @@
   let appliedPromo = null;
 
   function getDeliveryCost(subtotal) {
-    if (deliveryMethod === 'express') return 99;
-    if (deliveryMethod === 'cod') return 49;
-    if (appliedPromo && appliedPromo.type === 'shipping') return 0;
-    return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 49;
-  }
-
-  function selectDelivery(method) {
-    deliveryMethod = method;
-    document.querySelectorAll('.delivery-opt').forEach(el => el.classList.remove('selected'));
-    document.getElementById('del-' + method).classList.add('selected');
-    renderSummary();
-  }
+  if (appliedPromo && appliedPromo.type === 'shipping') return 0;
+  return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 49;
+}
 
   function applyPromo() {
     const code = document.getElementById('promo-input').value.trim().toUpperCase();
