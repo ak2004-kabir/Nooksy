@@ -47,7 +47,6 @@
     .terms-note a { color: #000; text-decoration: underline; }
     .back-link { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; padding: 0; margin-top: 0.25rem; }
 
-    /* RIGHT PANEL */
     .checkout-right { padding: 1.5rem; background: #fff; border-left: 0.5px solid var(--border); }
     .order-summary-title { font-family: var(--font-heading); font-size: 14px; font-weight: 700; margin-bottom: 1.25rem; }
     .order-item { display: flex; gap: 10px; margin-bottom: 0.875rem; align-items: center; }
@@ -83,14 +82,13 @@
 
 <div class="announce-bar">SECURE CHECKOUT &nbsp;·&nbsp; SSL ENCRYPTED &nbsp;·&nbsp; COD AVAILABLE</div>
 
-<!-- CHECKOUT NAVBAR -->
 <div class="checkout-nav">
   <a href="../index.html" class="nav-logo">
-  <img src="../images/logo-black.png" alt="Nooksy" style="height:110px;width:auto;display:block"> </a>
+    <img src="../images/logo-black.png" alt="Nooksy" style="height:36px;width:auto;display:block">
+  </a>
   <div class="nav-secure"><i class="ti ti-lock"></i> Secure Checkout</div>
 </div>
 
-<!-- STEPS -->
 <div class="checkout-steps">
   <div class="step done">
     <div class="step-num"><i class="ti ti-check" style="font-size:11px"></i></div>
@@ -111,7 +109,6 @@
 <div class="checkout-body">
   <div class="checkout-left">
 
-    <!-- CONTACT -->
     <div class="section-block">
       <div class="section-block-header">
         <div class="section-block-title"><div class="section-num">1</div> Contact Information</div>
@@ -146,7 +143,6 @@
       </div>
     </div>
 
-    <!-- ADDRESS -->
     <div class="section-block">
       <div class="section-block-header">
         <div class="section-block-title"><div class="section-num">2</div> Delivery Address</div>
@@ -213,7 +209,6 @@
       </div>
     </div>
 
-    <!-- PAYMENT -->
     <div class="section-block">
       <div class="section-block-header">
         <div class="section-block-title"><div class="section-num">3</div> Payment Method</div>
@@ -269,14 +264,15 @@
 
   </div>
 
-  <!-- RIGHT PANEL -->
   <div class="checkout-right">
     <div class="order-summary-title">Order Summary</div>
     <div id="checkout-items"></div>
     <div class="summary-divider"></div>
     <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">₹0</span></div>
     <div class="summary-row saving" id="co-discount-row" style="display:none"><span>Discount</span><span id="co-discount">₹0</span></div>
+    <div class="summary-row saving" id="co-promo-row" style="display:none"><span id="co-promo-label">Promo</span><span id="co-promo-val">₹0</span></div>
     <div class="summary-row" id="co-shipping-row"><span>Shipping</span><span id="co-shipping" style="color:var(--green)">Free</span></div>
+    <div class="summary-row" id="co-cod-row" style="display:none"><span>COD Handling Fee</span><span id="co-cod-fee">₹49</span></div>
     <div class="summary-divider"></div>
     <div class="summary-total"><span>Total</span><span id="co-total">₹0</span></div>
     <div class="trust-stack">
@@ -291,34 +287,25 @@
 <script src="../js/main.js"></script>
 <script src="../js/products.js"></script>
 <script>
+  // Reload if browser restores this page from bfcache (back/forward) — guarantees fresh state
   window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-      window.location.reload();
-    }
+    if (event.persisted) window.location.reload();
   });
 
-  // ── PayU Config ──────────────────────────────────────────
-  // Replace with your real PayU credentials once verified
-  const PAYU_CONFIG = {
-    merchantKey: 'YOUR_PAYU_MERCHANT_KEY',   // e.g. 'gtKFFx'
-    salt: 'YOUR_PAYU_SALT',                   // e.g. 'eCwWELxi'
-    env: 'test',                              // change to 'prod' when live
-    testUrl: 'https://test.payu.in/_payment',
-    prodUrl: 'https://secure.payu.in/_payment'
-  };
-  // ────────────────────────────────────────────────────────
+  const FREE_SHIPPING_THRESHOLD = 999;
+  const STANDARD_SHIPPING_FEE = 49;
+  const COD_FEE = 49;
 
-  const FREE_SHIPPING = 999;
   let paymentMethod = 'online';
-  // Restore promo from cart
-const savedPromo = localStorage.getItem('nooksy_promo');
-let appliedPromo = savedPromo ? JSON.parse(savedPromo) : null;
-let promoDiscount = 0;
-if (appliedPromo) {
-  const subtotalForPromo = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  if (appliedPromo.type === 'percent') promoDiscount = Math.round(subtotalForPromo * appliedPromo.value / 100);
-  else if (appliedPromo.type === 'flat') promoDiscount = appliedPromo.value;
-}
+
+  // Restore promo applied on the cart page
+  let appliedPromo = null;
+  (function restorePromo() {
+    const saved = localStorage.getItem('nooksy_promo');
+    if (saved) {
+      try { appliedPromo = JSON.parse(saved); } catch (e) { appliedPromo = null; }
+    }
+  })();
 
   function selectPayment(method) {
     paymentMethod = method;
@@ -335,55 +322,71 @@ if (appliedPromo) {
     return cart.reduce((s, i) => s + i.price * i.qty, 0);
   }
 
-  function getShipping(subtotal) {
-  if (paymentMethod === 'cod') return 49;
-  if (appliedPromo && appliedPromo.type === 'shipping') return 0;
-  return subtotal >= FREE_SHIPPING ? 0 : 49;
-}
-
- function renderSummary() {
-  const subtotal = getSubtotal();
-  const saleDiscount = cart.reduce((s, i) => {
-    if (i.originalPrice) return s + (i.originalPrice - i.price) * i.qty;
-    const p = products.find(x => x.id === i.id);
-    if (p && p.variants && i.size) {
-      const v = p.variants.find(x => x.size === i.size);
-      if (v && v.originalPrice) return s + (v.originalPrice - i.price) * i.qty;
-    }
-    if (p && p.originalPrice) return s + (p.originalPrice - p.price) * i.qty;
-    return s;
-  }, 0);
-
-  const shipping = getShipping(subtotal);
-  const total = subtotal + shipping - promoDiscount;
-
-  document.getElementById('co-subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
-
-  if (saleDiscount > 0) {
-    document.getElementById('co-discount-row').style.display = 'flex';
-    document.getElementById('co-discount').textContent = '−₹' + saleDiscount.toLocaleString('en-IN');
+  // Base shipping cost only — free above threshold, or free with a shipping-type promo.
+  // COD fee is calculated separately and never conflated with this.
+  function getShippingCost(subtotal) {
+    if (appliedPromo && appliedPromo.type === 'shipping') return 0;
+    return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE;
   }
 
-  if (promoDiscount > 0) {
-    // Add promo row if not already in HTML — show below discount row
-    let promoRow = document.getElementById('co-promo-row');
-    if (!promoRow) {
-      promoRow = document.createElement('div');
-      promoRow.id = 'co-promo-row';
-      promoRow.className = 'summary-row saving';
-      promoRow.innerHTML = '<span>Promo (' + appliedPromo.code + ')</span><span>−₹' + promoDiscount.toLocaleString('en-IN') + '</span>';
-      document.getElementById('co-discount-row').after(promoRow);
-    }
-    promoRow.style.display = 'flex';
+  // COD fee is always charged on top when Cash on Delivery is selected — regardless of
+  // shipping cost, promo type, or cart value.
+  function getCodFee() {
+    return paymentMethod === 'cod' ? COD_FEE : 0;
   }
 
-  const shipEl = document.getElementById('co-shipping');
-  shipEl.textContent = shipping === 0 ? 'Free' : '₹' + shipping;
-  shipEl.style.color = shipping === 0 ? 'var(--green)' : '#000';
+  function getPromoDiscount(subtotal) {
+    if (!appliedPromo) return 0;
+    if (appliedPromo.type === 'percent') return Math.round(subtotal * appliedPromo.value / 100);
+    if (appliedPromo.type === 'flat') return Math.min(appliedPromo.value, subtotal);
+    return 0;
+  }
 
-  document.getElementById('co-total').textContent = '₹' + total.toLocaleString('en-IN');
-  document.getElementById('place-order-txt').textContent = 'Place Order — ₹' + total.toLocaleString('en-IN');
-}
+  function renderSummary() {
+    const subtotal = getSubtotal();
+    const saleDiscount = cart.reduce((s, i) => {
+      if (i.originalPrice) return s + (i.originalPrice - i.price) * i.qty;
+      const p = products.find(x => x.id === i.id);
+      if (p && p.variants && i.size) {
+        const v = p.variants.find(x => x.size === i.size);
+        if (v && v.originalPrice) return s + (v.originalPrice - i.price) * i.qty;
+      }
+      if (p && p.originalPrice) return s + (p.originalPrice - p.price) * i.qty;
+      return s;
+    }, 0);
+
+    const shippingCost = getShippingCost(subtotal);
+    const codFee = getCodFee();
+    const promoDiscount = getPromoDiscount(subtotal);
+    const total = Math.max(0, subtotal + shippingCost + codFee - promoDiscount);
+
+    document.getElementById('co-subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
+
+    if (saleDiscount > 0) {
+      document.getElementById('co-discount-row').style.display = 'flex';
+      document.getElementById('co-discount').textContent = '−₹' + saleDiscount.toLocaleString('en-IN');
+    } else {
+      document.getElementById('co-discount-row').style.display = 'none';
+    }
+
+    if (promoDiscount > 0) {
+      document.getElementById('co-promo-row').style.display = 'flex';
+      document.getElementById('co-promo-label').textContent = 'Promo (' + (appliedPromo.code || '') + ')';
+      document.getElementById('co-promo-val').textContent = '−₹' + promoDiscount.toLocaleString('en-IN');
+    } else {
+      document.getElementById('co-promo-row').style.display = 'none';
+    }
+
+    const shipEl = document.getElementById('co-shipping');
+    shipEl.textContent = shippingCost === 0 ? 'Free' : '₹' + shippingCost;
+    shipEl.style.color = shippingCost === 0 ? 'var(--green)' : '#000';
+
+    document.getElementById('co-cod-row').style.display = codFee > 0 ? 'flex' : 'none';
+    document.getElementById('co-cod-fee').textContent = '₹' + codFee;
+
+    document.getElementById('co-total').textContent = '₹' + total.toLocaleString('en-IN');
+    document.getElementById('place-order-txt').textContent = 'Place Order — ₹' + total.toLocaleString('en-IN');
+  }
 
   function renderCheckoutItems() {
     const container = document.getElementById('checkout-items');
@@ -391,34 +394,35 @@ if (appliedPromo) {
       container.innerHTML = '<p style="font-size:13px;color:var(--muted)">Your cart is empty. <a href="shop.html">Shop now</a></p>';
       return;
     }
-    container.innerHTML = cart.map(item => `
-      <div class="order-item">
-        <div class="order-item-img">
-          ${item.image ? `<img src="${item.image}" alt="${item.name}">` : `<i class="ti ti-photo"></i>`}
-          <span class="order-item-qty">${item.qty}</span>
-        </div>
-        <div style="flex:1">
-          <div class="order-item-name">${item.name}</div>
-          <div class="order-item-meta">${[item.color, item.size].filter(Boolean).join(' · ')}</div>
-        </div>
-        <div class="order-item-price">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
-      </div>`).join('');
+    container.innerHTML = cart.map(function(item) {
+      const imgSrc = item.image || '';
+      const imgTag = imgSrc
+        ? '<img src="' + imgSrc + '" alt="' + item.name + '">'
+        : '<i class="ti ti-photo"></i>';
+      const meta = [item.color, item.size].filter(Boolean).join(' · ');
+      return '<div class="order-item">'
+        + '<div class="order-item-img">' + imgTag + '<span class="order-item-qty">' + item.qty + '</span></div>'
+        + '<div style="flex:1"><div class="order-item-name">' + item.name + '</div>'
+        + (meta ? '<div class="order-item-meta">' + meta + '</div>' : '')
+        + '</div>'
+        + '<div class="order-item-price">₹' + (item.price * item.qty).toLocaleString('en-IN') + '</div>'
+        + '</div>';
+    }).join('');
   }
 
-  // Form validation
   function validateForm() {
     const fields = [
-      { id: 'first-name', err: 'err-first-name', check: v => v.trim().length > 0 },
-      { id: 'last-name',  err: 'err-last-name',  check: v => v.trim().length > 0 },
-      { id: 'email',      err: 'err-email',      check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-      { id: 'phone',      err: 'err-phone',      check: v => /^[6-9]\d{9}$/.test(v.replace(/\s/g,'')) },
-      { id: 'addr1',      err: 'err-addr1',      check: v => v.trim().length > 5 },
-      { id: 'pincode',    err: 'err-pincode',    check: v => /^\d{6}$/.test(v) },
-      { id: 'city',       err: 'err-city',       check: v => v.trim().length > 0 },
-      { id: 'state',      err: 'err-state',      check: v => v !== '' },
+      { id: 'first-name', err: 'err-first-name', check: function(v) { return v.trim().length > 0; } },
+      { id: 'last-name',  err: 'err-last-name',  check: function(v) { return v.trim().length > 0; } },
+      { id: 'email',      err: 'err-email',      check: function(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); } },
+      { id: 'phone',      err: 'err-phone',      check: function(v) { return /^[6-9]\d{9}$/.test(v.replace(/\s/g,'')); } },
+      { id: 'addr1',      err: 'err-addr1',      check: function(v) { return v.trim().length > 5; } },
+      { id: 'pincode',    err: 'err-pincode',    check: function(v) { return /^\d{6}$/.test(v); } },
+      { id: 'city',       err: 'err-city',       check: function(v) { return v.trim().length > 0; } },
+      { id: 'state',      err: 'err-state',      check: function(v) { return v !== ''; } },
     ];
     let valid = true;
-    fields.forEach(f => {
+    fields.forEach(function(f) {
       const el = document.getElementById(f.id);
       const errEl = document.getElementById(f.err);
       const ok = f.check(el.value);
@@ -429,11 +433,10 @@ if (appliedPromo) {
     return valid;
   }
 
-  // Pincode auto-fill (India Post API)
   async function fetchCityState(pin) {
     if (pin.length !== 6) return;
     try {
-      const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+      const res = await fetch('https://api.postalpincode.in/pincode/' + pin);
       const data = await res.json();
       if (data[0].Status === 'Success') {
         const post = data[0].PostOffice[0];
@@ -446,117 +449,116 @@ if (appliedPromo) {
     } catch(e) { /* silently fail */ }
   }
 
-  // Build order data and submit to PayU or handle COD
   async function placeOrder() {
-  if (cart.length === 0) { alert('Your cart is empty.'); return; }
-  if (!validateForm()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (cart.length === 0) { alert('Your cart is empty.'); return; }
+    if (!validateForm()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
 
-  const subtotal = getSubtotal();
-  const shipping = getShipping(subtotal);
-  const total = subtotal + shipping - promoDiscount;
-  const txnId = 'NKY' + Date.now();
-  const firstName = document.getElementById('first-name').value.trim();
-  const lastName = document.getElementById('last-name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
+    const subtotal = getSubtotal();
+    const shippingCost = getShippingCost(subtotal);
+    const codFee = getCodFee();
+    const promoDiscount = getPromoDiscount(subtotal);
+    const shippingTotal = shippingCost + codFee; // combined figure sent to Worker as "shipping"
+    const total = Math.max(0, subtotal + shippingTotal - promoDiscount);
 
-  // Save order data
-  const orderData = {
-  txnId, items: cart, total, shipping, subtotal, paymentMethod,
-  status: paymentMethod === 'cod' ? 'confirmed' : 'pending_payment',
-    customer: {
-      name: firstName + ' ' + lastName, email, phone,
-      address: [
-        document.getElementById('addr1').value,
-        document.getElementById('addr2').value,
-        document.getElementById('city').value,
-        document.getElementById('state').value,
-        document.getElementById('pincode').value
-      ].filter(Boolean).join(', ')
-    }
-  };
-  sessionStorage.setItem('nooksy_order', JSON.stringify(orderData));
-  if (typeof saveOrder === 'function') {
-  const currentUser = getCurrentUser();
-  if (currentUser) {
-    orderData.uid = currentUser.uid;
-  }
-  await saveOrder(orderData).catch(e => console.log('Order save error:', e));
-}
+    const txnId = 'NKY' + Date.now();
+    const firstName = document.getElementById('first-name').value.trim();
+    const lastName = document.getElementById('last-name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
 
-  // COD — skip payment
-  if (paymentMethod === 'cod') {
-    cart = [];
-    localStorage.setItem('nooksy_cart', JSON.stringify(cart));
-    localStorage.removeItem('nooksy_promo');
-    window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
-    return;
-  }
-
-  // Online payment via PayU
-  const productInfo = cart.map(i => i.name).join(', ').substring(0, 100);
-  const btn = document.getElementById('place-order-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="ti ti-loader"></i> Processing...';
-
-  try {
-    const hashRes = await fetch('https://nooksy-payu.nooksyin.workers.dev/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-  txnid: txnId,
-  items: cart,
-  shipping: shipping,
-  promoCode: appliedPromo ? appliedPromo.code : null,
-  productinfo: productInfo,
-  firstname: firstName,
-  email: email,
-  udf1: document.getElementById('addr1').value,
-  udf2: document.getElementById('city').value
-})
-    });
-
-    const hashData = await hashRes.json();
-    if (!hashData.hash) throw new Error('Hash generation failed');
-
-    const payuUrl = 'https://secure.payu.in/_payment';
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = payuUrl;
-
-    const fields = {
-      key: hashData.key,
-      txnid: txnId,
-      amount: hashData.amount,
-      productinfo: productInfo,
-      firstname: firstName,
-      email: email,
-      phone: phone,
-      surl: 'https://nooksy-payu.nooksyin.workers.dev/redirect',
-      furl: 'https://nooksy-payu.nooksyin.workers.dev/redirect?status=failed',
-      hash: hashData.hash,
-      udf1: document.getElementById('addr1').value,
-      udf2: document.getElementById('city').value,
+    const orderData = {
+      txnId, items: cart, total, shipping: shippingTotal, subtotal, paymentMethod,
+      status: paymentMethod === 'cod' ? 'confirmed' : 'pending_payment',
+      customer: {
+        name: firstName + ' ' + lastName, email, phone,
+        address: [
+          document.getElementById('addr1').value,
+          document.getElementById('addr2').value,
+          document.getElementById('city').value,
+          document.getElementById('state').value,
+          document.getElementById('pincode').value
+        ].filter(Boolean).join(', ')
+      }
     };
+    sessionStorage.setItem('nooksy_order', JSON.stringify(orderData));
 
-    Object.entries(fields).forEach(([k, v]) => {
-      const inp = document.createElement('input');
-      inp.type = 'hidden'; inp.name = k; inp.value = v;
-      form.appendChild(inp);
-    });
+    if (typeof saveOrder === 'function') {
+      const currentUser = getCurrentUser();
+      if (currentUser) orderData.uid = currentUser.uid;
+      await saveOrder(orderData).catch(e => console.log('Order save error:', e));
+    }
 
-    localStorage.removeItem('nooksy_promo');
-    document.body.appendChild(form);
-    form.submit();
+    if (paymentMethod === 'cod') {
+      cart = [];
+      localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+      localStorage.removeItem('nooksy_promo');
+      window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
+      return;
+    }
 
-  } catch(err) {
-    btn.disabled = false;
-    btn.innerHTML = '<i class="ti ti-lock"></i> Place Order — ₹' + total.toLocaleString('en-IN');
-    alert('Payment could not be initiated. Please try again or use COD.');
+    const productInfo = cart.map(i => i.name).join(', ').substring(0, 100);
+    const btn = document.getElementById('place-order-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ti ti-loader"></i> Processing...';
+
+    try {
+      const hashRes = await fetch('https://nooksy-payu.nooksyin.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          txnid: txnId,
+          items: cart,
+          shipping: shippingTotal,
+          promoCode: appliedPromo ? appliedPromo.code : null,
+          productinfo: productInfo,
+          firstname: firstName,
+          email: email,
+          udf1: document.getElementById('addr1').value,
+          udf2: document.getElementById('city').value
+        })
+      });
+
+      const hashData = await hashRes.json();
+      if (!hashData.hash) throw new Error('Hash generation failed');
+
+      const payuUrl = 'https://secure.payu.in/_payment';
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = payuUrl;
+
+      const fields = {
+        key: hashData.key,
+        txnid: txnId,
+        amount: hashData.amount,
+        productinfo: productInfo,
+        firstname: firstName,
+        email: email,
+        phone: phone,
+        surl: 'https://nooksy-payu.nooksyin.workers.dev/redirect',
+        furl: 'https://nooksy-payu.nooksyin.workers.dev/redirect?status=failed',
+        hash: hashData.hash,
+        udf1: document.getElementById('addr1').value,
+        udf2: document.getElementById('city').value,
+      };
+
+      Object.entries(fields).forEach(function([k, v]) {
+        const inp = document.createElement('input');
+        inp.type = 'hidden'; inp.name = k; inp.value = v;
+        form.appendChild(inp);
+      });
+
+      localStorage.removeItem('nooksy_promo');
+      document.body.appendChild(form);
+      form.submit();
+
+    } catch(err) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-lock"></i> Place Order — ₹' + total.toLocaleString('en-IN');
+      alert('Payment could not be initiated. Please try again or use COD.');
+    }
   }
-}
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', function() {
     renderCheckoutItems();
     renderSummary();
   });
@@ -566,7 +568,7 @@ if (appliedPromo) {
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../js/firebase-config.js"></script>
 <script>
-  onAuthStateChange(user => {
+  onAuthStateChange(function(user) {
     const link = document.querySelector('a[aria-label="Account"]');
     if (!link) return;
     link.href = user ? 'account.html' : 'login.html';
