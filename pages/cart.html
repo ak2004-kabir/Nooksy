@@ -151,7 +151,7 @@
       <div class="summary-divider"></div>
       <div class="summary-total"><span>Total</span><span id="total">₹0</span></div>
 
-      <button class="checkout-btn" onclick="window.location.href='checkout.html'">
+      <button class="checkout-btn" onclick="goToCheckout()">
         <i class="ti ti-lock"></i> Proceed to Checkout
       </button>
       <button class="continue-btn" onclick="window.location.href='shop.html'">Continue Shopping</button>
@@ -472,11 +472,23 @@
     }).join('');
   }
 
+  let currentUser = null;
   onAuthStateChange(function(user) {
+    currentUser = user;
     const link = document.querySelector('a[aria-label="Account"]');
     if (!link) return;
     link.href = user ? 'account.html' : 'login.html';
   });
+
+  function goToCheckout() {
+    if (cart.length === 0) return;
+    if (!currentUser) {
+      sessionStorage.setItem('nooksy_redirect_after_login', 'checkout.html');
+      window.location.href = 'login.html?next=checkout';
+      return;
+    }
+    window.location.href = 'checkout.html';
+  }
 
   document.addEventListener('DOMContentLoaded', function() {
     reflectPromoUI();
