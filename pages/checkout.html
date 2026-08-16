@@ -568,10 +568,20 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="../js/firebase-config.js"></script>
 <script>
+  // Require login before checkout — guest orders would be silently rejected by
+  // Firestore rules and never recorded anywhere. Redirect to login instead.
+  let authCheckDone = false;
   onAuthStateChange(function(user) {
     const link = document.querySelector('a[aria-label="Account"]');
-    if (!link) return;
-    link.href = user ? 'account.html' : 'login.html';
+    if (link) link.href = user ? 'account.html' : 'login.html';
+
+    if (!authCheckDone) {
+      authCheckDone = true;
+      if (!user) {
+        sessionStorage.setItem('nooksy_redirect_after_login', 'checkout.html');
+        window.location.href = 'login.html?next=checkout';
+      }
+    }
   });
 </script>
 </body>
