@@ -488,13 +488,16 @@
       await saveOrder(orderData).catch(e => console.log('Order save error:', e));
     }
 
-    if (paymentMethod === 'cod') {
-      cart = [];
-      localStorage.setItem('nooksy_cart', JSON.stringify(cart));
-      localStorage.removeItem('nooksy_promo');
-      window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
-      return;
-    }
+   if (paymentMethod === 'cod') {
+  cart = [];
+  localStorage.setItem('nooksy_cart', JSON.stringify(cart));
+  localStorage.removeItem('nooksy_promo');
+  try {
+    await fetch('https://nooksy-payu.nooksyin.workers.dev/notify?txn=' + txnId);
+  } catch (e) { /* don't block checkout if email fails */ }
+  window.location.href = 'order-confirmation.html?method=cod&txn=' + txnId;
+  return;
+}
 
     const productInfo = cart.map(i => i.name).join(', ').substring(0, 100);
     const btn = document.getElementById('place-order-btn');
