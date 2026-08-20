@@ -7,7 +7,7 @@ const products = [
     name: 'Nooksy Skinny Tumbler — Midnight Black',
     category: 'tumblers',
     categoryLabel: 'Tumbler Bottle',
-    price: 10,
+    price: 795,
     originalPrice: 1299,
     badge: 'sale',
     images: [
@@ -76,7 +76,7 @@ const products = [
     name: 'Nooksy Adventure Tote — Nature Print',
     category: 'tote-bags',
     categoryLabel: 'Tote Bags',
-    price: 10,
+    price: 445,
     originalPrice: 999,
     badge: 'sale',
     images: [
@@ -306,8 +306,9 @@ const products = [
     badge: 'bestseller',
     variants: [
     { size: '8×10 inches',  price: 400, originalPrice: 899 },
-    { size: '8×12 inches', price: 450, originalPrice: 999 },
-    { size: '10×12 inches', price: 500, originalPrice: 1099 }
+    { size: '8×12 inches', price: 485, originalPrice: 999 },
+    { size: '12×12 inches', price: 585, originalPrice: 1199 }
+    { size: '10×10 inches', price: 415, originalPrice: 899 }
   ],
    images: [
       'https://images.nooksy.in/spf1/spf1-1.jpg',
