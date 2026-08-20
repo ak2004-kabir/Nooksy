@@ -307,7 +307,7 @@ const products = [
     variants: [
     { size: '8×10 inches',  price: 400, originalPrice: 899 },
     { size: '8×12 inches', price: 485, originalPrice: 999 },
-    { size: '12×12 inches', price: 585, originalPrice: 1199 }
+    { size: '12×12 inches', price: 585, originalPrice: 1199 },
     { size: '10×10 inches', price: 415, originalPrice: 899 }
   ],
    images: [
