@@ -6,6 +6,23 @@
   <meta name="description" content="Nooksy — Your Everyday, Reimagined. Tote bags, photo frames, tumblers and more." />
   <title>Nooksy — Your Everyday, Reimagined</title>
   <link rel="stylesheet" href="css/global.css" />
+  <style>
+  .responsive-grid-3, .responsive-grid-4, .responsive-grid-5 { display: grid; gap: 1rem; }
+  .responsive-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .responsive-grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .responsive-grid-5 { grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+
+  @media (max-width: 768px) {
+    .responsive-grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .responsive-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .responsive-grid-5 { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .responsive-grid-3 { grid-template-columns: repeat(1, 1fr); }
+    .responsive-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .responsive-grid-5 { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
   <link rel="canonical" href="https://nooksy.in/" />
 </head>
 <body>
@@ -79,7 +96,7 @@
     <p class="section-label">Browse by category</p>
     <h2 class="section-title">Shop what you love</h2>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem" id="category-grid"></div>
+  <div class="responsive-grid-4" id="category-grid"></div>
 <script src="js/main.js"></script>
 <script src="js/products.js"></script>
 <script>
@@ -129,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <p class="section-label">Customer favourites</p>
     <h2 class="section-title">Bestsellers</h2>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem" id="bestsellers-grid">
+  <div class="responsive-grid-3" id="bestsellers-grid">
     <!-- Products loaded from products.js -->
   </div>
   <div style="text-align:center;margin-top:2rem">
@@ -151,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <p class="section-label">Why nooksy</p>
     <h2 class="section-title">Built different</h2>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem">
+  <div class="responsive-grid-4" style="gap:1.5rem">
     <div style="text-align:center;padding:1.5rem 1rem">
       <i class="ti ti-leaf" style="font-size:28px;margin-bottom:1rem;display:block"></i>
       <div style="font-family:var(--font-heading);font-size:13px;font-weight:600;margin-bottom:6px">Thoughtful design</div>
@@ -181,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <p class="section-label">@nooksy.in</p>
     <h2 class="section-title">As seen on Instagram</h2>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.5rem">
+  <div class="responsive-grid-5">
     <div style="background:var(--beige);aspect-ratio:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-brand-instagram" style="font-size:28px;color:#b8a48a"></i></div>
     <div style="background:#e8e4de;aspect-ratio:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-brand-instagram" style="font-size:28px;color:#b8a48a"></i></div>
     <div style="background:#e0ebe1;aspect-ratio:1;display:flex;align-items:center;justify-content:center"><i class="ti ti-brand-instagram" style="font-size:28px;color:#8aab8c"></i></div>
@@ -245,18 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </footer>
 
-<script src="js/main.js"></script>
-<script src="js/products.js"></script>
-<script>
-  // Render bestsellers on home page
-  document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.getElementById('bestsellers-grid');
-    if (grid && typeof products !== 'undefined') {
-      const bestsellers = products.filter(p => p.badge === 'bestseller').slice(0, 3);
-      grid.innerHTML = bestsellers.map(p => renderProductCard(p)).join('');
-    }
-  });
-</script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="js/firebase-config.js"></script>
