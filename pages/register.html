@@ -223,9 +223,14 @@
 
     try {
       const cred = await firebase.auth().createUserWithEmailAndPassword(email, password);
-      await cred.user.updateProfile({ displayName: fname + ' ' + lname });
-      await saveUserProfile({ firstName: fname, lastName: lname, email, phone, createdAt: new Date().toISOString() });
-      window.location.href = 'account.html';
+await cred.user.updateProfile({ displayName: fname + ' ' + lname });
+await saveUserProfile({ firstName: fname, lastName: lname, email, phone, createdAt: new Date().toISOString() });
+
+try {
+  await cred.user.sendEmailVerification();
+} catch (e) { /* don't block signup if this fails */ }
+
+window.location.href = 'account.html';
     } catch (err) {
       btn.disabled = false;
       btn.innerHTML = '<i class="ti ti-user-plus"></i> Create Account';
