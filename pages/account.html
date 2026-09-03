@@ -309,21 +309,32 @@
 <script>
   let userProfile = null;
 
+  onAuthStateChange(async user => {
+    document.getElementById('loading-state').style.display = 'none';
+    if (!user) { window.location.href = 'login.html'; return; }
+    document.getElementById('account-body').style.display = 'grid';
+
     if (!user.emailVerified) {
-    const banner = document.createElement('div');
-    banner.style.cssText = 'background:#fff8e1;border:0.5px solid #f0c14b;padding:12px 20px;margin-bottom:1rem;font-size:13px;color:#7a5c00;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap';
-    banner.innerHTML = '<span>⚠️ Your email isn\'t verified yet. Please check your inbox.</span>' +
-      '<button id="resend-verify-btn" style="background:#000;color:#fff;border:none;padding:6px 14px;font-size:12px;cursor:pointer">Resend Email</button>';
-    document.getElementById('account-body').before(banner);
-    document.getElementById('resend-verify-btn').addEventListener('click', async () => {
-      try {
-        await user.sendEmailVerification();
-        alert('Verification email sent — check your inbox.');
-      } catch (e) {
-        alert('Could not send email right now. Please try again shortly.');
+      const banner = document.createElement('div');
+      banner.style.cssText = 'background:#fff8e1;border:0.5px solid #f0c14b;padding:12px 20px;margin-bottom:1rem;font-size:13px;color:#7a5c00;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap';
+      banner.innerHTML = '<span>⚠️ Your email isn\'t verified yet. Please check your inbox.</span>' +
+        '<button id="resend-verify-btn" style="background:#000;color:#fff;border:none;padding:6px 14px;font-size:12px;cursor:pointer">Resend Email</button>';
+      const accountBodyEl = document.getElementById('account-body');
+      if (accountBodyEl && accountBodyEl.parentNode) {
+        accountBodyEl.parentNode.insertBefore(banner, accountBodyEl);
       }
-    });
-  }
+      const resendBtn = document.getElementById('resend-verify-btn');
+      if (resendBtn) {
+        resendBtn.addEventListener('click', async () => {
+          try {
+            await user.sendEmailVerification();
+            alert('Verification email sent — check your inbox.');
+          } catch (e) {
+            alert('Could not send email right now. Please try again shortly.');
+          }
+        });
+      }
+    }
 
     const name = user.displayName || 'Customer';
     const initial = name.charAt(0).toUpperCase();
