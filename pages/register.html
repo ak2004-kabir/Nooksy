@@ -227,10 +227,11 @@ await cred.user.updateProfile({ displayName: fname + ' ' + lname });
 await saveUserProfile({ firstName: fname, lastName: lname, email, phone, createdAt: new Date().toISOString() });
 
 try {
-  await user.sendEmailVerification({
-  url: 'https://nooksy.in/pages/verify-email.html',
-  handleCodeInApp: false
-});
+  const actionCodeSettings = {
+  url: "https://nooksy.in/pages/verify-email.html",
+  handleCodeInApp: true
+};
+await sendEmailVerification(user, actionCodeSettings);
 } catch (e) { /* don't block signup if this fails */ }
 
 window.location.href = 'account.html';
