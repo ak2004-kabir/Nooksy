@@ -327,10 +327,11 @@
       if (resendBtn) {
         resendBtn.addEventListener('click', async () => {
           try {
-            await user.sendEmailVerification({
-  url: 'https://nooksy.in/pages/verify-email.html',
-  handleCodeInApp: false
-});
+            const actionCodeSettings = {
+  url: "https://nooksy.in/pages/verify-email.html",
+  handleCodeInApp: true
+};
+await sendEmailVerification(user, actionCodeSettings);
             alert('Verification email sent — check your inbox.');
           } catch (e) {
             alert('Could not send email right now. Please try again shortly.');
