@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Email — Nooksy</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <style>
+    .verify-page { min-height: 80vh; display: flex; align-items: center; justify-content: center; background: var(--gray); padding: 2rem; }
+    .verify-card { background: #fff; border: 0.5px solid var(--border); padding: 2.5rem; width: 100%; max-width: 440px; text-align: center; }
+    .verify-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+    .verify-icon.pending { background: var(--beige); }
+    .verify-icon.success { background: var(--green); }
+    .verify-icon.error { background: #c0392b; }
+    .verify-icon i { font-size: 26px; color: #fff; }
+    .verify-icon.pending i { color: #5a4a35; }
+    .verify-title { font-family: var(--font-heading); font-size: 19px; font-weight: 700; margin-bottom: 0.5rem; }
+    .verify-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+    .verify-btn { width: 100%; background: #000; color: #fff; border: none; font-size: 14px; font-weight: 500; padding: 13px; cursor: pointer; letter-spacing: 0.5px; }
+    .verify-btn:disabled { background: #888; cursor: not-allowed; }
+    .verify-link { font-size: 13px; color: var(--muted); margin-top: 1rem; }
+    .verify-link a { color: #000; font-weight: 600; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="announce-bar">Free shipping above ₹999 &nbsp;·&nbsp; COD available</div>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">
+    <img src="../images/logo-black.png" alt="Nooksy" style="height:36px;width:auto;display:block">
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="cart.html" class="nav-icon" aria-label="Cart"><i class="ti ti-shopping-bag"></i><span class="cart-badge">0</span></a>
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<div class="verify-page">
+  <div class="verify-card" id="verify-card">
+    <div class="verify-icon pending" id="verify-icon"><i class="ti ti-mail" id="verify-icon-inner"></i></div>
+    <div class="verify-title" id="verify-title">Confirm your email</div>
+    <div class="verify-sub" id="verify-sub">Click the button below to verify your Nooksy account email address.</div>
+    <button class="verify-btn" id="verify-btn" onclick="doVerify()">Verify Email Address</button>
+    <div class="verify-link" id="verify-link-area" style="display:none"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script>
+  // Read the oobCode from the URL — but do NOT apply it automatically.
+  // Automated email security scanners (Gmail, Outlook Safe Links, etc.) fetch
+  // this page's HTML at delivery time, but they don't simulate a real button
+  // click — so the code stays valid until the actual human clicks "Verify".
+  const params = new URLSearchParams(window.location.search);
+  const oobCode = params.get('oobCode');
+  const mode = params.get('mode');
+
+  function setState(type, title, sub, showLoginLink) {
+    const icon = document.getElementById('verify-icon');
+    const iconInner = document.getElementById('verify-icon-inner');
+    icon.className = 'verify-icon ' + type;
+    iconInner.className = type === 'success' ? 'ti ti-check' : (type === 'error' ? 'ti ti-x' : 'ti ti-mail');
+    document.getElementById('verify-title').textContent = title;
+    document.getElementById('verify-sub').textContent = sub;
+    document.getElementById('verify-btn').style.display = 'none';
+    if (showLoginLink) {
+      const linkArea = document.getElementById('verify-link-area');
+      linkArea.style.display = 'block';
+      linkArea.innerHTML = '<a href="account.html">Go to My Account</a>';
+    }
+  }
+
+  async function doVerify() {
+    if (!oobCode || mode !== 'verifyEmail') {
+      setState('error', 'Invalid link', 'This verification link is missing required information.', false);
+      return;
+    }
+    const btn = document.getElementById('verify-btn');
+    btn.disabled = true;
+    btn.textContent = 'Verifying...';
+    try {
+      await firebase.auth().applyActionCode(oobCode);
+      setState('success', 'Email verified!', 'Your email has been confirmed. You can now enjoy full access to your Nooksy account.', true);
+    } catch (err) {
+      const messages = {
+        'auth/expired-action-code': 'This link has expired. Please request a new verification email from your account page.',
+        'auth/invalid-action-code': 'This link has already been used or is invalid. Please request a new one if needed.',
+        'auth/user-disabled': 'This account has been disabled.',
+        'auth/user-not-found': 'No account found for this link.'
+      };
+      setState('error', 'Verification failed', messages[err.code] || 'Something went wrong. Please try requesting a new verification email.', true);
+    }
+  }
+</script>
+</body>
+</html>
