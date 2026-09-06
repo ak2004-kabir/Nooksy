@@ -56,50 +56,143 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="../js/firebase-config.js"></script>
 <script>
-  // Read the oobCode from the URL — but do NOT apply it automatically.
-  // Automated email security scanners (Gmail, Outlook Safe Links, etc.) fetch
-  // this page's HTML at delivery time, but they don't simulate a real button
-  // click — so the code stays valid until the actual human clicks "Verify".
-  const params = new URLSearchParams(window.location.search);
-  const oobCode = params.get('oobCode');
-  const mode = params.get('mode');
 
-  function setState(type, title, sub, showLoginLink) {
-    const icon = document.getElementById('verify-icon');
-    const iconInner = document.getElementById('verify-icon-inner');
-    icon.className = 'verify-icon ' + type;
-    iconInner.className = type === 'success' ? 'ti ti-check' : (type === 'error' ? 'ti ti-x' : 'ti ti-mail');
-    document.getElementById('verify-title').textContent = title;
-    document.getElementById('verify-sub').textContent = sub;
-    document.getElementById('verify-btn').style.display = 'none';
-    if (showLoginLink) {
-      const linkArea = document.getElementById('verify-link-area');
-      linkArea.style.display = 'block';
-      linkArea.innerHTML = '<a href="account.html">Go to My Account</a>';
-    }
+let currentUser = null;
+
+firebase.auth().onAuthStateChanged(user => {
+
+  currentUser = user;
+
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
   }
 
-  async function doVerify() {
-    if (!oobCode || mode !== 'verifyEmail') {
-      setState('error', 'Invalid link', 'This verification link is missing required information.', false);
+  updateVerificationState();
+
+});
+
+async function updateVerificationState() {
+
+  if (!currentUser) return;
+
+  try {
+
+    await currentUser.reload();
+
+    currentUser = firebase.auth().currentUser;
+
+    if (currentUser.emailVerified) {
+
+      setState(
+        'success',
+        'Email verified!',
+        'Your email has been successfully verified.',
+        true
+      );
+
       return;
     }
-    const btn = document.getElementById('verify-btn');
-    btn.disabled = true;
-    btn.textContent = 'Verifying...';
-    try {
-      await firebase.auth().applyActionCode(oobCode);
-      setState('success', 'Email verified!', 'Your email has been confirmed. You can now enjoy full access to your Nooksy account.', true);
-    } catch (err) {
-      const messages = {
-        'auth/expired-action-code': 'This link has expired. Please request a new verification email from your account page.',
-        'auth/invalid-action-code': 'This link has already been used or is invalid. Please request a new one if needed.',
-        'auth/user-disabled': 'This account has been disabled.',
-        'auth/user-not-found': 'No account found for this link.'
-      };
-      setState('error', 'Verification failed', messages[err.code] || 'Something went wrong. Please try requesting a new verification email.', true);
-    }
+
+    document.getElementById('verify-title').textContent =
+      'Verify your email';
+
+    document.getElementById('verify-sub').textContent =
+      'We sent a verification link to ' + currentUser.email +
+      '. Please check your inbox and click the link to verify your email.';
+
+    document.getElementById('verify-btn').style.display = 'block';
+    document.getElementById('verify-btn').textContent =
+      'Resend Verification Email';
+
+  } catch (err) {
+
+    console.error('Verification status check failed:', err);
+
+    setState(
+      'error',
+      'Something went wrong',
+      'We could not check your verification status. Please try again.',
+      true
+    );
+
   }
+
+}
+
+async function doVerify() {
+
+  if (!currentUser) return;
+
+  const btn = document.getElementById('verify-btn');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+
+    await currentUser.sendEmailVerification({
+      url: 'https://nooksy.in/pages/account.html',
+      handleCodeInApp: false
+    });
+
+    document.getElementById('verify-title').textContent =
+      'Verification email sent';
+
+    document.getElementById('verify-sub').textContent =
+      'We sent a new verification link to ' +
+      currentUser.email +
+      '. Please check your inbox and spam folder.';
+
+    btn.disabled = false;
+    btn.textContent = 'Resend Verification Email';
+
+  } catch (err) {
+
+    console.error('Resend verification failed:', err);
+
+    btn.disabled = false;
+    btn.textContent = 'Resend Verification Email';
+
+    document.getElementById('verify-sub').textContent =
+      'Could not send the verification email. Please wait a moment and try again.';
+
+  }
+
+}
+
+function setState(type, title, sub, showLoginLink) {
+
+  const icon = document.getElementById('verify-icon');
+  const iconInner = document.getElementById('verify-icon-inner');
+
+  icon.className = 'verify-icon ' + type;
+
+  iconInner.className =
+    type === 'success'
+      ? 'ti ti-check'
+      : type === 'error'
+        ? 'ti ti-x'
+        : 'ti ti-mail';
+
+  document.getElementById('verify-title').textContent = title;
+  document.getElementById('verify-sub').textContent = sub;
+
+  document.getElementById('verify-btn').style.display = 'none';
+
+  if (showLoginLink) {
+
+    const linkArea = document.getElementById('verify-link-area');
+
+    linkArea.style.display = 'block';
+
+    linkArea.innerHTML =
+      '<a href="account.html">Go to My Account</a>';
+
+  }
+
+}
+
 </script>
 </body>
 </html>
