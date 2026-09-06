@@ -227,12 +227,13 @@ await cred.user.updateProfile({ displayName: fname + ' ' + lname });
 await saveUserProfile({ firstName: fname, lastName: lname, email, phone, createdAt: new Date().toISOString() });
 
 try {
-  const actionCodeSettings = {
-  url: "https://nooksy.in/pages/verify-email.html",
-  handleCodeInApp: true
-};
-await sendEmailVerification(user, actionCodeSettings);
-} catch (e) { /* don't block signup if this fails */ }
+  await cred.user.sendEmailVerification({
+    url: 'https://nooksy.in/pages/account.html',
+    handleCodeInApp: false
+  });
+} catch (e) {
+  console.error('Verification email could not be sent:', e);
+}
 
 window.location.href = 'account.html';
     } catch (err) {
